@@ -25,3 +25,6 @@ scaps/figures/**/*
 
 # Temp
 *.tmp
+
+# Worklog
+WORKLOG.md

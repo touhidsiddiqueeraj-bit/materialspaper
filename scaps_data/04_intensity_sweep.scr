@@ -1,0 +1,48 @@
+# ============================================================
+# SCAPS-1D Batch Script: Light Intensity Dependence
+# Paper: RbGeI3 perovskite solar cell
+# ============================================================
+
+Load("FTO_TiO2_RbGeI3_CuI_Au.def")
+
+Temperature = 300
+Rs = 0
+Rsh = 1e10
+
+# ---- Sweep light intensity multiplier ----
+# 0.01 suns
+Illumination = 0.01
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/intensity/jv_0.01sun.jv")
+
+# 0.1 suns
+Illumination = 0.1
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/intensity/jv_0.1sun.jv")
+
+# 0.5 suns
+Illumination = 0.5
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/intensity/jv_0.5sun.jv")
+
+# 1 sun (baseline)
+Illumination = 1.0
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/intensity/jv_1sun.jv")
+
+# 2 suns
+Illumination = 2.0
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/intensity/jv_2sun.jv")
+
+# 5 suns
+Illumination = 5.0
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/intensity/jv_5sun.jv")
+
+# 10 suns
+Illumination = 10.0
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/intensity/jv_10sun.jv")
+
+Print("Intensity sweep done. Check scaps_data/intensity/")

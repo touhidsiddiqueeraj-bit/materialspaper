@@ -1,0 +1,37 @@
+# ============================================================
+# SCAPS-1D Batch Script: C-V / Mott-Schottky Analysis
+# Paper: RbGeI3 perovskite solar cell (FTO/TiO2/RbGeI3/CuI/Au)
+# ============================================================
+# Instructions:
+#   1. Save the optimized device as FTO_TiO2_RbGeI3_CuI_Au.def
+#   2. Place this .scr file in the same directory
+#   3. In SCAPS: Actions -> Run script -> select this file
+# ============================================================
+
+Load("FTO_TiO2_RbGeI3_CuI_Au.def")
+
+# ---- Baseline parameters (Table XVI) ----
+Temperature = 300
+Illumination = 1.0
+Rs = 0
+Rsh = 1e10
+
+# ---- C-V calculation ----
+# Parameters: start_V, end_V, step_V, frequency_Hz, AC_voltage
+CalcCV(-2.0, 2.0, 0.05, 1e6, 0.010)
+
+# Save C-V data
+Save("scaps_data/cv_mott_schottky/cv_1mhz.cv")
+
+# ---- Also at 10 kHz and 100 kHz for comparison ----
+CalcCV(-2.0, 2.0, 0.05, 1e4, 0.010)
+Save("scaps_data/cv_mott_schottky/cv_10khz.cv")
+
+CalcCV(-2.0, 2.0, 0.05, 1e5, 0.010)
+Save("scaps_data/cv_mott_schottky/cv_100khz.cv")
+
+# ---- C-f at V=0 ----
+CalcCF(1e2, 1e7, 10, 0.0)
+Save("scaps_data/cv_mott_schottky/cf_v0.cf")
+
+Print("C-V/C-F done. Check scaps_data/cv_mott_schottky/")

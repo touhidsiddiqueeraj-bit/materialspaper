@@ -1,0 +1,63 @@
+# ============================================================
+# SCAPS-1D Batch Script: Back Contact Work Function Sweep
+# Paper: RbGeI3 perovskite solar cell
+# ============================================================
+
+Load("FTO_TiO2_RbGeI3_CuI_Au.def")
+
+Temperature = 300
+Illumination = 1.0
+Rs = 0
+Rsh = 1e10
+
+# ---- Sweep work function of right (back) contact ----
+# Au default = 5.1 eV, sweep from 4.0 to 6.0 eV
+SetContact("right", "WF", 4.0)
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/workfunction/jv_wf4.0.jv")
+
+SetContact("right", "WF", 4.2)
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/workfunction/jv_wf4.2.jv")
+
+SetContact("right", "WF", 4.4)
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/workfunction/jv_wf4.4.jv")
+
+SetContact("right", "WF", 4.6)
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/workfunction/jv_wf4.6.jv")
+
+SetContact("right", "WF", 4.8)
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/workfunction/jv_wf4.8.jv")
+
+SetContact("right", "WF", 5.0)
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/workfunction/jv_wf5.0.jv")
+
+SetContact("right", "WF", 5.1)
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/workfunction/jv_wf5.1.jv")
+
+SetContact("right", "WF", 5.2)
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/workfunction/jv_wf5.2.jv")
+
+SetContact("right", "WF", 5.4)
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/workfunction/jv_wf5.4.jv")
+
+SetContact("right", "WF", 5.6)
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/workfunction/jv_wf5.6.jv")
+
+SetContact("right", "WF", 5.8)
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/workfunction/jv_wf5.8.jv")
+
+SetContact("right", "WF", 6.0)
+CalcJV(-1.0, 1.3, 0.01, 250)
+Save("scaps_data/workfunction/jv_wf6.0.jv")
+
+Print("Work function sweep done. Check scaps_data/workfunction/")

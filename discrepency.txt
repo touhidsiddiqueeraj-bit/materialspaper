@@ -1,0 +1,99 @@
+# RbGeI3 Perovskite Solar Cell — Jsc/Bandgap Discrepancy
+
+## Context
+Paper: "Photovoltaic Performance Analysis of RbGeI3 Absorber Based Perovskite
+Solar Cell using SCAPS-1D Simulation" (journal paper + companion thesis).
+Device architecture: FTO/TiO2/RbGeI3/CuI/Au.
+Simulator: SCAPS 3.3.10.
+
+Headline claimed result (final consolidated device):
+- PCE = 26.69%
+- Voc = 1.1127 V
+- Jsc = 30.3156 mA/cm²
+- FF = 79.13%
+- Absorber thickness = 700 nm
+- Optimal bandgap = 1.4 eV (as stated in the final results table)
+- Interfacial defect density = 1e14 cm⁻² at both interfaces
+
+## The Issue
+The bandgap optimization sweep (Table VII in the journal paper / Table 5.7 in
+the thesis) tested Eg from 1.3–1.7/1.8 eV and found:
+- Eg = 1.4 eV → best PCE = 19.87%, Jsc = 27.42 mA/cm²
+
+But the final device's reported Jsc (30.3156 mA/cm²) does **not** match this
+Eg=1.4 eV sweep value. Instead, 30.3156 is much closer to what the sweep
+implies for a lower bandgap — specifically the Eg=1.31 eV region.
+
+This is corroborated internally: the thesis's own band-diagram discussion
+section independently states the absorber bandgap is "1.31 eV" — directly
+contradicting its own Table 5.13, which lists Eg = 1.4 eV for the same final
+device.
+
+The journal paper discloses this discrepancy explicitly in Sections V.H,
+V.O, VII.A, and the conclusion. The thesis does not disclose it anywhere —
+it silently contains the same contradiction.
+
+## Diagnostic Work Already Done
+Using the j_total_gen output diagnostic in SCAPS, confirmed the bandgap
+field is correctly wired into the simulation (lower Eg → higher generation
+current, as physically expected):
+
+| Eg (eV) | j_total_gen | Jsc (mA/cm²) | PCE (%) |
+|---------|-------------|--------------|---------|
+| 1.31    | 3.37336571e+01 | 33.27404003 | 30.3296 |
+| 1.40    | 3.07713814e+01 | 30.31564066 | 26.6933 |
+
+So the bandgap field itself is not the bug — it drives the model correctly.
+
+**But:** neither of these fresh reruns matches the *originally published*
+Table VII/5.7 values for the corresponding bandgap. Both are off by a
+consistent ~2.5 mA/cm² in Jsc versus what Table VII/5.7 reports at the same
+Eg. This means some *other* device parameter differs between the current
+SCAPS `.def` file and whatever `.def`/parameter set originally produced the
+published Table VII/5.7 sweep — the bandgap mismatch is a symptom, not the
+root cause.
+
+## What Needs to Be Solved
+Isolate which parameter(s) differ between:
+(a) the current `.def` file (Layer 2 = RbGeI3: thickness 0.700 µm, Eg field
+    tested at 1.31 and 1.40 eV, electron affinity 3.900, dielectric
+    permittivity 15.000, Nc = Nv = 1.000E+17, electron mobility 28.60,
+    hole mobility 27.30, defect: neutral, Nt = 1e14 uniform, Et = 0.60 eV
+    above Ev, tau_n = tau_p = 1.0e3 ns), and
+(b) whatever parameter set actually produced the original Table VII/5.7
+    sweep numbers (Jsc = 27.42 mA/cm² at Eg = 1.4 eV).
+
+Candidate parameters to check first (most likely culprits for a flat ~2.5
+mA/cm² Jsc offset across bandgaps): Nc/Nv (absorber effective density of
+states), absorber thickness at the time the sweep was run, front/back
+contact recombination velocities, or an interfacial defect density that may
+have differed between the sweep run and the final consolidated device run.
+
+## Resolution Path
+1. Locate/recover the original `.def` file(s) or SCAPS batch log used to
+   generate Table VII/5.7 (if archived) and diff parameter-by-parameter
+   against the current final-device `.def`.
+2. If the original sweep files aren't recoverable, run a systematic
+   one-at-a-time (OAT) sweep at fixed Eg=1.4 eV, varying each candidate
+   parameter above, and match against Jsc=27.42 mA/cm² to identify which
+   change reproduces the published number.
+3. Once the differing parameter is found, decide the fix:
+   - If the *final device* used the correct (intended) parameter set, then
+     Table VII/5.7 needs correcting (or a footnote reconciling it), OR
+   - If the *original sweep* used the correct parameter set, the final
+     device parameters need correcting to Eg=1.4 eV with matching Jsc, and
+     the headline PCE/Voc/Jsc/FF numbers change accordingly.
+4. Update whichever document(s) are inconsistent — at minimum the thesis's
+   band-diagram section (currently says 1.31 eV) needs to either match
+   Table 5.13 (1.4 eV) or the table needs correcting, and the thesis needs
+   the same disclosure the journal paper already has in V.H/V.O/VII.A/
+   conclusion.
+
+## Explicitly Out of Scope
+A separate robustness/sensitivity analysis pass (OAT sensitivity ranking,
+2D interaction heatmaps, factorial bandgap sweep, N=200 Latin Hypercube
+uncertainty quantification, illumination intensity dependence, temperature
+dependence, dark J-V characteristics, mesh convergence check) has already
+been completed and reviewed. Decision: **do not add this to the paper** —
+it would bloat the paper and distract from the core contribution. No action
+needed on this front.

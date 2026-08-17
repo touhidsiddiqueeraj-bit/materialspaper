@@ -44,7 +44,7 @@ check('A1  PCE = Voc*Jsc*FF/100', approx(v*j*ff/100, pce, 0.02), f'{v*j*ff/100:.
 fine = conv['FINE']
 check('A2  headline traces to FINE run', abs(fine['PCE']-26.80) < 0.02 and approx(fine['FF'], 78.92, 0.01),
       f"FINE PCE={fine['PCE']:.4f} FF={fine['FF']:.4f}")
-check('A3  Voc 1.12 in text', 'Voc = 1.12 V' in text)
+check('A3  Voc 1.12 in text', re.search(r'V\s*O\s*C\s*=\s*1\.12 V', text) is not None)
 check('A4  max-power V=0.96 J=27.9 -> 26.8 mW/cm2', approx(0.96*27.9, 26.8, 0.3))
 
 # ---- B. sweep claims vs thesis tables ----
@@ -124,7 +124,8 @@ check('UQ median 25.85', approx(np.median(pce_uq), 25.85, 0.01), f'{np.median(pc
 check('UQ p5 23.38 (linear pct)', approx(np.percentile(pce_uq, 5), 23.38, 0.02), f'{np.percentile(pce_uq,5):.3f}')
 check('UQ p95 28.81 (linear pct)', approx(np.percentile(pce_uq, 95), 28.81, 0.02), f'{np.percentile(pce_uq,95):.3f}')
 check('UQ Voc mean 1.087', approx(voc_uq.mean(), 1.087, 0.001), f'{voc_uq.mean():.3f}')
-check('UQ Voc sd 0.021 in text', 'Mean Voc = 1.087 \u00b1 0.021 V' in text_flat)
+check('UQ Voc sd 0.021 in text',
+      re.search(r'Mean V\s*O\s*C\s*=\s*1\.087 \u00b1 0\.021 V', text_flat) is not None)
 
 # ---- F. dark JV ----
 dj = conv['DARK_JV']
@@ -196,6 +197,17 @@ for p in list(doc.paragraphs) + [pp for t in doc.tables for r in t.rows
             bad.append(txt[:60])
 check('no plain unsubscripted formulas/band labels',
       not bad, repr(bad[:5]))
+PV = re.compile(r'(?<![A-Za-z])(?:V|J|I)(?:oc|OC|sc|SC)(?![A-Za-z])')
+pv_bad = []
+for p in list(doc.paragraphs) + [pp for t in doc.tables for r in t.rows
+                                 for c in r.cells for pp in c.paragraphs]:
+    for r in p._p.findall(f'{W}r'):
+        if r.find(f'{W}rPr/{SUB}') is not None:
+            continue
+        txt = ''.join(t.text or '' for t in r.findall(f'{W}t'))
+        if PV.search(txt):
+            pv_bad.append(txt[:60])
+check('no plain unsubscripted Voc/Jsc/Isc', not pv_bad, repr(pv_bad[:5]))
 check('no em dashes', '\u2014' not in text)
 check('spike->step at RbGeI3/TiO2 (abstract+caption)', join_all.count('conduction-band step at RbGeI3/TiO2') == 2,
       str(join_all.count('conduction-band step at RbGeI3/TiO2')))

@@ -672,6 +672,168 @@ def normalize_table_format(doc):
           f'{len(doc.tables)} tables')
 
 
+def apply_sample_table_style(doc):
+    """Pass I: restyle every table like the user's sample - three thin black
+    horizontal rules (top, under the header, bottom), no vertical or inner
+    borders, header row larger (10 pt) and not bold, first column left-
+    aligned, other columns centered."""
+    W = '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
+    RULE = 'single'
+    SZ = '4'
+    for tbl in doc.tables:
+        tblPr = tbl._tbl.tblPr
+        style = tblPr.find(qn('w:tblStyle'))
+        if style is None:
+            style = OxmlElement('w:tblStyle')
+            tblPr.insert(0, style)
+        style.set(qn('w:val'), 'TableNormal')
+        for old in tblPr.findall(qn('w:tblBorders')):
+            tblPr.remove(old)
+        borders = OxmlElement('w:tblBorders')
+        for edge, tag in (('w:top', 'w:top'), ('w:bottom', 'w:bottom'),
+                          ('w:left', 'w:left'), ('w:right', 'w:right'),
+                          ('w:insideH', 'w:insideH'),
+                          ('w:insideV', 'w:insideV')):
+            el = OxmlElement(edge)
+            val = 'none' if edge in ('w:left', 'w:right',
+                                     'w:insideH', 'w:insideV') else RULE
+            el.set(qn('w:val'), val)
+            if val != 'none':
+                el.set(qn('w:sz'), SZ)
+                el.set(qn('w:space'), '0')
+                el.set(qn('w:color'), '000000')
+            borders.append(el)
+        layout = tblPr.find(qn('w:tblLayout'))
+        if layout is not None:
+            layout.addprevious(borders)
+        else:
+            tblPr.append(borders)
+
+        rows = tbl.rows
+        header = rows[0]
+        for cell in header.cells:
+            tcPr = cell._tc.tcPr
+            if tcPr is None:
+                tcPr = cell._tc.get_or_add_tcPr()
+            for old in tcPr.findall(qn('w:tcBorders')):
+                tcPr.remove(old)
+            tcb = OxmlElement('w:tcBorders')
+            bottom = OxmlElement('w:bottom')
+            bottom.set(qn('w:val'), RULE)
+            bottom.set(qn('w:sz'), SZ)
+            bottom.set(qn('w:space'), '0')
+            bottom.set(qn('w:color'), '000000')
+            tcb.append(bottom)
+            tcW = tcPr.find(qn('w:tcW'))
+            if tcW is not None:
+                tcW.addnext(tcb)
+            else:
+                tcPr.insert(0, tcb)
+            for p in cell.paragraphs:
+                for r in p.runs:
+                    rpr = r._r.get_or_add_rPr()
+                    b = rpr.find(qn('w:b'))
+                    if b is None:
+                        b = OxmlElement('w:b')
+                        rpr.append(b)
+                    b.set(qn('w:val'), '0')
+                    sz = rpr.find(qn('w:sz'))
+                    if sz is None:
+                        sz = OxmlElement('w:sz')
+                        rpr.append(sz)
+                    sz.set(qn('w:val'), '20')
+                    set_jc(p, 'center' if cell != header.cells[0] else 'left')
+
+        for row in rows[1:]:
+            for ci, cell in enumerate(row.cells):
+                for p in cell.paragraphs:
+                    text = p.text
+                    long_text = ci != 0 and len(text) > 30
+                    set_jc(p, 'left' if (ci == 0 or long_text) else 'center')
+    print(f'apply_sample_table_style: styled {len(doc.tables)} tables')
+
+
+def set_jc(paragraph, value):
+    pPr = paragraph._p.get_or_add_pPr()
+    for old in pPr.findall(qn('w:jc')):
+        pPr.remove(old)
+    jc = OxmlElement('w:jc')
+    jc.set(qn('w:val'), value)
+    rPr = pPr.find(qn('w:rPr'))
+    if rPr is not None:
+        rPr.addprevious(jc)
+    else:
+        pPr.append(jc)
+
+
+def pv_subscript_pass(doc):
+    """Pass J: thesis-style V_OC / J_SC / I_SC typography for the paper text.
+    'Voc'->'V'+'OC'(subscript), 'Jsc'->'J'+'SC'(subscript), 'Isc' likewise,
+    matching the thesis's all-caps subscript convention in text and tables."""
+    PW = re.compile(r'(?<![A-Za-z])([VJI])(oc|OC|sc|SC)(?![A-Za-z])')
+    paras = list(doc.paragraphs)
+    for tbl in doc.tables:
+        for row in tbl.rows:
+            for cell in row.cells:
+                paras.extend(cell.paragraphs)
+    n = 0
+    for p in paras:
+        for r in para_runs(p):
+            for t in list(r.findall(qn('w:t'))):
+                txt = t.text or ''
+                if not PW.search(txt):
+                    continue
+                parent = r.getparent()
+                rpr = r.find(qn('w:rPr'))
+                newruns = []
+                pos = 0
+                for m in PW.finditer(txt):
+                    if m.start() > pos:
+                        newruns.append((txt[pos:m.start()], None))
+                    newruns.append((m.group(1), None))
+                    newruns.append((m.group(2).upper(), 'subscript'))
+                    pos = m.end()
+                if pos < len(txt):
+                    newruns.append((txt[pos:], None))
+                idx = parent.index(r)
+                parent.remove(r)
+                for text, va in newruns:
+                    nr = OxmlElement('w:r')
+                    rpr_new = copy.deepcopy(rpr) if rpr is not None else None
+                    if va:
+                        if rpr_new is None:
+                            rpr_new = OxmlElement('w:rPr')
+                        el = OxmlElement('w:vertAlign')
+                        el.set(qn('w:val'), va)
+                        rpr_new.append(el)
+                    if rpr_new is not None:
+                        nr.append(rpr_new)
+                    nt = OxmlElement('w:t')
+                    nt.set(qn('xml:space'), 'preserve')
+                    nt.text = text
+                    nr.append(nt)
+                    parent.insert(idx, nr)
+                    idx += 1
+                n += 1
+    cap = 0
+    for p in paras:
+        for r in para_runs(p):
+            rpr = r.find(qn('w:rPr'))
+            if rpr is None:
+                continue
+            va = rpr.find(qn('w:vertAlign'))
+            if va is None or va.get(qn('w:val')) != 'subscript':
+                continue
+            ts = r.findall(qn('w:t'))
+            txt = ''.join(t.text or '' for t in ts)
+            if txt.upper() in ('OC', 'SC') and txt != txt.upper():
+                for t in ts:
+                    t.text = (t.text or '').upper()
+                cap += 1
+    print(f'pv_subscript_pass: {n} text runs rewritten'
+          f', {cap} lowercase oc/sc subscripts capitalized')
+
+
 def main():
     doc = docx.Document(WORK)
 
@@ -750,6 +912,12 @@ def main():
 
     # Pass H: uniform table cell typography (Times New Roman 9 pt).
     normalize_table_format(doc)
+
+    # Pass I: sample-style table rules and alignment.
+    apply_sample_table_style(doc)
+
+    # Pass J: thesis-style V_OC / J_SC / I_SC subscripts.
+    pv_subscript_pass(doc)
 
     # Pass E
     for media, fig in SWAPS.items():

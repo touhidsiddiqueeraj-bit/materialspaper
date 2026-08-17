@@ -25,3 +25,6 @@ scaps/data/**/*
 # Worklog
 WORKLOG.md
 .verify/
+
+# Palimpsest tool state
+.palimpsest/

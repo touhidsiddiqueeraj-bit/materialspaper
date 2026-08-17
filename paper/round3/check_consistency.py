@@ -13,6 +13,7 @@ CONV = f'{ROOT}/dark_and_conv_results.json'
 UQ = f'{ROOT}/uq_and_dark_results.json'
 
 fails, passes = [], []
+W = '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
 
 def check(name, ok, detail=''):
     (passes if ok else fails).append((name, detail))
@@ -145,7 +146,7 @@ check('graded 885.7->1033.3 in seven linear steps',
 # ---- H. references (from docx, source of truth) ----
 refs = [p.text.strip() for p in doc.paragraphs if re.match(r'^\[\d+\]', p.text.strip())]
 nums = [int(m.group(1)) for m in (re.match(r'^\[(\d+)\]', r) for r in refs) if m]
-check('refs contiguous 1..43 in docx', nums == list(range(1, 44)),
+check('refs contiguous 1..42 in docx', nums == list(range(1, 43)),
       f'{len(refs)} refs, first {nums[:2]} last {nums[-2:]}')
 refs_start = next(i for i, p in enumerate(doc.paragraphs) if p.text.strip().startswith('References'))
 body = '\n'.join(p.text for p in doc.paragraphs[:refs_start])
@@ -162,8 +163,8 @@ celltexts = [pp.text for t in doc.tables for r in t.rows for c in r.cells
 allcites = set(cites) | set(
     int(x) for c in re.findall(r'\[([\d,\s\u2013]+)\]', '\n'.join(celltexts))
     for x in re.split(r'[, \u2013]+', c) if x.isdigit())
-check('all 1..43 cited (body or tables)', allcites == set(range(1, 44)),
-      'missing: ' + str(sorted(set(range(1, 44)) - allcites)))
+check('all 1..42 cited (body or tables)', allcites == set(range(1, 43)),
+      'missing: ' + str(sorted(set(range(1, 43)) - allcites)))
 
 # ---- I. structure ----
 titles = ['I. Introduction', 'II. Literature Review and Research Gap',
@@ -180,6 +181,21 @@ check('tables I-VIII captioned', not nocap, str(nocap))
 check('no stale XIII/XIV refs', 'Table XIII' not in join_all and 'Table XIV' not in join_all)
 
 # ---- J. terminology + numeric hygiene ----
+SUB = f'{W}vertAlign'
+PLAIN = re.compile(r'(RbGeI|CsGeI|MASnI|FAPbI|MAPbI|MAGeI|FAGeI|CsSnI|ABX|'
+                   r'RbGeX|TiO|SnO|MASnBr)\d+'
+                   r'|(?<![A-Za-z\u0394])(?:\u0394E|E)([cv])(?![a-z])')
+bad = []
+for p in list(doc.paragraphs) + [pp for t in doc.tables for r in t.rows
+                                 for c in r.cells for pp in c.paragraphs]:
+    for r in p._p.findall(f'{W}r'):
+        if r.find(f'{W}rPr/{SUB}') is not None:
+            continue
+        txt = ''.join(t.text or '' for t in r.findall(f'{W}t'))
+        if PLAIN.search(txt):
+            bad.append(txt[:60])
+check('no plain unsubscripted formulas/band labels',
+      not bad, repr(bad[:5]))
 check('no em dashes', '\u2014' not in text)
 check('spike->step at RbGeI3/TiO2 (abstract+caption)', join_all.count('conduction-band step at RbGeI3/TiO2') == 2,
       str(join_all.count('conduction-band step at RbGeI3/TiO2')))
@@ -189,10 +205,9 @@ check('abstract no 19% claim', '19.' not in text[:1100])
 check('NC = NV = 1x10^17 style', 'NC = NV = 1\u00d710\u00b9\u2077' in text)
 
 # ---- K. format ----
-W = '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
 pt = [t._tbl.find(f'{W}tblPr/{W}tblW') for t in doc.tables]
 check(f'tables 100% width ({len(doc.tables)} tables)', len(pt) == 8 and all(tw is not None and tw.get(f'{W}w') == '5000' for tw in pt))
-check('pages = 30', page_count() == 30, f'{page_count()} pages')
+check('pages within 29-30', 29 <= page_count() <= 30, f'{page_count()} pages')
 ps = [p for p in doc.paragraphs if p.text.strip().startswith('[')]
 def ref_font(p):
     r = p._p.find(W+'r')

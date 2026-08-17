@@ -31,6 +31,7 @@ SWAPS = {
     'image13.png': 'fig11_cui_thick.png',
     'image14.png': 'fig12_nc.png',
     'image15.png': 'fig13_nv.png',
+    'image17.png': 'fig15_band.png',
 }
 
 GLOBAL = [
@@ -212,10 +213,38 @@ RENUMBER = {25: 40, 26: 25, 27: 26, 28: 27, 29: 28, 30: 29, 31: 30, 32: 31,
             33: 32, 34: 33, 35: 34, 36: 36, 37: 39, 38: 41, 39: 42, 40: 43,
             42: 37, 43: 38, 44: 35}
 
+# Pass F: retire the Mushtaq reference entirely (paper no longer cited).
+PASS_F = [
+    # absorber-thickness paragraph: drop the trade-off clause
+    (', a trade-off also observed in the optimized MASnBr3 devices of Mushtaq et al. [35].', '.'),
+    # simple citation drops
+    ('commonly assumed for lead-free perovskite absorbers in SCAPS studies [35]',
+     'commonly assumed for lead-free perovskite absorbers in SCAPS studies'),
+    ('comparable SCAPS studies of lead-free perovskites [35]',
+     'comparable SCAPS studies of lead-free perovskites'),
+    ('parasitic absorption [35]', 'parasitic absorption'),
+    ('weak thickness dependence [35]', 'weak thickness dependence'),
+    # Table VIII intro: drop the MASnBr3 comparator clause
+    (' (including the 34.52% MASnBr3 device of Mushtaq et al. [35], the 26.40% '
+     'CsSnI3 device of Park et al. [41], and the 25.98% MASnI3 device of Islam '
+     'et al. [42])',
+     ' (including the 26.40% CsSnI3 device of Park et al. [41] and the 25.98% '
+     'MASnI3 device of Islam et al. [42])'),
+]
 
-def renumber_refs(doc, mapping):
-    """Rewrite citation tokens in body/tables by mapping, drop orphan ref 41,
-    relabel bibliography entries and re-sort them by new number."""
+MUSHTAQ_REFS = {n: n - 1 for n in range(36, 44)}
+
+# Pass G: Mushtaq-style subscripting of formula digits and band-edge letters.
+SUB_RE = re.compile(
+    r'(RbGeI|CsGeI|MASnI|FAPbI|MAPbI|MAGeI|FAGeI|CsSnI|ABX|RbGeX)(\d+)'
+    r'|(TiO|SnO|MASnBr)(\d+)'
+    r'|(\u0394E)([cv])'
+    r'|(?<![A-Za-z\u0394])(E)([cv])(?![a-z])')
+
+
+def renumber_refs(doc, mapping, orphan=None):
+    """Rewrite citation tokens in body/tables by mapping, drop an orphan ref
+    paragraph, relabel bibliography entries and re-sort them by new number."""
     pat = re.compile(r'\[([\d,\s\u2013]+)\]')
 
     def repl_m(m):
@@ -244,9 +273,9 @@ def renumber_refs(doc, mapping):
     for p in refps:
         m = re.match(r'^\[(\d+)\]', p.text.strip())
         n = int(m.group(1)) if m else 0
-        if n == 41:
+        if orphan is not None and n == orphan:
             p._p.getparent().remove(p._p)
-            print('dropped orphan ref [41]')
+            print(f'dropped ref [{orphan}]')
             continue
         if n in mapping and m:
             rebuild(p, p.text.replace(f'[{n}]', f'[{mapping[n]}]', 1))
@@ -290,13 +319,15 @@ def fix_runs(el, old, new):
 
 
 def rebuild(p, text):
-    """Rewrite a paragraph as a single run inheriting the first run's rPr."""
+    """Rewrite a paragraph as a single run inheriting the first run rPr that
+    actually has one (empty placeholder runs are skipped), else a fresh rPr."""
     runs = para_runs(p)
-    if not runs:
-        r = OxmlElement('w:r')
-        p._p.append(r)
-        runs = [r]
-    rpr = runs[0].find(qn('w:rPr'))
+    rpr = None
+    for r in runs:
+        cand = r.find(qn('w:rPr'))
+        if cand is not None:
+            rpr = cand
+            break
     for r in runs:
         p._p.remove(r)
     r = OxmlElement('w:r')
@@ -499,6 +530,148 @@ def rebuild_from_xml(el, text, rpr_tpl=None):
     el.append(r)
 
 
+def drop_mushtaq(doc):
+    """Pass F: remove all [35] citations, the Table VIII MASnBr3 row and the
+    reference entry, then renumber 36..43 down to 35..42."""
+    for old, new in PASS_F:
+        n = 0
+        for p in doc.paragraphs:
+            if old in p.text:
+                n += replace_in_paras(doc, old, new)
+        for tbl in doc.tables:
+            for row in tbl.rows:
+                for cell in row.cells:
+                    for p in cell.paragraphs:
+                        if old in p.text:
+                            n += fix_runs(p._p, old, new)
+        if n == 0:
+            print(f'WARN: PASS_F no match: {old[:50]!r}...')
+    left = [p.text[:100] for p in doc.paragraphs
+            if not re.match(r'^\[\d+\]', p.text.strip())
+            and ('Mushtaq' in p.text or '[35]' in p.text)]
+    if left:
+        raise SystemExit('PASS_F leftovers: ' + repr(left))
+    for tbl in doc.tables:
+        for row in list(tbl.rows):
+            if row.cells[0].text.strip() == 'FTO/SnO2/MASnBr3/NiO/Au':
+                row._tr.getparent().remove(row._tr)
+                print('removed MASnBr3 row from table')
+    renumber_refs(doc, MUSHTAQ_REFS, orphan=35)
+
+
+SUB = qn('w:vertAlign')
+
+
+def subscript_pass(doc):
+    """Pass G: split plain formula/band-edge tokens into normal+subscript
+    runs, Mushtaq-style. Already-subscripted runs are left untouched."""
+    n = 0
+    for p in list(doc.paragraphs) + [pp for t in doc.tables for r in t.rows
+                                     for c in r.cells for pp in c.paragraphs]:
+        for r in list(para_runs(p)):
+            rpr = r.find(qn('w:rPr'))
+            if rpr is not None and rpr.find(SUB) is not None:
+                continue
+            ts = r.findall(qn('w:t'))
+            text = ''.join(t.text or '' for t in ts)
+            if not SUB_RE.search(text):
+                continue
+            if rpr is None:
+                rpr = OxmlElement('w:rPr')
+                r.insert(0, rpr)
+            else:
+                rpr = copy.deepcopy(rpr)
+            subs = OxmlElement('w:vertAlign')
+            subs.set(qn('w:val'), 'subscript')
+            segs, pos = [], 0
+            for m in SUB_RE.finditer(text):
+                if m.start() > pos:
+                    segs.append(('n', text[pos:m.start()]))
+                pre = m.group(1) or m.group(3) or m.group(5) or m.group(7) or ''
+                sub = m.group(2) or m.group(4) or m.group(6) or m.group(8) or ''
+                if pre:
+                    segs.append(('n', pre))
+                segs.append(('s', sub))
+                pos = m.end()
+            if pos < len(text):
+                segs.append(('n', text[pos:]))
+            parent = r.getparent()
+            parent.remove(r)
+            for kind, s in segs:
+                nr = OxmlElement('w:r')
+                t = OxmlElement('w:t')
+                t.set(qn('xml:space'), 'preserve')
+                t.text = s
+                if kind == 's':
+                    nr.append(copy.deepcopy(rpr))
+                    nr.find(qn('w:rPr')).append(copy.deepcopy(subs))
+                else:
+                    nr.append(copy.deepcopy(rpr))
+                nr.append(t)
+                parent.append(nr)
+            n += len(segs)
+    print(f'subscript pass: {n} run segments rewritten')
+
+
+def normalize_table_format(doc):
+    """Pass H: uniform Times New Roman 9pt across all table cells. Runs with
+    no rPr get the canonical template (TNR, not bold, not italic); runs with
+    an rPr get missing rFonts/sz filled in. Existing bold (headers),
+    italics and vertAlign (subscripts) are preserved."""
+    tpl = None
+    for r in para_runs(doc.tables[0].rows[1].cells[0].paragraphs[0]):
+        cand = r.find(qn('w:rPr'))
+        if cand is not None:
+            tpl = cand
+            break
+    if tpl is None:
+        raise SystemExit('no rPr template found in tables[0]')
+    tpl = copy.deepcopy(tpl)
+    filled = 0
+    for tbl in doc.tables:
+        for row in tbl.rows:
+            for cell in row.cells:
+                for p in cell.paragraphs:
+                    for r in para_runs(p):
+                        rpr = r.find(qn('w:rPr'))
+                        if rpr is None:
+                            rpr = copy.deepcopy(tpl)
+                            r.insert(0, rpr)
+                            filled += 1
+                            continue
+                        changed = False
+                        if rpr.find(qn('w:rFonts')) is None:
+                            rf = OxmlElement('w:rFonts')
+                            rf.set(qn('w:ascii'), 'Times New Roman')
+                            rf.set(qn('w:hAnsi'), 'Times New Roman')
+                            rf.set(qn('w:cs'), 'Times New Roman')
+                            rpr.insert(0, rf)
+                            changed = True
+                        sz = rpr.find(qn('w:sz'))
+                        if sz is None:
+                            sz = OxmlElement('w:sz')
+                            sz.set(qn('w:val'), '18')
+                            rpr.append(sz)
+                            changed = True
+                        elif sz.get(qn('w:val')) != '18':
+                            sz.set(qn('w:val'), '18')
+                            changed = True
+                        if rpr.find(qn('w:b')) is None:
+                            b = OxmlElement('w:b')
+                            b.set(qn('w:val'), '0')
+                            rpr.append(b)
+                            changed = True
+                        if rpr.find(qn('w:i')) is None:
+                            i = OxmlElement('w:i')
+                            i.set(qn('w:val'), '0')
+                            rpr.append(i)
+                            changed = True
+                        if changed:
+                            filled += 1
+    print(f'normalize_table_format: {filled} runs touched across '
+          f'{len(doc.tables)} tables')
+
+
 def main():
     doc = docx.Document(WORK)
 
@@ -566,7 +739,17 @@ def main():
     add_refs(doc)
 
     # Pass D2: renumber tail references by first-use order; drop orphan [41]
-    renumber_refs(doc, RENUMBER)
+    renumber_refs(doc, RENUMBER, orphan=41)
+
+    # Pass F: retire the Mushtaq reference (citations, table row, entry,
+    # renumber 36..43 -> 35..42) -- must run after Pass D2 numbering.
+    drop_mushtaq(doc)
+
+    # Pass G: Mushtaq-style subscripts in formulas and band-edge labels.
+    subscript_pass(doc)
+
+    # Pass H: uniform table cell typography (Times New Roman 9 pt).
+    normalize_table_format(doc)
 
     # Pass E
     for media, fig in SWAPS.items():

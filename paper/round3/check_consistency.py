@@ -209,8 +209,11 @@ for p in list(doc.paragraphs) + [pp for t in doc.tables for r in t.rows
             pv_bad.append(txt[:60])
 check('no plain unsubscripted Voc/Jsc/Isc', not pv_bad, repr(pv_bad[:5]))
 check('no em dashes', '\u2014' not in text)
-check('spike->step at RbGeI3/TiO2 (abstract+caption)', join_all.count('conduction-band step at RbGeI3/TiO2') == 2,
-      str(join_all.count('conduction-band step at RbGeI3/TiO2')))
+band_text = join_all.translate(str.maketrans({'₃': '3', '₂': '2'}))
+band_term_count = (band_text.count('conduction-band step at RbGeI3/TiO2') +
+                   band_text.count('conduction-band offset at the RbGeI3/TiO2'))
+check('step/offset at RbGeI3/TiO2 (abstract+caption)', band_term_count == 2,
+      str(band_term_count))
 check('no spike at RbGeI3/TiO2 anywhere', 'spike at RbGeI3/TiO2' not in join_all)
 check('26.80 appears 6+ times', text.count('26.80') >= 6, str(text.count('26.80')))
 check('abstract no 19% claim', '19.' not in text[:1100])

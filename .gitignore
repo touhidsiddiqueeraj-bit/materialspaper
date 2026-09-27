@@ -28,3 +28,46 @@ WORKLOG.md
 
 # Palimpsest tool state
 .palimpsest/
+
+# --- Review-facing cleanup: thesis, presentations, old versions, scratch ---
+documents/
+Thesis Final Book 1.docx
+thesis_stale_pages/
+backups_round5/
+paper/round3/
+round4_results/
+fix_results/
+figures/
+figuresample.jpeg
+tablesample.jpeg
+
+# Superseded helper scripts and prior-round data
+fix_docx.py
+fix_refs.py
+fix_refs2.py
+fix_submission.py
+gen_figures.py
+run_fix.py
+round4_*.py
+fig_jv.py
+fig_schematic.py
+dark_and_conv_results.json
+factorial_sweep.json
+factorial_sweep_results.json
+heatmap_data.json
+uq_and_dark_results.json
+
+# Run logs and status markers (results JSONs/figures stay tracked)
+r5_results/log_*.txt
+r5_results/DONE*
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.spl
+texput.log
+*.synctex.gz
+*.toc
+*.fls
+*.fdb_latexmk

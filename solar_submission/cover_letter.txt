@@ -1,0 +1,33 @@
+Cover letter — submission to Solar Energy (Elsevier)
+
+Dear Editor,
+
+We submit our manuscript "Defect-Tolerant Design of Lead-Free RbGeI3 Solar
+Cells: From SCAPS-1D Optimization to Manufacturing Tolerances, Benchmarked
+Against CsGeI3" for consideration as a Regular Paper in Solar Energy.
+
+Using SCAPS-1D, we optimize a lead-free FTO/TiO2/RbGeI3/CuI/Au cell to
+26.81% PCE and go beyond standard parameter sweeps: defect-energy/
+capture-asymmetry mapping of Ge-related degradation, background-doping and
+mobility viability windows, series-resistance manufacturing tolerances,
+activation-energy diagnostics, and a full same-stack CsGeI3 comparison
+isolating the A-site cation effect. The work gives experimentalists
+quantitative targets (doping <= 1e15 cm-3, mobility >= 15 cm2/Vs,
+Rs <= 8 ohm.cm2) rather than an idealized efficiency number.
+
+The work is original, not under consideration elsewhere, and all authors
+approve submission. We suggest reviewers with expertise in lead-free
+perovskite simulation and SCAPS-1D device modelling.
+
+Yours sincerely,
+Hussain Touhid Siddiquee (second and corresponding author)
+touhidsiddiqueeraj@gmail.com
+on behalf of Md. Abdul Malek Fahim (first author; mdabdulmalekfahim@gmail.com)
+Department of Electrical and Electronic Engineering,
+Leading University, Sylhet, Bangladesh
+
+Manuscript word count: ~5,940 words including tables (body prose ~5,250;
+table/figure captions and references excluded), within the 4,000–6,000-word
+guide for Regular Papers. Detailed one-at-a-time sweeps, illumination/dark
+characteristics, screening/setup tables, and supporting datasets are provided
+as supplementary material (cited in text).

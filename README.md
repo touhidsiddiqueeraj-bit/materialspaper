@@ -25,40 +25,32 @@ Numerical simulation and optimisation of a lead-free RbGeI₃ perovskite solar c
 ## Repository Structure
 
 ```
-├── paper/
-│   └── RbGeI3_JournalPaper_Corrected_2026-07-29.docx / .pdf   # Manuscript (current version)
-├── documents/
-│   ├── thesis.docx                 # Companion thesis
-│   ├── defense_slides.pptx         # Defense presentation
-│   └── reference_masnbr3.pdf       # Reference paper
-├── figures/                        # Simulation campaign figures
-│   ├── temperature_sweep.png
-│   ├── illumination_sweep.png
-│   ├── dark_jv.png
-│   ├── convergence_check.png
-│   ├── sensitivity_tornado.png
-│   ├── uncertainty_quantification.png
-│   ├── factorial_by_eg.png
-│   └── heatmap_Eg{1.3,1.45,1.6}.png
-├── fix_results/                    # Bandgap/Jsc discrepancy analysis outputs
-│   ├── fix_report.md
-│   ├── corrected_table_bandgap_sweep.md
-│   ├── diagnostic_table.md
-│   ├── raw_results.json
-│   └── fig_*.png                   # Diagnostic figures
-├── factorial_sweep.json            # 320-point joint factorial grid (Eg × Nt × NC × NV)
-├── factorial_sweep_results.json    # Summarised factorial results
-├── uq_and_dark_results.json        # 200-sample UQ + dark J–V
-├── dark_and_conv_results.json      # Convergence study + J–V curves
-├── heatmap_data.json               # 2D PCE matrices (Nt×NC, Nt×NV, NC×NV)
-├── run_fix.py                      # Re-runs discrepancy sweeps via scaps-runner
-├── gen_figures.py                  # Regenerates fix_results figures/tables from raw_results.json
-├── Final circuit.scaps             # SCAPS circuit file
-├── fix_plan.md                     # Discrepancy analysis plan
-├── discrepency.txt                 # Discrepancy documentation
+├── solar_submission/               # Solar Energy (Elsevier) submission package
+│   ├── manuscript.tex / .pdf       # Main paper, elsarticle review mode (36 pp)
+│   ├── supplement.tex / .pdf       # Supplementary S1–S3 (11 pp)
+│   ├── titlepage.tex / .pdf        # Standalone title page upload
+│   ├── cover_letter.txt            # Draft cover letter (+ word count)
+│   ├── highlights.txt              # 5 highlights (≤85 chars)
+│   ├── figs/fig{1..31}.png         # All figures, 300 dpi
+│   └── README.md                   # Journal facts + package checklist
+├── paper/round5/
+│   └── RbGeI3_Round5.docx / .pdf   # Full-record Word master (42 pp)
+├── r5_results/                     # Round-5 simulation results (JSON + figures)
+│   ├── r5_baseline.json            # Frozen headline device (26.81%)
+│   ├── r5_et_sigma.json            # Defect energy + capture asymmetry
+│   ├── r5_na.json                  # Background doping sweep
+│   ├── r5_rs.json                  # Series-resistance tolerance map
+│   ├── r5_mobility.json            # Mobility sweep (+ thin checks)
+│   ├── r5_temp.json                # Temperature sweep (Ea extraction)
+│   ├── r5_csgei3_oat.json          # Full 11-family CsGeI3 mirror (71 runs)
+│   ├── r5_csfinal.json             # Consolidated CsGeI3 + derating
+│   └── R5_REPORT.md                # Full provenance + harness-fix notes
+├── r5_*.py, mk_latex.py,           # Reproducibility scripts (sweeps →
+│   slim.py, slim2.py, trim.py      # LaTeX → slim/split → submission)
+├── Final circuit.scaps             # SCAPS circuit file (device definition)
+├── fix_plan.md / discrepency.txt   # Bandgap/Jsc discrepancy audit trail
 ├── todolist.txt                    # Full simulation campaign log
-├── VERIFICATION_REPORT.md          # Reference/citation verification (50 refs)
-└── WORKLOG.md                      # Work log
+└── VERIFICATION_REPORT.md          # Reference/citation verification
 ```
 
 ## Simulation Campaign

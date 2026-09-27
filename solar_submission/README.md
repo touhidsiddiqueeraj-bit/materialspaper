@@ -1,5 +1,9 @@
 # Solar Energy submission package — RbGeI3 SCAPS-1D study
 
+> **Status (Sep 2026): under review at *Solar Energy* (Elsevier), Regular Paper.**
+> Title: *Defect-Tolerant Design of Lead-Free RbGeI₃ Solar Cells: From SCAPS-1D
+> Optimization to Manufacturing Tolerances, Benchmarked Against CsGeI₃*.
+
 ## Journal facts (verified 2026-09-27)
 
 - **Solar Energy** (Elsevier, ISSN 0038-092X), official journal of ISES.

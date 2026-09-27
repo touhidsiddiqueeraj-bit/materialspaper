@@ -1,15 +1,20 @@
 # RbGeI₃ Perovskite Solar Cell — SCAPS-1D Simulation
 
-Numerical simulation and optimisation of a lead-free RbGeI₃ perovskite solar cell with an **FTO/TiO₂/RbGeI₃/CuI/Au** planar heterojunction architecture, carried out with SCAPS-1D (v3.3.10) under Wine. The optimised device reaches **26.69% PCE**.
+> **Status (Sep 2026): under review at *Solar Energy* (Elsevier) as a Regular Paper** —
+> *Defect-Tolerant Design of Lead-Free RbGeI₃ Solar Cells: From SCAPS-1D Optimization
+> to Manufacturing Tolerances, Benchmarked Against CsGeI₃*.
+> Submission package: [`solar_submission/`](solar_submission/).
+
+Numerical simulation and optimisation of a lead-free RbGeI₃ perovskite solar cell with an **FTO/TiO₂/RbGeI₃/CuI/Au** planar heterojunction architecture, carried out with SCAPS-1D (v3.3.10) under Wine. The optimised device reaches **26.81% PCE**.
 
 ## Final Device Results
 
 | Parameter | Value |
 |-----------|-------|
-| PCE | 26.69% |
-| V_OC | 1.1127 V |
-| J_SC | 30.3156 mA/cm² |
-| FF | 79.13% |
+| PCE | 26.81% |
+| V_OC | 1.13 V |
+| J_SC | 30.32 mA/cm² |
+| FF | 78.26% |
 | Absorber thickness | 700 nm |
 | Absorber bandgap | 1.4 eV |
 | Absorber defect density | 1×10¹⁴ cm⁻³ |

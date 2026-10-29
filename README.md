@@ -1,9 +1,4 @@
 # Defect-Tolerant Design of Lead-Free RbGeI₃ Solar Cells
-
-> **Status (Sep 2026): under review at *Solar Energy* (Elsevier) as a Regular Paper.**
-> *Defect-Tolerant Design of Lead-Free RbGeI₃ Solar Cells: From SCAPS-1D Optimization
-> to Manufacturing Tolerances, Benchmarked Against CsGeI₃.*
-
 ## What this is
 
 This repository contains the full simulation study behind the paper: a SCAPS-1D

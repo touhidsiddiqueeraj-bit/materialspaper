@@ -1,0 +1,42 @@
+Cover letter — submission to AIP Advances
+
+Dear Editor,
+
+We submit our manuscript "Oxidation-budgeted design of lead-free RbGeI3
+solar cells: back-surface-field enhancement, realistic loss budgeting and
+SHAP sensitivity from SCAPS-1D optimization to manufacturing tolerances,
+benchmarked against CsGeI3" for consideration as a Regular Article in
+AIP Advances.
+
+Lead-halide perovskites dominate single-junction efficiencies but carry a
+lead-toxicity liability. Using SCAPS-1D on one frozen parameter deck, we
+optimize a lead-free FTO/TiO2/RbGeI3/CuI/Au cell to 27.06% PCE and go
+beyond standard parameter sweeps: a Cu2O-like back-surface field (28.01%
+ideal; +0.98 pp on the identical full-realism stack), a single stacked
+loss waterfall bounding the experimentally plausible window (20.78%,
+21.76% with BSF), a defect-energy and capture-asymmetry mapping of
+Ge-related degradation converted into a quantitative oxidation fab spec
+(E^f >= 0.46 eV at 300 K equilibrium), manufacturing tolerances for
+series/shunt resistance, doping, and mobility, a held-out XGBoost/SHAP
+sensitivity analysis, a same-stack CsGeI3 gap control, and a calibration
+check of the solver pipeline against two experimental beta-CsPbI3
+devices reproduced within 2%. The work gives experimentalists
+quantitative targets (BSF NA ~1e19 cm-3, bulk Nt <= 1e15 cm-3, mobility
+>= 15 cm2/Vs) rather than an idealized efficiency number.
+
+The manuscript fits the broad applied-physics and energy-materials scope
+of AIP Advances. All simulations are documented for reproducibility
+(Supplementary Sections S1–S7 with decks, scripts, and archived result
+files), and every performance claim sits below its Shockley–Queisser
+limit with the approximations disclosed in the text.
+
+The work is original and is not under consideration elsewhere. All
+authors approve submission. We suggest reviewers with expertise in
+lead-free perovskite simulation and SCAPS-1D device modelling.
+
+Yours sincerely,
+Hussain Touhid Siddiquee (corresponding author)
+touhidsiddiqueeraj@gmail.com
+on behalf of Md. Abdul Malek Fahim (mdabdulmalekfahim@gmail.com)
+Department of Electrical and Electronic Engineering,
+Leading University, Sylhet, Bangladesh

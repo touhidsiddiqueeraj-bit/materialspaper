@@ -1,0 +1,39 @@
+Cover letter — submission to Thin Solid Films (Elsevier)
+
+Dear Editor,
+
+We submit our manuscript "Realistic Loss Budgeting and Defect Tolerance
+in Lead-Free RbGeI3 Thin-Film Solar Cells: A SCAPS-1D and SHAP Sensitivity
+Analysis" for consideration as a Research Article in Thin Solid Films.
+
+Using SCAPS-1D, we optimize a lead-free all-inorganic
+FTO/TiO2 (10 nm)/RbGeI3 (700 nm)/CuI (100 nm)/Au cell and go beyond
+standard parameter sweeps. A Cu2O-like p+ back-surface field raises the
+stack from 26.81% (VOC 1.13 V, JSC 30.32 mA/cm2, FF 78.26%) to 30.35%
+(1.18 V, 30.32 mA/cm2, 84.89%), with BSF doping — not thickness —
+controlling the gain. A complete loss waterfall bounds the experimentally
+plausible window: 10% front reflection costs 2.71 pp, realistic bulk
+defects (1e15 cm-3) a further 1.74 pp and interface defects a further
+1.54 pp, leaving 20.80% without BSF and 23.29% with BSF on the identical
+defect stack (+2.49 pp recovery). Unlike standard simulation studies that
+report idealized limits, this work provides a rigorous loss budget that
+translates idealized SCAPS outputs into a realistic 23.3% efficiency
+window bounded by actual thin-film optical reflection and native defect
+densities. Junction analysis anchored to the
+converged working point gives Vbi 1.46 V, depletion width 171 nm, SRH
+lifetime 1000 ns and diffusion length 8.6 um, with a Mott-Schottky
+baseline for experimental comparison. A SHAP sensitivity analysis over an
+XGBoost surrogate of the simulation campaign independently recovers
+bandgap and interface defects as the dominant design levers. The work gives experimentalists
+quantitative targets (BSF NA ~1e19 cm-3, bulk Nt <= 1e15 cm-3,
+Rs <= 8 ohm.cm2, mobility >= 15 cm2/Vs) rather than an idealized
+efficiency number.
+
+The work is original, not under consideration elsewhere, and all authors
+approve submission.
+
+Yours sincerely,
+Hussain Touhid Siddiquee (corresponding author), touhidsiddiqueeraj@gmail.com
+on behalf of Md. Abdul Malek Fahim (first author; mdabdulmalekfahim@gmail.com)
+Department of Electrical and Electronic Engineering,
+Leading University, Sylhet, Bangladesh

@@ -1,0 +1,74 @@
+Cover letter - submission to the Journal of Applied Physics
+
+Dear Editor,
+
+We submit our manuscript "Oxidation-budgeted design of lead-free RbGeI3
+solar cells: back-surface-field enhancement, realistic loss budgeting and
+SHAP sensitivity from SCAPS-1D optimization to manufacturing tolerances,
+benchmarked against CsGeI3" for consideration as an Article in the Journal
+of Applied Physics.
+
+Lead-halide perovskites dominate single-junction efficiencies but carry a
+lead-toxicity liability. Using SCAPS-1D on one frozen parameter deck, we
+optimize a lead-free FTO/TiO2/RbGeI3/CuI/Au cell to 27.06% PCE and go
+beyond standard parameter sweeps in ways that matter to device physics and
+to fabrication:
+
+1. A Cu2O-like back-surface field raises the ideal point to 28.01% and
+   recovers about one percentage point on the identical full-realism stack
+   (20.78% -> 21.76%); a block-level attribution plus a p+ control isolates
+   the offset share of the gain from the trap-immunity share.
+2. Ge2+ oxidation - the central liability of this absorber - is converted
+   from a qualitative stability worry into a quantitative processing spec
+   by mapping Ge-vacancy formation-energy thermodynamics onto the defect
+   ladder (E^f >~ 0.46 eV at 300 K equilibrium for the headline efficiency;
+   0.57-0.65 eV for anneal freeze-in; ambient exposure falls below 20.76%).
+   The energetics are CsGeI3 DFT transferred to RbGeI3 by framework
+   analogy, and the equilibrium values are lower bounds.
+3. A single stacked optical/defect/parasitic loss waterfall bounds the
+   experimentally plausible window instead of reporting an ideal number
+   alone, and a held-out XGBoost/SHAP analysis gives design rules (bulk
+   defect density, bandgap, electron mobility) that one-at-a-time sweeps
+   cannot provide.
+4. The solver pipeline is calibration-checked against two experimental
+   beta-CsPbI3 devices reproduced within 2% in a refit - a check on the
+   solver, not on this device - and the same-stack CsGeI3 gap control
+   reproduces RbGeI3 exactly at Eg = 1.4 eV, isolating a band-gap effect
+   at fixed electron affinity rather than A-site chemistry.
+
+The work sits within the Journal of Applied Physics coverage of
+photovoltaics, physics of devices and sensors, physics of semiconductors,
+and thin films and interfaces. It is a device-physics study rather than a
+routine optimization exercise: the recombination diagnostic, the interface
+attribution of the back-surface-field gain, and the thermodynamic-to-process
+translation are the substance of the paper, and the idealized limits are
+disclosed explicitly rather than claimed as device performance. The
+analysis extends the Shockley-Queisser detailed-balance framework of
+Shockley and Queisser (J. Appl. Phys. 32, 510 (1961)) and the limiting
+efficiency analysis of Henry (J. Appl. Phys. 51, 4494 (1980)), both in this
+Journal, to a lead-free absorber with real loss channels; we also place the
+stacked realistic window against the frozen inorganic perovskite database
+as context.
+
+All simulations are documented for reproducibility: Supplementary Sections
+S1-S7 give the per-parameter sweep traces, the setup and provenance tables,
+the loss-waterfall and oxidation-budget derivations, and a reproducibility
+appendix naming the decks, run scripts, and archived result files, which are
+available from the corresponding author on request. Every performance claim
+sits below its Shockley-Queisser limit with the approximations disclosed in
+the text.
+
+The manuscript is original and is not under consideration elsewhere, and it
+has not been published previously. All authors approve submission. The
+authors have no conflicts of interest to declare. Reviewer suggestions are
+welcome; suitable expertise would be lead-free perovskite simulation,
+SCAPS-1D/drift-diffusion device modelling, and perovskite defect
+thermodynamics.
+
+Yours sincerely,
+
+Hussain Touhid Siddiquee (corresponding author)
+touhidsiddiqueeraj@gmail.com
+on behalf of Md. Abdul Malek Fahim (mdabdulmalekfahim@gmail.com)
+Department of Electrical and Electronic Engineering,
+Leading University, Sylhet, Bangladesh

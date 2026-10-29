@@ -1,0 +1,33 @@
+Cover letter — submission to Optical Materials (Elsevier)
+
+Dear Editor,
+
+We submit our manuscript "Back-Surface-Field-Enhanced, Defect-and-Optics-Budgeted
+Design of Lead-Free RbGeI3/CuI Solar Cells: SCAPS-1D with Native Loss Waterfall
+and ML-Guided Sensitivity" for consideration as a Research Article in Optical
+Materials.
+
+This work began as a Solar Energy submission (standard SCAPS-1D optimization of
+FTO/TiO2/RbGeI3/CuI/Au, 26.81%) that was desk-rejected for insufficient novelty
+("largely well-established methods"). Rather than resubmit incrementally, we
+rebuilt the contribution around what the RbGeI3/CuI literature lacks: (1) a
+Cu2O-like p+ back-surface field raising this exact stack to 30.35% ideally and
+23.29% on the identical full-realism defect/reflection stack (+2.49 pp recovery);
+(2) a natively simulated ideal-to-realistic loss waterfall (radiative/Auger
+bounded, 10% reflection, bulk/interface defects: 26.81 -> 20.80%); (3) an
+XGBoost surrogate (R2 0.9999) with SHAP ranking recovering gap/interface physics
+from data; (4) SCAPS-anchored junction analysis (Vbi 1.46 V, W 171 nm, tau
+1000 ns, L 8.6 um) with a Mott-Schottky baseline for experimental comparison.
+All currents respect the Shockley-Queisser limit; failed runs and two negative
+scripting results (Tfront override, scripted C-V capture) are disclosed in
+Methods. Optical Materials is the natural home: the sister CsGeI3/CuI study
+(Saikia et al., Opt. Mater. 123, 111839) appeared here, and our core results are
+optical/admissibility results (QE edge, absorption-budgeted waterfall, SQ checks).
+
+The work is original, purely computational, not under consideration elsewhere,
+and all authors approve submission.
+
+Yours sincerely,
+Hussain Touhid Siddiquee (corresponding author), touhidsiddiqueeraj@gmail.com
+on behalf of Md. Abdul Malek Fahim (first author)
+Dept. of EEE, Leading University, Sylhet, Bangladesh

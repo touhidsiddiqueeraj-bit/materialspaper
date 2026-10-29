@@ -1,23 +1,58 @@
-Cover letter — submission to Solar Energy (Elsevier)
+Cover letter — submission to Solar Energy Materials and Solar Cells
 
 Dear Editor,
 
-We submit our manuscript "Defect-Tolerant Design of Lead-Free RbGeI3 Solar
-Cells: From SCAPS-1D Optimization to Manufacturing Tolerances, Benchmarked
-Against CsGeI3" for consideration as a Regular Paper in Solar Energy.
+We submit our revised manuscript "Oxidation-Budgeted Design of Lead-Free
+RbGeI3 Solar Cells: Back-Surface-Field Enhancement, Realistic Loss Budgeting
+and SHAP Sensitivity From SCAPS-1D Optimization to Manufacturing Tolerances,
+Benchmarked Against CsGeI3" for reconsideration as a Regular Paper in
+Solar Energy.
 
-Using SCAPS-1D, we optimize a lead-free FTO/TiO2/RbGeI3/CuI/Au cell to
-26.81% PCE and go beyond standard parameter sweeps: defect-energy/
-capture-asymmetry mapping of Ge-related degradation, background-doping and
-mobility viability windows, series-resistance manufacturing tolerances,
-activation-energy diagnostics, and a full same-stack CsGeI3 comparison
-isolating the A-site cation effect. The work gives experimentalists
-quantitative targets (doping <= 1e15 cm-3, mobility >= 15 cm2/Vs,
-Rs <= 8 ohm.cm2) rather than an idealized efficiency number.
+Using SCAPS-1D on one frozen deck, we optimize a lead-free
+FTO/TiO2/RbGeI3/CuI/Au cell to 27.06% PCE (SQ-checked) and go beyond
+standard parameter sweeps: a Cu2O-like p+ back-surface field raising the
+ideal point to 28.01% (+0.98 pp on the identical full-realism stack,
+20.78% to 21.76%, via rear-interface gap widening isolated by controlled
+trap attribution with a p+ control), a D2/NiO cross-check through the same
+pipeline (28.16%, so the reported stack trades efficiency for stability),
+a single stacked loss waterfall bounding the experimentally plausible window
+(optics, bulk/interface defects, radiative/Auger bounds, parasitics),
+defect-energy/capture-asymmetry mapping of Ge-related degradation,
+background-doping and mobility viability windows recomputed on the
+stacked point, series/shunt manufacturing tolerances, temperature
+diagnostics with a disclosed Ea extrapolation artifact (1.48 eV), a
+lifetime baseline (1000 ns, 8.6 um) for experimental comparison, a
+held-out XGBoost/SHAP sensitivity analysis recovering bulk defects,
+bandgap and electron mobility as the top levers, and a same-stack CsGeI3
+gap control (fixed-chi protocol, not A-site proof). The work gives
+experimentalists quantitative targets (BSF NA ~1e19 cm-3, bulk Nt <=
+1e15 cm-3, mobility >= 15 cm2/Vs, Rs <= 4 ohm.cm2) rather than an
+idealized efficiency number.
+
+Crucially, this revision answers the experimental-grounding concern head-on.
+No RbGeI3 device has been fabricated to date, so we calibration-check the
+solver pipeline itself: our SCAPS-1D rebuild of the experimental beta-CsPbI3
+devices of Wang et al. (Science 2019) reproduces both the control
+(15.18 vs 15.10%) and the CHI-passivated champion (18.49 vs 18.40%)
+within 2% by tuning defect densities (plus one resistive correction),
+presented as calibration rather than validation. We further place our
+realistic window against a frozen pre-2021 snapshot of 41,316 reported
+devices from the Perovskite Database Project (NOMAD) purely as era-bounded
+context, with no superiority claim over the present state of the art.
+Finally, we convert the central liability of this absorber --- Ge2+
+oxidation --- into a quantitative fab spec: mapping V_Ge vacancy
+thermodynamics onto our defect ladder shows E^f >= 0.46 eV (300 K
+equilibrium; 0.57-0.65 eV for anneal freeze-in) holds 27.06% while ambient
+processing falls below 20.76%, with passivation chemistries (PCCMAI, Lewis
+bases) acting as Nt reduction in waterfall language.
 
 The work is original, not under consideration elsewhere, and all authors
-approve submission. We suggest reviewers with expertise in lead-free
-perovskite simulation and SCAPS-1D device modelling.
+approve submission. A prior version was rejected; this revision rebuilds
+the contribution around the oxidation budget, BSF variant with measured
+desensitization mechanism, single stacked loss budget, lifetime baseline,
+held-out ML surrogate, and experimental anchoring. We suggest
+reviewers with expertise in lead-free perovskite simulation and SCAPS-1D
+device modelling.
 
 Yours sincerely,
 Hussain Touhid Siddiquee (second and corresponding author)
@@ -26,8 +61,9 @@ on behalf of Md. Abdul Malek Fahim (first author; mdabdulmalekfahim@gmail.com)
 Department of Electrical and Electronic Engineering,
 Leading University, Sylhet, Bangladesh
 
-Manuscript word count: ~5,940 words including tables (body prose ~5,250;
-table/figure captions and references excluded), within the 4,000–6,000-word
-guide for Regular Papers. Detailed one-at-a-time sweeps, illumination/dark
-characteristics, screening/setup tables, and supporting datasets are provided
+Manuscript word count: ~4,060 words excluding references (body prose
+~2,880; tables/figure captions ~1,180), within the 4,000–6,000-word guide
+for Regular Papers. Detailed one-at-a-time sweeps, illumination/dark
+characteristics, screening/setup tables, validation provenance,
+oxidation-budget derivation and a reproducibility appendix are provided
 as supplementary material (cited in text).

@@ -233,7 +233,7 @@ L.append(r'''\author[lus]{Md.\ Abdul Malek Fahim\fnref{fn1}}
 \author[lus]{Hussain Touhid Siddiquee\corref{cor1}\fnref{fn2}}
 \address[lus]{Department of Electrical and Electronic Engineering, Leading University, Sylhet, Bangladesh}
 \cortext[cor1]{Corresponding author.}
-\fntext[fn1]{E-mail: mdabdulmalekfahim@gmail.com; fahim.eee@lus.ac.bd}
+\fntext[fn1]{E-mail: mdabdulmalekfahim@gmail.com}
 \fntext[fn2]{E-mail: touhidsiddiqueeraj@gmail.com}
 \begin{abstract}''')
 L.append(conv_para(d.paragraphs[7]))

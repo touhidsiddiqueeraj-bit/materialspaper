@@ -39,16 +39,17 @@ sn_vals = ['1e-21', '1e-19', '1e-17']
 sp_vals = ['1e-21', '1e-19', '1e-17']
 keys = {(sn, sp): f'r5_sn{sn[0]}e{sn[-2:]}_sp{sp[0]}e{sp[-2:]}'
         for sn in sn_vals for sp in sp_vals}
-fig, ax = plt.subplots(figsize=(5.25, 3.2))
+sfmt = lambda s: r'$10^{%d}$' % int(s.split('e')[1])
+fig, ax = plt.subplots(figsize=(5.25, 3.9))
 x = np.arange(3)
 w = 0.22
 for i, sn in enumerate(sn_vals):
     vals = [d[keys[(sn, sp)]]['PCE'] for sp in sp_vals]
-    ax.bar(x + (i - 1) * w, vals, w, label=f'sigma_n={sn} m2')
+    ax.bar(x + (i - 1) * w, vals, w, label=r'$\sigma_n$=' + sfmt(sn) + r' m$^2$')
 ax.set_xticks(x)
-ax.set_xticklabels([f'sigma_p={s}' for s in sp_vals])
+ax.set_xticklabels([r'$\sigma_p$=' + sfmt(s) + r' m$^2$' for s in sp_vals])
 ax.set_ylabel('PCE (%)')
-ax.legend(fontsize=8)
+ax.legend(fontsize=9, loc='upper center', bbox_to_anchor=(0.5, -0.18), ncol=3)
 ax.grid(alpha=0.3, axis='y')
 save(fig, 'fig_r5_sigma.png')
 

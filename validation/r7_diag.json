@@ -1,0 +1,22 @@
+{
+  "r7d_cui": {
+    "Voc": 0.9689,
+    "Jsc": 17.9904,
+    "FF": 82.2,
+    "PCE": 14.33
+  },
+  "r7d_ceiling": {
+    "Voc": 0.9352,
+    "Jsc": 17.9915,
+    "FF": 77.06,
+    "PCE": 12.97
+  },
+  "r7d_flatedge": {
+    "PCE": 0,
+    "FAILED": "missing-result-file"
+  },
+  "r7d_wf51": {
+    "PCE": 0,
+    "FAILED": "missing-result-file"
+  }
+}

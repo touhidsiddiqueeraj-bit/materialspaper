@@ -1,0 +1,28 @@
+{
+  "r6_rad_K16c": {
+    "Voc": 1.1291,
+    "Jsc": 30.3156,
+    "FF": 78.26,
+    "PCE": 26.79
+  },
+  "r6_realistic_c": {
+    "Voc": 1.1291,
+    "Jsc": 30.3156,
+    "FF": 78.26,
+    "PCE": 26.79
+  },
+  "opt90": {
+    "PCE": 0,
+    "FAILED": "inconsistent-or-empty"
+  },
+  "opt85": {
+    "PCE": 0,
+    "FAILED": "inconsistent-or-empty"
+  },
+  "opt100": {
+    "Voc": 1.1294,
+    "Jsc": 30.3156,
+    "FF": 78.23,
+    "PCE": 26.79
+  }
+}

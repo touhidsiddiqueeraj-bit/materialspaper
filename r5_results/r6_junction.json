@@ -1,0 +1,15 @@
+{
+  "ni_m3": "1.736e+11",
+  "Vbi_V": 1.457,
+  "W_nm": 171.0,
+  "Wn_nm": 156.91,
+  "Wp_nm": 14.1,
+  "MS_slope_SI": "9.399e+04",
+  "MS_intercept_V": 1.457,
+  "tau_s": "1.000e-06",
+  "tau_ns": 1000.0,
+  "L_um": 8.6,
+  "alpha_per_m": "3.300e+06",
+  "G0_per_m3s": "6.932e+27",
+  "note": "U(x) illustrative ~2% SRH scale; G(x) normalized to SCAPS Jsc"
+}

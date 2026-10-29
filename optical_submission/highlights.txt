@@ -1,0 +1,6 @@
+Highlights (<=85 chars each):
+- Cu2O-like BSF lifts RbGeI3/CuI stack 26.81% to 30.35% in SCAPS-1D
+- Loss waterfall bounds realistic window at 20.8%, 23.3% with BSF
+- Radiative/Auger bounded; reflection and defects dominate the budget
+- XGBoost surrogate R2 0.9999; SHAP recovers gap/interface physics
+- Junction baseline Vbi 1.46 V, W 171 nm, lifetime 1000 ns for experiments

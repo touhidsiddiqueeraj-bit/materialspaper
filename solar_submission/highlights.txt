@@ -1,7 +1,7 @@
 Highlights (Solar Energy submission — RbGeI3/TiO2/CuI SCAPS-1D study)
 
-- RbGeI3 cell FTO/TiO2/RbGeI3/CuI/Au optimized to 26.81% PCE in SCAPS-1D.
-- Mid-gap defects most lethal; hole/electron capture asymmetry costs 2.7 pp.
-- Device tolerates Rs up to 8 ohm.cm2 and doping up to 1e15 cm-3.
-- VOC(T) gives Ea = 1.46 eV, proving bulk-limited recombination.
-- Same-stack CsGeI3 reaches 19.66%; CuI suits RbGeI3 uniquely.
+- Cu2O BSF lifts RbGeI3 stack 27.06% to 28.01%; +0.98 pp at full realism.
+- Stacked loss window 20.78% (21.76% with BSF); D2 cross-check 28.16%.
+- Oxidation budget: E^f>=0.46 eV holds 27.06%; ambient below 20.76%.
+- SHAP ranks bulk defects, gap, electron mobility; R2 0.907 held out.
+- SCAPS pipeline calibration-checked on CsPbI3 within 2% on both devices.

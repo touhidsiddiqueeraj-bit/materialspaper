@@ -1,0 +1,173 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{tabularx,booktabs,graphicx}
+\renewcommand{\thetable}{\arabic{table}}
+\begin{document}
+\section*{Tables}
+\begin{table}[htbp]
+\centering
+{\small\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{XX}
+\hline
+Device & Architecture
+\\\hline
+D1 & FTO / PCBM / RbGeI$_{3}$ / NiO / Au\\
+D2 & FTO / TiO$_{2}$ / RbGeI$_{3}$ / NiO / Au\\
+D3 & FTO / PCBM / RbGeI$_{3}$ / CuI / Au\\
+D4 & FTO / TiO$_{2}$ / RbGeI$_{3}$ / CuI / Au\\
+D5 & FTO / PCBM / RbGeI$_{3}$ / CBTS / Au\\
+D6 & FTO / TiO$_{2}$ / RbGeI$_{3}$ / CBTS / Au\\
+D7 & FTO / PCBM / RbGeI$_{3}$ / Spiro-OMeTAD / Au\\
+D8 & FTO / TiO$_{2}$ / RbGeI$_{3}$ / Spiro-OMeTAD / Au\\
+\hline
+\end{tabularx}
+}
+\caption{Eight device configurations screened in this study. All configurations were simulated at an absorber thickness of 400 nm.}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+{\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{XXcccc}
+\hline
+Dev. & Architecture & V$_{\mathrm{OC}}$ (V) & J$_{\mathrm{SC}}$ (mA/cm$^{2}$) & FF (\%) & PCE (\%)
+\\\hline
+D1 & FTO/\allowbreak{}PCBM/\allowbreak{}RbGeI$_{3}$/NiO/\allowbreak{}Au & 0.81 & 30.10 & 83.68 & 20.40\\
+D2 & FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/NiO/\allowbreak{}Au & 0.82 & 30.46 & 84.48 & 21.10\\
+D3 & FTO/\allowbreak{}PCBM/\allowbreak{}RbGeI$_{3}$/CuI/\allowbreak{}Au & 0.81 & 30.10 & 83.96 & 20.47\\
+D4 & FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au & 0.81 & 30.46 & 79.98 & 19.78\\
+D5 & FTO/\allowbreak{}PCBM/\allowbreak{}RbGeI$_{3}$/CBTS/\allowbreak{}Au & 0.82 & 30.20 & 82.36 & 20.40\\
+D6 & FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CBTS/\allowbreak{}Au & 0.82 & 30.55 & 82.13 & 20.57\\
+D7 & FTO/\allowbreak{}PCBM/\allowbreak{}RbGeI$_{3}$/Spiro/Au & 0.81 & 30.07 & 85.01 & 20.71\\
+D8 & FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/Spiro/Au & 0.82 & 30.46 & 83.95 & 20.97\\
+\hline
+\end{tabularx}
+}
+\caption{Initial photovoltaic performance of the eight screened device configurations, simulated at an absorber thickness of 400 nm.  Selected as the baseline for full parametric optimization.}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+{\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{Xccc}
+\hline
+Step & Sweep range & Adopted & Gate basis
+\\\hline
+1 thickness & 0.3--1.0 $\mu$m & 0.7 $\mu$m & sweep max, plateau \\
+2 bulk $N_{t}$ & 1e12--1e18 cm$^{-3}$ & 1e14 & passivated-film pin (max at 1e12 shown) \\
+3 $\epsilon_{r}$ & 10--35 & 15 & sweep-flat pin \\
+4 $\chi$ & 3.7--4.2 eV & 3.9 eV & interior max (3.7 non-convergent) \\
+5/6 interface $N_{t}$ & 1e12--1e18 cm$^{-2}$ & 1e14 & passivated-film pin (max at 1e12 shown) \\
+7 $E_{g}$ & 1.2--1.7 eV & 1.4 eV & SQ-margin gate (max at 1.3 rejected) \\
+8 TiO$_{2}$ & 10--90 nm & 10 nm & sweep max + pinhole caveat \\
+9 CuI & 0.05--1.9 $\mu$m & 100 nm & sweep-flat pin \\
+10/11 $N_{C}$/$N_{V}$ & 1e18--1e20 cm$^{-3}$ & 1e18 & literature floor (sub-floor $\le$0.13 pp) \\
+\hline
+\end{tabularx}
+}
+\caption{Per-step sweeps, adopted values and gate basis. Full traces: Figs.~S1--S10.}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+{\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{Xcccc}
+\hline
+Parameter & TiO$_{2}$ & FTO & RbGeI$_{3}$ & CuI
+\\\hline
+Thickness (nm) & 10 & 500 & 700 & 100\\
+Bandgap $E_{\mathrm{g}}$ (eV) & 3.2 & 3.2 & 1.4 & 3.1\\
+Electron affinity $\chi$ (eV) & 4.0 & 4.4 & 3.9 & 2.1\\
+Dielectric permittivity $\epsilon$r & 9 & 9 & 15 & 6.5\\
+CB effective DOS N$_{\mathrm{C}}$ (cm$^{-3}$) & 2$\times$10$^{18}$ & 2.2$\times$10$^{18}$ & 1$\times$10$^{18}$ & 2.8$\times$10$^{19}$\\
+VB effective DOS N$_{\mathrm{V}}$ (cm$^{-3}$) & 1.8$\times$10$^{19}$ & 1.8$\times$10$^{19}$ & 1$\times$10$^{18}$ & 1$\times$10$^{19}$\\
+Electron mobility $\mu$e (cm$^{2}$ V$^{-1}$ s$^{-1}$) & 20 & 20 & 28.6 & 100\\
+Hole mobility $\mu$p (cm$^{2}$ V$^{-1}$ s$^{-1}$) & 10 & 10 & 27.3 & 43.9\\
+Donor density $N_{\mathrm{D}}$ (cm$^{-3}$) & 9$\times$10$^{16}$ & 1$\times$10$^{19}$ & 1$\times$10$^{9}$ & 0\\
+Acceptor density $N_{\mathrm{A}}$ (cm$^{-3}$) & 0 & 0 & 1$\times$10$^{9}$ & 1$\times$10$^{18}$\\
+Bulk defect density $N_{\mathrm{t}}$ (cm$^{-3}$) & 1$\times$10$^{15}$ & 1$\times$10$^{14}$ & 1$\times$10$^{14}$ & 1$\times$10$^{14}$\\
+\hline
+\end{tabularx}
+}
+\caption{Optimized material parameters of the proposed FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au perovskite solar cell. Transport-layer bulk defect densities were carried from the initial deck (not among the eleven swept steps).}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+{\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{Xcccc}
+\hline
+Device & V$_{\mathrm{OC}}$ (V) & J$_{\mathrm{SC}}$ (mA/cm$^{2}$) & FF (\%) & PCE (\%)
+\\\hline
+Adopted reference (Table IV) & 1.06 & 30.32 & 84.11 & 27.06\\
+GA best-found ($E_{\mathrm{g}}$ 1.36 eV) & 1.04 & 31.55 & 85.87 & 28.30\\
+Reference, N$_{\mathrm{C}}$=N$_{\mathrm{V}}$=1e19 & 0.97 & 30.32 & 84.09 & 24.82\\
+Reference + realistic optics (0.9 sun) & 1.06 & 27.28 & 83.97 & 24.28\\
+\hline
+\end{tabularx}
+}
+\caption{Adopted reference device versus GA best-found point and sensitivity rows (defect rows re-simulated, Fig. 8; optics row reports PCE$_{1\text{-sun}}$). PCEs are unrounded SCAPS outputs (displayed inputs rounded).}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+{\scriptsize\setlength{\tabcolsep}{2pt}
+\begin{tabularx}{\textwidth}{XccccX}
+\hline
+Device Structure & V$_{\mathrm{OC}}$ (V) & J$_{\mathrm{SC}}$ (mA/cm$^{2}$) & FF (\%) & PCE (\%) & Year [Ref.]
+\\\hline
+FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/NiO/\allowbreak{}Ag & 0.5311 & 28.89 & 63.68 & 9.77 & 2022 \cite{r14}\\
+FTO/\allowbreak{}TiO$_{2}$/CsGeI$_{3}$/CuI/\allowbreak{}Au & 0.667 & 22.06 & 73.49 & 10.80 & 2022 \cite{r24}\\
+ITO/\allowbreak{}C$_{60}$/RbGeI$_{3}$/CBTS/\allowbreak{}Ag & 0.99 & 33.20 & 82.80 & 27.21 & 2024 \cite{r22}\\
+FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/PEDOT:PSS/\allowbreak{}Au & 0.813 & 30.84 & 74.19 & 18.60 & 2025 \cite{r39}\\
+FTO/\allowbreak{}TiO$_{2}$/MASnI$_{3}$/CBTS/\allowbreak{}Au & 1.030 & 30.24 & 83.41 & 25.98 & 2026 \cite{r41}\\
+FTO/\allowbreak{}TiO$_{2}$/MASnI$_{3}$/CZTS/Au & 0.96 & 31.66 & 67.00 & 20.36 & 2025 \cite{r42}\\
+FTO/\allowbreak{}TiO$_{2}$/CsSnI$_{3}$/P3HT/Au & 0.972 & 34.70 & 78.21 & 26.38 & 2024 \cite{r40}\\
+FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/Spiro-OMeTAD/\allowbreak{}Au & 1.1813 & 26.31 & 85.16 & 26.47 & 2026 \cite{r23}\\
+FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au (this work) & 1.06 & 30.32 & 84.11 & 27.06 & This work\\
+FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/Cu$_{2}$O-BSF/CuI/\allowbreak{}Au (this work) & 1.09 & 30.32 & 84.62 & 28.01 & This work\\
+\hline
+\end{tabularx}
+}
+\caption{Comparison of the proposed device with recently reported lead-free perovskite solar cells. All comparator values verified against primary sources. All entries are SCAPS-1D simulation studies.}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+{\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{XXccc}
+\hline
+Device & Condition & V$_{\mathrm{OC}}$ (V) & J$_{\mathrm{SC}}$ (mA/cm$^{2}$) & PCE (\%)
+\\\hline
+RbGeI$_{3}$ & Ideal ($N_{\mathrm{t}}$=1e14) & 1.06 & 30.32 & 27.06\\
+CsGeI$_{3}$ & Ideal ($N_{\mathrm{t}}$=1e14) & 1.10 & 23.18 & 19.65\\
+RbGeI$_{3}$ & Realistic ($N_{\mathrm{t}}$=1e15) & 1.02 & 30.31 & 24.40\\
+CsGeI$_{3}$ & Realistic ($N_{\mathrm{t}}$=1e15) & 1.10 & 23.17 & 19.31\\
+RbGeI$_{3}$ & High oxidation ($N_{\mathrm{t}}$=1e16) & 0.96 & 30.22 & 20.76\\
+CsGeI$_{3}$ & High oxidation ($N_{\mathrm{t}}$=1e16) & 1.09 & 23.10 & 17.07\\
+\hline
+\end{tabularx}
+}
+\caption{RbGeI$_{3}$ versus CsGeI$_{3}$ in the identical FTO/\allowbreak{}TiO$_{2}$/absorber/CuI/\allowbreak{}Au stack under ideal, realistic, and high-oxidation defect budgets. Only the absorber bandgap differs (1.4 vs 1.6 eV) at fixed affinity --- a gap-effect control, not A-site chemistry proof.}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+{\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{Xcccc}
+\hline
+Device & V$_{\mathrm{OC}}$ (V) & J$_{\mathrm{SC}}$ (mA/cm$^{2}$) & FF (\%) & PCE (\%)
+\\\hline
+Wang control (measured) & 1.05 & 20.03 & 72.0 & 15.10\\
+SCAPS rebuild + $R_{s}$ 6.9 & 1.060 & 19.92 & 71.88 & 15.18\\
+Wang champion (measured) & 1.11 & $\sim$20.0 & 82.0 & 18.40\\
+SCAPS rebuild & 1.127 & 19.92 & 82.37 & 18.49\\
+\hline
+\end{tabularx}
+}
+\caption{Calibration check: SCAPS rebuild vs measured $\beta$-CsPbI$_{3}$ devices \cite{rWang} at 318 K. Fitted knobs are defect densities (plus $R_{s}$ on the control); the control fit misses the knee.}
+\end{table}
+
+\end{document}

@@ -1,0 +1,7 @@
+Highlights (Thin Solid Films submission — max 85 chars each, verified):
+
+- Cu2O BSF lifts RbGeI3 thin-film stack 26.81% to 30.35% in SCAPS-1D
+- Loss waterfall bounds realistic window at 20.8%, 23.3% with BSF
+- Thickness/doping/mobility tolerance windows set for fabrication
+- XGBoost surrogate R2 0.9999; SHAP recovers gap/interface physics
+- Junction baseline Vbi 1.46 V, W 171 nm, lifetime 1000 ns for labs

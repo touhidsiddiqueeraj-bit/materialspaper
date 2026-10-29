@@ -18,18 +18,18 @@
 \begin{document}
 \begin{frontmatter}
 
-\title{Defect-Tolerant Design of Lead-Free RbGeI$_{3}$ Solar Cells: From SCAPS-1D Optimization to Manufacturing Tolerances, Benchmarked Against CsGeI$_{3}$}
+\title{Oxidation-Budgeted Design of Lead-Free RbGeI$_{3}$ Solar Cells: Back-Surface-Field Enhancement, Realistic Loss Budgeting and SHAP Sensitivity From SCAPS-1D Optimization to Manufacturing Tolerances, Benchmarked Against CsGeI$_{3}$}
 \author[lus]{Md.\ Abdul Malek Fahim\fnref{fn1}}
 \author[lus]{Hussain Touhid Siddiquee\corref{cor1}\fnref{fn2}}
 \address[lus]{Department of Electrical and Electronic Engineering, Leading University, Sylhet, Bangladesh}
 \cortext[cor1]{Corresponding author.}
-\fntext[fn1]{E-mail: mdabdulmalekfahim@gmail.com; fahim.eee@lus.ac.bd}
+\fntext[fn1]{E-mail: mdabdulmalekfahim@gmail.com}
 \fntext[fn2]{E-mail: touhidsiddiqueeraj@gmail.com}
 \begin{abstract}
-The rapid rise of lead-halide perovskite solar cells has been tempered by lead toxicity, motivating a search for lead-free absorbers with comparable optoelectronics. Rubidium germanium iodide (RbGeI$_{3}$) offers a direct, tunable bandgap, strong absorption, and improved environmental compatibility. Here we report a SCAPS-1D (v3.3.10) optimization of an RbGeI$_{3}$ cell. After screening eight ETL--HTL combinations sharing the same absorber, the FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au architecture was carried forward on stability and cost grounds. Eleven parameters (absorber thickness, defect density, dielectric constant, electron affinity, bandgap, effective densities of states, transport-layer thicknesses, both interface defect densities) were varied sequentially under AM 1.5G at 300 K. The optimized device reaches 26.81\% PCE, with V$_{\mathrm{OC}}$ = 1.13 V, J$_{\mathrm{SC}}$ = 30.32 mA/cm$^{2}$, FF = 78.26\%: a 700 nm absorber ($E_{\mathrm{g}}$ = 1.4 eV, $\chi$ = 3.9 eV, $\epsilon$r = 15, N$_{\mathrm{C}}$ = N$_{\mathrm{V}}$ = 1$\times$10$^{17}$ cm$^{-3}$), 10 nm TiO$_{2}$, 100 nm CuI, and 1$\times$10$^{14}$ cm$^{-2}$ interface defects. The band diagram confirms favorable alignment: a 1.8 eV offset at CuI/\allowbreak{}RbGeI$_{3}$ blocking electron back-transfer and a 0.10 eV step at RbGeI$_{3}$/TiO$_{2}$ aiding extraction. The 26.81\% is an ideal-coupling upper bound; optical and defect realism bound the plausible window to $\approx$20.7--23.5\%, and joint optimization places the mathematical maximum at 31.78\%.
+The rapid rise of lead-halide perovskite solar cells has been tempered by lead toxicity, motivating a search for lead-free absorbers with comparable optoelectronics. Rubidium germanium iodide (RbGeI$_{3}$) offers a direct, tunable bandgap, strong absorption, and improved environmental compatibility. Here we report a SCAPS-1D optimization of an RbGeI$_{3}$ cell organized around its central liability, Ge$^{2+}$ oxidation. After screening eight ETL--HTL combinations, the FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au architecture was carried forward on stability and cost grounds (a D2/NiO cross-check through the same pipeline reaches 28.16\%, so this stack is not the efficiency optimum). Eleven parameters were varied sequentially on one frozen deck; the consolidated device reaches 27.06\% PCE. A Cu$_{2}$O-like back-surface field raises the ideal point to 28.01\% and recovers about one point on the identical full-realism stack (20.78\% $\rightarrow$ 21.76\%). Mapping V$_{\mathrm{Ge}}$ vacancy thermodynamics onto the defect ladder converts air exposure into a fab spec ($E^f\gtrsim0.46$ eV holds the headline at 300 K equilibrium, 0.57--0.65 eV for anneal freeze-in; ambient falls below 20.76\%), with a 15.53\% current-state rung marking what first fabrication must beat. The solver pipeline is calibration-checked against experimental $\beta$-CsPbI$_{3}$ \cite{rWang}, and SHAP analysis recovers bulk defects, bandgap and electron mobility as the dominant levers.
 \end{abstract}
 \begin{keyword}
-lead-free perovskite; RbGeI$_{3}$; SCAPS-1D; CuI hole transport layer; defect density; interface engineering
+lead-free perovskite; RbGeI$_{3}$; SCAPS-1D; back surface field; oxidation budget; SHAP sensitivity analysis
 \end{keyword}
 \end{frontmatter}
 
@@ -37,37 +37,27 @@ lead-free perovskite; RbGeI$_{3}$; SCAPS-1D; CuI hole transport layer; defect de
 \section{Introduction}
 
 \subsection{Background and motivation}
-Global electricity demand continues to climb as populations grow, economies industrialize, and urbanization accelerates. Fossil fuels still supply the bulk of this demand \cite{r1,r2}, but their depletion and the environmental cost of carbon emissions have made renewable energy a strategic priority rather than an alternative. Among renewable sources, solar energy stands out for its abundance and for the steady decline in the levelized cost of photovoltaic (PV) electricity, which has made solar the fastest-expanding renewable technology worldwide \cite{r3}. The global installed PV capacity surpassed 2.2 TW in 2024, and continued growth relies on identifying photovoltaic materials that combine high efficiency with low environmental impact and low fabrication cost. Continued progress in PV technology matters for meeting climate-mitigation targets and for expanding energy access in regions without reliable grid infrastructure \cite{r4}. Photovoltaic devices are commonly classified into three generations: crystalline silicon (high efficiency, energy-intensive), thin films (less material, modest efficiency), and emerging devices promising high efficiency at low processing cost.
+Global electricity demand keeps climbing while fossil fuels still supply its bulk with a heavy carbon cost \cite{r1,r2}. Solar is the fastest-expanding renewable technology, with installed capacity surpassing 2.2 TW in 2024 and levelized costs still falling \cite{r3}; continued growth needs absorbers combining high efficiency with low environmental impact and cost \cite{r4}. Devices are commonly classed into three generations --- crystalline silicon, thin films, and emerging devices --- and halide perovskites lead the third generation with certified single-junction efficiencies above 26\% and tandems past 33\% \cite{r3}.
 
 \subsection{Perovskite solar cells and the lead problem}
-Halide perovskites adopt an ABX$_{3}$ crystal structure in which the A-site hosts a monovalent cation, the B-site a divalent metal, and the X-site a halogen. Their attractiveness for photovoltaics stems from strong light absorption, continuously tunable bandgaps, ambipolar carrier transport with long diffusion lengths, and weak exciton binding \cite{r7,r8}. Certified power conversion efficiencies (PCEs) for single-junction lead-based devices now exceed 26\% \cite{r3}, and perovskite-on-silicon tandems have crossed 33\% \cite{r3}. The best absorbers, however, are methylammonium lead iodide (MAPbI$_{3}$) and formamidinium lead iodide (FAPbI$_{3}$), both of which contain lead. Lead contamination concerns across the device life cycle drive the search for Sn, Ge, Bi, and Sb substitutes \cite{r9,r10,r11,r12}.
-Tin-based perovskites initially attracted the most attention as lead substitutes, because Sn$^{2+}$ has a similar lone-pair electronic configuration to Pb$^{2+}$ \cite{r11}. Unfortunately, Sn$^{2+}$ readily oxidizes to Sn$^{4+}$ in air, generating high densities of deep defects and accelerating device degradation \cite{r11,r12}. Germanium-based perovskites have emerged as a complementary alternative: germanium offers the same lone-pair electronic structure as lead, \cite{r13}. Among Ge-based absorbers, rubidium germanium iodide (RbGeI$_{3}$) stands out for its suitable bandgap ($\approx$1.3--1.4 eV depending on the structural phase and computational method), strong optical absorption coefficient, and good thermal stability \cite{r14,r15,r16}. DFT confirms a direct gap with MAPbI$_{3}$-comparable absorption \cite{r13,r17,r18}.
+Halide perovskites (ABX$_{3}$) attract photovoltaics with strong absorption, tunable gaps, ambipolar transport with long diffusion lengths, and weak exciton binding \cite{r7,r8}, rising from sensitized and meso-superstructured architectures \cite{r9,r10}. The champion absorbers MAPbI$_{3}$ and FAPbI$_{3}$ hold certified records \cite{r3} but contain lead, whose life-cycle contamination motivates Sn, Ge, Bi and Sb substitutes \cite{r11,r12}. Tin drew first attention since Sn$^{2+}$ shares the Pb$^{2+}$ lone-pair configuration \cite{r11}, but Sn$^{2+}$ oxidizes readily to Sn$^{4+}$, creating deep defects and fast degradation \cite{r11,r12}. Germanium offers the same lone-pair structure \cite{r13}; among Ge absorbers RbGeI$_{3}$ stands out for a near-optimal direct gap ($\approx$1.3--1.4 eV), MAPbI$_{3}$-comparable absorption by first principles \cite{r13,r17,r18}, and good thermal stability \cite{r14}.
 
 \subsection{Role of numerical simulation and research gap}
-Because experimental optimization of a multilayer photovoltaic device is both time-consuming and expensive, numerical simulation has become the standard tool for screening materials and parameters before fabrication. The Solar Cell Capacitance Simulator in one dimension (SCAPS-1D), developed at the Department of Electronics and Information Systems (ELIS) of Ghent University, Belgium, has been widely adopted for this purpose \cite{r19,r20,r21}. SCAPS-1D solves Poisson, continuity, and drift-diffusion equations self-consistently \cite{r19}, disentangling individual parameter contributions (Figure 1).
+Because experimental optimization of multilayer devices is slow and expensive, numerical simulation screens materials before fabrication. SCAPS-1D (Ghent University) self-consistently solves Poisson, continuity and drift-diffusion equations \cite{r19,r20} and is the workhorse for lead-free design, as a recent review of 54 SCAPS lead-free studies confirms \cite{rReview} (see their Fig.~1).
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.85\linewidth]{figs/fig1.png}
-\caption{Graphical user interface of SCAPS-1D (version 3.3.10) used for device simulation in this study.}
-\end{figure}
-Although several SCAPS-1D studies of RbGeI$_{3}$ devices have been reported, most have optimized only a limited subset of device parameters or investigated a single device configuration. The simulation baseline for RbGeI$_{3}$ devices is still low: Pindolia et al. reported a PCE of 9.77\% for the FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/NiO/\allowbreak{}Ag architecture using SCAPS-1D simulation \cite{r14}. That study swept HTLs, ETLs, thicknesses, doping, defects, contacts, and temperature broadly \cite{r14}. Simulation-based studies have since raised the predicted PCE of RbGeI$_{3}$ devices to 27.21\% (2024 \cite{r22}) and 26.47\% (2026 \cite{r23}), although each of these works optimized only a limited subset of device parameters. The ETL--HTL combinations explored for RbGeI$_{3}$ have also been narrow: most studies used TiO$_{2}$ as the ETL and either Spiro-OMeTAD, NiO, or CBTS as the HTL, while the TiO$_{2}$/CuI combination used here has received comparatively little attention despite the well-documented advantages of CuI as an HTL.
+The RbGeI$_{3}$ simulation baseline is Pindolia et al.\ at 9.77\% for FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/NiO/\allowbreak{}Ag \cite{r14}; predictions since reach 27.21\% \cite{r22} and 26.47\% \cite{r23}, each optimizing only a subset of parameters. The TiO$_{2}$/CuI combination used here has received comparatively little attention despite CuI's documented advantages as an HTL.
 
 \subsection{Contributions and paper organization}
-We close this gap by running a SCAPS-1D optimization of an FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au perovskite solar cell. We first screen eight ETL--HTL combinations, then run an eleven-step sequential optimization of absorber, interface, and transport-layer parameters. We also analyze spectra, band diagram, and primary-source-verified literature benchmarks.
+We close this gap with a SCAPS-1D study of an FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au cell built around one idea: Ge$^{2+}$ oxidation converted into a quantitative fab spec. It contributes: (i) an oxidation defect-tolerance map from V$_{\mathrm{Ge}}$ thermodynamics on a frozen-deck eleven-step optimization (27.06\% ideal, 20.78\% stacked window, D2 like-for-like cross-check at 28.16\%); (ii) a Cu$_{2}$O BSF variant whose trap-immunity mechanism is isolated by controlled interface attribution (+0.98 pp on the identical realistic stack); and (iii) held-out SHAP design rules plus experimental grounding (CsPbI$_{3}$ calibration refit, frozen database snapshot as context). Band lineups and primary-source-verified benchmarks support each claim.
 
 
 \section{Literature Review and Research Gap}
-Over the past five years, SCAPS-1D, often combined with first-principles DFT calculations, has become the workhorse numerical tool for designing and optimizing lead-free perovskite solar cells before experimental fabrication. This section surveys the most relevant recent SCAPS-1D studies on Ge-based and Sn-based absorbers, highlighting structure, performance, and limitations. Supplementary Table S1 summarizes these studies. All numerical values listed in Supplementary Table S1 have been cross-checked against the primary source literature; where a reported efficiency was inconsistent with the device's published J--V metrics, the value implied by those metrics was adopted.
-
-
-Copper(I) iodide is a wide-gap ($E_{\mathrm{g}}$ $\approx$ 3.1 eV), p-type transparent conductor whose valence-band maximum aligns closely with that of RbGeI$_{3}$, supporting efficient hole extraction \cite{r25,r26}. Reported single-crystal hole mobilities of CuI exceed 100 cm$^{2}$ V$^{-1}$ s$^{-1}$, and the material is solution-processable at low temperatures, which suits large-area fabrication \cite{r27}. Despite these advantages, only a few SCAPS-1D studies have paired CuI with RbGeI$_{3}$, and none has run an eleven-parameter optimization on this combination. Here we vary all eleven device-level parameters on the FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au architecture and report the resulting photovoltaic performance.
-A further observation from Supplementary Table S1 is that the comparator device structures span a range of ETL and HTL materials (TiO$_{2}$, PCBM, C$_{60}$, NiO, CuI, CBTS, Spiro-OMeTAD, PEDOT:PSS) and back-contact metals (Ag, Au). Two details prevent citation-propagation errors: the Loumachi ETL is C$_{60}$ (not ``C6'') and its back contact is Ag, not Au \cite{r22}.
+SCAPS-1D, often combined with DFT, is the workhorse for lead-free design before fabrication. Supplementary Table S1 surveys recent Ge- and Sn-based studies; all values there were cross-checked against primary sources, adopting the J--V-implied efficiency where inconsistent. CuI is a wide-gap ($E_{\mathrm{g}}$ $\approx$ 3.1 eV) p-type conductor whose valence maximum aligns with RbGeI$_{3}$ for hole extraction \cite{r25,r26}, with single-crystal mobilities above 100 cm$^{2}$ V$^{-1}$ s$^{-1}$ and low-temperature solution processing \cite{r27}; yet few SCAPS studies pair it with RbGeI$_{3}$, and none runs an eleven-parameter optimization on this combination. Comparator structures span TiO$_{2}$, PCBM, C$_{60}$, NiO, CuI, CBTS, Spiro-OMeTAD and Ag/Au contacts; note the Loumachi ETL is C$_{60}$ (not ``C6'') with an Ag contact \cite{r22}.
 
 \section{Device Structure and Material Selection}
 
 \subsection{Proposed device architecture}
-The lead-free perovskite solar cell we propose uses a conventional n-i-p planar heterojunction architecture with the configuration FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au. The device comprises five functional layers: a fluorine-doped tin oxide (FTO) transparent conducting oxide front electrode, a titanium dioxide (TiO$_{2}$) electron transport layer (ETL), a rubidium germanium iodide (RbGeI$_{3}$) absorber layer, a copper iodide (CuI) hole transport layer (HTL), and a gold (Au) back contact. This stack combines efficient charge separation, rapid carrier transport, and suitable energy-level alignment while eliminating the environmental and health concerns associated with lead-based perovskite absorbers. The schematic diagram of the proposed device structure is shown in Figure 2. The choice of constituent materials is justified in the remainder of this section, and the initial material parameters used in the SCAPS-1D simulation are summarized in Supplementary Table S2.
+We use a conventional n-i-p planar heterojunction, FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au: FTO front electrode, TiO$_{2}$ ETL, RbGeI$_{3}$ absorber, CuI HTL, Au back contact (Figure 1). Material choices are justified below; initial parameters are in Supplementary Table S2.
 
 \begin{figure}[htbp]
 \centering
@@ -76,13 +66,13 @@ The lead-free perovskite solar cell we propose uses a conventional n-i-p planar 
 \end{figure}
 
 \subsection{Material selection rationale}
-Fluorine-doped tin oxide (FTO, 500 nm) is the front electrode for its transparency, conductivity, and thermal/chemical stability \cite{r28}. It was preferred over ITO for stability, process compatibility, and cost \cite{r29}.
-Titanium dioxide (TiO$_{2}$) is the electron transport layer: its 3.2 eV gap passes visible light, its conduction-band minimum lies slightly below typical iodide-perovskite levels for downhill electron transfer, and its deep valence band blocks holes \cite{r30,r31}. Despite lower mobility than ZnO/SnO$_{2}$, it transports adequately and forms stable perovskite interfaces \cite{r32}.
-Rubidium germanium iodide (RbGeI$_{3}$, ABX$_{3}$) is the absorber: replacing lead with germanium keeps the needed optoelectronics, with a direct 1.3--1.4 eV gap and strong absorption (comparable to MAPbI$_{3}$ by first-principles calculations \cite{r17,r18}), and good thermal stability make it well-suited for single-junction photovoltaic applications. Screening used 400 nm and 1.4 eV from experimental literature \cite{r14}. Both parameters were subsequently optimized (Section V).
-Copper iodide (CuI) is the hole transport layer for its conductivity, transparency, close valence alignment with RbGeI$_{3}$, and low cost \cite{r25,r26,r33}. CuI is a wide-gap ($E_{\mathrm{g}}$ $\approx$ 3.1 eV) p-type conductor whose valence maximum aligns with RbGeI$_{3}$ (0.10 eV offset, Supplementary Section S1.3); single-crystal hole mobilities exceed 100 cm$^{2}$ V$^{-1}$ s$^{-1}$ and it processes from solution at low temperature \cite{r27}. Screening used 100 nm CuI. Gold (Au) is the back contact: its high work function gives an ohmic contact to CuI without a parasitic Schottky barrier \cite{r34}. 
+Fluorine-doped tin oxide (FTO, 500 nm) is the front electrode for its transparency, conductivity, and thermal/chemical stability \cite{r28}, the standard low-cost TCO choice for this stack.
+TiO$_{2}$ is the ETL: its 3.2 eV gap passes visible light, its conduction-band minimum gives downhill electron transfer, and its deep valence band blocks holes \cite{r30,r31}, forming stable perovskite interfaces despite lower mobility than ZnO/SnO$_{2}$ \cite{r32}.
+RbGeI$_{3}$ is the absorber (direct 1.3--1.4 eV gap, MAPbI$_{3}$-comparable absorption \cite{r17,r18}, good thermal stability); screening used 400 nm and 1.4 eV from literature \cite{r14}, both subsequently optimized (Section V).
+CuI is the HTL (conductive, transparent, 0.10 eV valence offset to RbGeI$_{3}$, low cost \cite{r25,r26,r33}); screening used 100 nm. Au is the back contact, ohmic to CuI \cite{r34}. 
 
 \subsection{Initial material parameters}
-The initial electrical and optical parameters used in the SCAPS-1D simulation of the proposed FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au solar cell are summarized in Supplementary Table S2. These values were collected from previously published experimental and numerical studies on lead-free perovskite solar cells \cite{r14,r15,r16,r19,r30} and were carefully incorporated into the SCAPS-1D simulator to establish a realistic baseline device before performing further optimization. The interface defect densities applied at the two heterojunctions are listed in Supplementary Table S3. The initial absorber thickness of 400 nm listed in Supplementary Table S2 is the value at which all eight device configurations were screened (Section V.A, Table I). This thickness was subsequently optimized to 700 nm in the consolidated final device (Section V.G).
+Initial parameters from published experimental and numerical lead-free studies \cite{r14,r15,r16,r19,r30} are in Supplementary Table S2 (interfaces: Table S3). All eight configurations were screened at 400 nm absorber (Section V.A, Table II); the consolidated device uses the optimized 700 nm (Section V.G).
 
 
 
@@ -91,7 +81,7 @@ The initial electrical and optical parameters used in the SCAPS-1D simulation of
 \section{Methodology}
 
 \subsection{SCAPS-1D simulation framework}
-The device stack was simulated with SCAPS-1D version 3.3.10 \cite{r19,r20,r21}, which solves the Poisson equation together with the electron and hole continuity equations self-consistently across the device and is widely used for thin-film and perovskite device studies. The drift-diffusion transport model underlying these equations is summarized below; further details are available in the original references \cite{r19,r20,r21}.
+The stack was simulated with SCAPS-1D v3.3.10 \cite{r19,r20}, solving Poisson plus electron/hole continuity self-consistently under drift-diffusion transport (see original references for details).
 \begin{equation}\label{eq:poisson}
 \frac{d}{dx}\left(\epsilon\frac{d\psi}{dx}\right) =
 -q\left(p-n+N_{D}-N_{A}+\rho_{t}\right)
@@ -102,25 +92,27 @@ The device stack was simulated with SCAPS-1D version 3.3.10 \cite{r19,r20,r21}, 
 \begin{equation}\label{eq:hole}
 \frac{dJ_{p}}{dx} = q\,(G-R)
 \end{equation}
-where $\epsilon$ is the dielectric permittivity, $\psi$ the electrostatic potential, q the elementary charge, n and p the electron and hole concentrations, $N_{\mathrm{D}}$ and $N_{\mathrm{A}}$ the donor and acceptor concentrations, and $\rho_{\mathrm{t}}$ the trapped charge density. Electron and hole transport are governed by the continuity equations,
-where $J_{\mathrm{n}}$ is the electron current density, G the carrier generation rate, and R the carrier recombination rate; the hole continuity equation describes hole transport analogously,
-where $J_{\mathrm{p}}$ is the hole current density. Together, Eqs. (1)--(3) describe generation, transport, and recombination under illumination; SCAPS-1D computes the resulting J--V characteristics from the layer properties defined below.
+where $\epsilon$ is the permittivity, $\psi$ the potential, n/p the carrier concentrations, $N_{\mathrm{D}}$/$N_{\mathrm{A}}$ the doping, $\rho_{\mathrm{t}}$ the trapped charge, $J_{n}$/$J_{p}$ the current densities, and G/R the generation/recombination rates. SCAPS-1D computes the J--V characteristics from the layer properties below.
 
 \subsection{Simulation conditions}
-All simulations were performed under the AM 1.5G spectrum at an incident power density of 100 mW/cm$^{2}$ (one sun, STC) with the operating temperature fixed at 300 K, using the initial material parameters of Supplementary Table S2 and the interface defect densities of Supplementary Table S3 unless otherwise stated. During each optimization step, only one parameter was varied while all remaining parameters were held constant; the general simulation conditions are summarized in Supplementary Table S4. Absorption uses the SCAPS square-root law $\alpha$ = A$\sqrt{h\nu-E_{\mathrm{g}}}$ with A = 10$^{5}$ cm$^{-1}$ (uniform at the electrical bandgap). Contacts are ideal ($R_{\mathrm{s}}$ = 0, $R_{\mathrm{sh}}$ = $\infty$); no series/shunt resistance is included unless stated, so fill factors are upper bounds. Figures 3--13 record each sweep as-run with its contemporary deck version; absolute offsets between sweep generations (e.g. the Section V.B sweep record) are bounded by consolidated-deck re-simulation, and all headline metrics come solely from single consolidated-deck runs.
+All simulations were performed under the AM 1.5G spectrum at an incident power density of 100 mW/cm$^{2}$ (one sun, STC) with the operating temperature fixed at 300 K, using the initial material parameters of Supplementary Table S2 and the interface defect densities of Supplementary Table S3 unless otherwise stated. During each optimization step, only one parameter was varied while all remaining parameters were held constant; the general simulation conditions are summarized in Supplementary Table S4. Absorption uses the SCAPS square-root law $\alpha$ = A$\sqrt{h\nu-E_{\mathrm{g}}}$ with A = 10$^{5}$ cm$^{-1}$ at the electrical bandgap, with radiative recombination at the literature perovskite coefficient ($K_{\mathrm{rad}}$ $10^{-10}$ cm$^{3}$/s) included in all headline runs. Contacts are ideal ($R_{\mathrm{s}}$ = 0, $R_{\mathrm{sh}}$ = $\infty$) unless stated, so fill factors are upper bounds. All eleven sweeps ran sequentially on one frozen deck generation with carry-forward (Section~V.B); failed runs were retried and the survivors surface as \texttt{FAILED} rather than stale data. Scripting limits (front-reflection handling, C--V capture, resistance post-corrections) and the full reproducibility protocol are documented in Supplementary Section~S7.
 
 
 
 \subsection{Performance parameters}
-Performance was evaluated using the four key parameters extracted from the simulated J--V curve: open-circuit voltage (V$_{\mathrm{OC}}$), short-circuit current density (J$_{\mathrm{SC}}$), fill factor (FF), and power conversion efficiency (PCE), computed as PCE = (V$_{\mathrm{OC}}$ $\times$ J$_{\mathrm{SC}}$ $\times$ FF)/Pin with Pin = 100 mW/cm$^{2}$ under AM 1.5G.
+Performance was evaluated using the four key parameters extracted from the simulated J--V curve: open-circuit voltage (V$_{\mathrm{OC}}$), short-circuit current density (J$_{\mathrm{SC}}$), fill factor (FF), and power conversion efficiency (PCE), computed as
+\begin{equation}\label{eq:pce}
+\mathrm{PCE} = (V_{\mathrm{OC}} \times J_{\mathrm{SC}} \times \mathrm{FF})/P_{\mathrm{in}}
+\end{equation}
+with $P_{\mathrm{in}}$ = 100 mW/cm$^{2}$ under AM 1.5G.
 
 \subsection{Sequential optimization procedure}
 Starting from the initial device, one parameter at a time (OPAT) was varied while all others were held constant, as detailed in Section V.
-The procedure comprises eleven optimization steps: (1) absorber thickness (0.3--1.0 $\mu$m); (2) absorber bulk defect density (10$^{12}$--10$^{18}$ cm$^{-3}$); (3) absorber dielectric constant (15--23.1); (4) absorber electron affinity (3.9--4.2 eV); (5) TiO$_{2}$/RbGeI$_{3}$ interfacial defect density (10$^{12}$--10$^{18}$ cm$^{-2}$); (6) RbGeI$_{3}$/CuI interfacial defect density (10$^{12}$--10$^{18}$ cm$^{-2}$); (7) absorber bandgap (1.3--1.7 eV); (8) TiO$_{2}$ ETL thickness (0.01--0.09 $\mu$m); (9) CuI HTL thickness (0.1--1.9 $\mu$m); (10) conduction-band effective density of states N$_{\mathrm{C}}$ (1$\times$10$^{17}$--1$\times$10$^{20}$ cm$^{-3}$); (11) valence-band effective density of states N$_{\mathrm{V}}$ (1$\times$10$^{17}$--1$\times$10$^{20}$ cm$^{-3}$). Each step's locally optimal parameter value was carried forward into all subsequent steps, with the consolidated final parameter set summarized in Table III.
-Because each per-step optimum is identified with all other parameters fixed at prior-step values, the consolidated parameter set may not be a global optimum; the OPAT approach nevertheless identifies the dominant parameter effects and establishes a clear baseline. To test for missed cross-interactions, Section V.G reports a genetic-algorithm (GA) joint optimization over the six most sensitive parameters (bandgap, bulk and interface defect densities, N$_{\mathrm{C}}$, N$_{\mathrm{V}}$, absorber thickness), which finds a higher mathematical optimum at a lower bandgap and lower defect density than the OPAT point.
+The procedure comprises eleven optimization steps: (1) absorber thickness (0.3--1.0 $\mu$m); (2) absorber bulk defect density (10$^{12}$--10$^{18}$ cm$^{-3}$); (3) absorber dielectric constant (10--35, extended until the trend was mapped); (4) absorber electron affinity (3.7--4.2 eV); (5) TiO$_{2}$/RbGeI$_{3}$ interfacial defect density (10$^{12}$--10$^{18}$ cm$^{-2}$); (6) RbGeI$_{3}$/CuI interfacial defect density (10$^{12}$--10$^{18}$ cm$^{-2}$); (7) absorber bandgap (1.2--1.7 eV, with 1.2 probed); (8) TiO$_{2}$ ETL thickness (0.01--0.09 $\mu$m); (9) CuI HTL thickness (0.05--1.9 $\mu$m); (10) conduction-band effective density of states N$_{\mathrm{C}}$ (1$\times$10$^{18}$--1$\times$10$^{20}$ cm$^{-3}$, literature floor); (11) valence-band effective density of states N$_{\mathrm{V}}$ (same range). Each step's value was carried forward under a triple-gate adoption rule: sweep maximum, literature-parameter compliance, and Shockley--Queisser admissibility with margin. Parameters that cannot be ordered from a supplier (dielectric constant) or tuned below physical floors (defect densities, N$_{\mathrm{C}}$/N$_{\mathrm{V}}$) were pinned at literature values with the full trace disclosed, rather than carried at grid edges; the consolidated set is summarized in Table IV.
+Because each per-step value is identified with all other parameters fixed at prior-step values, the consolidated set may not be a global optimum. To test for missed cross-interactions, Section V.G reports a genetic-algorithm joint search over the six most sensitive parameters, which returns a best-found joint point (not a proven global maximum).
 
 \subsection{Device configurations screened}
-Eight planar configurations combining two ETLs (TiO$_{2}$, PCBM) with four HTLs (NiO, CuI, CBTS, Spiro-OMeTAD) around the RbGeI$_{3}$ absorber (D1--D8, Table I) were simulated at the initial absorber thickness of 400 nm (Supplementary Table S2) to permit a fair architecture comparison before the thickness optimization of Section V.B.
+Eight planar configurations combining two ETLs (TiO$_{2}$, PCBM) with four HTLs (NiO, CuI, CBTS, Spiro-OMeTAD) around the RbGeI$_{3}$ absorber (D1--D8, Table II) were simulated at the initial absorber thickness of 400 nm (Supplementary Table S2) to permit a fair architecture comparison before the thickness optimization of Section V.B.
 
 \begin{table}[htbp]
 \centering
@@ -159,7 +151,7 @@ Dev. & Architecture & V$_{\mathrm{OC}}$ (V) & J$_{\mathrm{SC}}$ (mA/cm$^{2}$) & 
 D1 & FTO/\allowbreak{}PCBM/\allowbreak{}RbGeI$_{3}$/NiO/\allowbreak{}Au & 0.81 & 30.10 & 83.68 & 20.40\\
 D2 & FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/NiO/\allowbreak{}Au & 0.82 & 30.46 & 84.48 & 21.10\\
 D3 & FTO/\allowbreak{}PCBM/\allowbreak{}RbGeI$_{3}$/CuI/\allowbreak{}Au & 0.81 & 30.10 & 83.96 & 20.47\\
-D4 & FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au & 0.812 & 30.46 & 79.98 & 19.78\\
+D4 & FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au & 0.81 & 30.46 & 79.98 & 19.78\\
 D5 & FTO/\allowbreak{}PCBM/\allowbreak{}RbGeI$_{3}$/CBTS/\allowbreak{}Au & 0.82 & 30.20 & 82.36 & 20.40\\
 D6 & FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CBTS/\allowbreak{}Au & 0.82 & 30.55 & 82.13 & 20.57\\
 D7 & FTO/\allowbreak{}PCBM/\allowbreak{}RbGeI$_{3}$/Spiro/Au & 0.81 & 30.07 & 85.01 & 20.71\\
@@ -169,22 +161,44 @@ D8 & FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/Spiro/Au & 0.82 & 30.46 & 83.95 & 20
 }
 \caption{Initial photovoltaic performance of the eight screened device configurations, simulated at an absorber thickness of 400 nm.  Selected as the baseline for full parametric optimization.}
 \end{table}
-The best FF belongs to D7 (Spiro-OMeTAD, 85.01\%) and the best PCE to D2 (21.10\%), not to D4. D4 still won our attention: CuI beats Spiro-OMeTAD on stability and cost and NiO on moisture and oxygen sensitivity while offering higher hole mobility. Its PCE deficit of about 1.3 percentage points to the top entries is the kind of gap the parameter sweep can close; the stability and cost that CuI carries are not something parameter tuning can buy back.
+The best FF belongs to D7 (85.01\%) and the best PCE to D2 (21.10\%), not D4. Because D2 led at screening, it was run through the identical eleven-step pipeline on its own NiO deck (literature-standard NiO parameters, documented in S7; same triple-gate adoptions) as a like-for-like check: D2 carries 0.8~$\mu$m / $10^{12}$ defects / $\epsilon_{r}$ 23.1 / $\chi$ 3.9 / 10~nm ETL / $10^{18}$ densities to a raw 32.87\% chain end, and its gate-adopted device reaches 28.16\% (1.11~V, 30.32~mA/cm$^{2}$, 83.57\%) --- the screening gap survives optimization essentially intact (+1.32~pp at screening, +1.10~pp adopted), so D4 is not the efficiency optimum of this family. D4 is retained on stability and cost grounds stated plainly: CuI's documented stability and solution-processability advantages over Spiro-OMeTAD \cite{r25,r26} plus NiO's moisture sensitivity against D2, and an all-inorganic transport pair either way. Per-step D2 nodes are tabulated in Supplementary Section~S1. Screening ran once per configuration on the pre-rebase deck, so Table II is an architecture-ranking record, not headline numbers; the selected D4 stack was fully re-optimized on the rebased frozen deck. Band-alignment conclusions (offsets, extraction paths) transfer across the rebase while absolute PCEs do not.
 
 \subsection{Optimization summary}
 Eleven parameters were optimized one at a time on the screened
 FTO/TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au stack (absorber thickness, bulk
 and interface defect densities, dielectric constant, electron affinity,
 bandgap, transport-layer thicknesses, conduction- and valence-band densities
-of states); each optimum was carried forward, giving the consolidated set in
-Table III. Full per-parameter traces (Figs.\ S1--S10) are given in
+of states); each value was carried forward under the triple-gate rule, giving the consolidated set in
+Table IV. Full per-parameter traces (Figs.\ S1--S10) are given in
 Supplementary Section~S1, and the illumination and dark characteristics
 (Figs.\ S11--S12) in Section~S2. The defect-density step itself is retained
 below (Section~V.C) together with its energy/asymmetry extension, since
 Ge-related degradation is central to this work.
+
+\begin{table}[htbp]
+\centering
+{\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{Xccc}
+\hline
+Step & Sweep range & Adopted & Gate basis
+\\\hline
+1 thickness & 0.3--1.0 $\mu$m & 0.7 $\mu$m & sweep max, plateau \\
+2 bulk $N_{t}$ & 1e12--1e18 cm$^{-3}$ & 1e14 & passivated-film pin (max at 1e12 shown) \\
+3 $\epsilon_{r}$ & 10--35 & 15 & sweep-flat pin \\
+4 $\chi$ & 3.7--4.2 eV & 3.9 eV & interior max (3.7 non-convergent) \\
+5/6 interface $N_{t}$ & 1e12--1e18 cm$^{-2}$ & 1e14 & passivated-film pin (max at 1e12 shown) \\
+7 $E_{g}$ & 1.2--1.7 eV & 1.4 eV & SQ-margin gate (max at 1.3 rejected) \\
+8 TiO$_{2}$ & 10--90 nm & 10 nm & sweep max + pinhole caveat \\
+9 CuI & 0.05--1.9 $\mu$m & 100 nm & sweep-flat pin \\
+10/11 $N_{C}$/$N_{V}$ & 1e18--1e20 cm$^{-3}$ & 1e18 & literature floor (sub-floor $\le$0.13 pp) \\
+\hline
+\end{tabularx}
+}
+\caption{Per-step sweeps, adopted values and gate basis. Full traces: Figs.~S1--S10.}
+\end{table}
 \subsection{Effect of absorber defect density}
-Bulk defects act as SRH recombination centers: swept from 10$^{12}$ to 10$^{18}$ cm$^{-3}$, the device holds to 10$^{14}$ cm$^{-3}$ without loss, then PCE collapses from 20.40\% to 7.58\% at 10$^{18}$ cm$^{-3}$ through falling V$_{\mathrm{OC}}$ (0.848 to 0.550 V). The sweep settles at 10$^{14}$ cm$^{-3}$, the standard lead-free assumption.
-Beyond the total trap density, the energetic position $E_{\mathrm{t}}$ of the dominant defect and the electron/hole capture asymmetry ($\sigma_{n}$, $\sigma_{p}$) were swept to model Ge-related degradation explicitly. At $N_{\mathrm{t}}$ = $10^{15}$ cm$^{-3}$, moving $E_{\mathrm{t}}$ from 0.2 eV to 1.2 eV above $E_{\mathrm{v}}$ traces a shallow symmetric minimum centred at mid-gap: PCE falls from 25.01\% at the band edges to 24.84\% for $E_{\mathrm{t}}$ = 0.4-1.0 eV (Fig. 12), the textbook SRH fingerprint that mid-gap states are the most lethal recombination centres. At the baseline $N_{\mathrm{t}}$ = $10^{14}$ cm$^{-3}$ the level position is immaterial (26.81-26.85\%), confirming the consolidated defect budget sits deep inside the tolerant regime. Capture asymmetry at mid-gap (Fig. 13) is significant even at a fixed $\sigma_{n}\times\sigma_{p}$ product: the electron-capture-dominated trap ($\sigma_{n}$ = $10^{-17}$, $\sigma_{p}$ = $10^{-19}$ m2) limits PCE to 23.97\%, while the mirrored hole-dominated trap holds 26.71\%, and the symmetric $10^{-17}$/$10^{-17}$ case collapses to 21.45\%. The oxidation threat (Ge$^{2+}$ $\rightarrow$ Ge$^{4+}$, Ge vacancies) therefore cannot be reduced to a single $N_{\mathrm{t}}$ number: its energy and capture character jointly set the damage, and dense symmetric traps are the worst case.
+Swept $10^{12}$--$10^{18}$ cm$^{-3}$, PCE peaks at 25.27\% at the $10^{12}$ cm$^{-3}$ floor, reads 23.37\% at the adopted passivated-film pin of $10^{14}$ cm$^{-3}$, then collapses (23.37 $\rightarrow$ 6.79\%) through falling V$_{\mathrm{OC}}$ (0.964 $\rightarrow$ 0.559 V), saturating past $10^{17}$ cm$^{-3}$.
+Beyond the total trap density, the energetic position $E_{\mathrm{t}}$ of the dominant defect and the electron/hole capture asymmetry ($\sigma_{n}$, $\sigma_{p}$) were swept to model Ge-related degradation explicitly. At the H1 baseline ($N_{\mathrm{t}}$ = $10^{14}$ cm$^{-3}$), moving $E_{\mathrm{t}}$ from 0.2 eV to 1.2 eV above $E_{\mathrm{v}}$ traces a shallow symmetric minimum centred at mid-gap: PCE falls from 27.27\% at the band edges to 27.06\% for $E_{\mathrm{t}}$ = 0.4-1.0 eV (Fig. 10), the textbook SRH fingerprint that mid-gap states are the most lethal recombination centres. The level position is thus immaterial at baseline densities (27.06-27.27\%). A two-point check at $N_{\mathrm{t}}$ = $10^{15}$ cm$^{-3}$ gives 25.07\% (0.2 eV) and 24.40\% (0.7 eV), consistent with the bulk-ladder penalty rather than a level effect. Capture asymmetry at mid-gap (Fig. 11) is significant: symmetric large traps ($\sigma_{n}$=$\sigma_{p}$=$10^{-17}$ m$^{2}$) collapse to 20.76\%, the worst case; at fixed large $\sigma_{n}$=$10^{-17}$ m$^{2}$, shrinking $\sigma_{p}$ recovers 21.91\% ($10^{-19}$ m$^{2}$) and then 27.59\% ($10^{-21}$ m$^{2}$); small $\sigma_{n}$ ($\le$$10^{-19}$ m$^{2}$) is benign at any $\sigma_{p}$ (26.99--27.80\%). Electron capture sets the damage. The oxidation threat (Ge$^{2+}$ $\rightarrow$ Ge$^{4+}$, Ge vacancies) therefore cannot be reduced to a single $N_{\mathrm{t}}$ number: its energy and capture character jointly set the damage, and dense symmetric traps are the worst case.
 
 \begin{figure}[htbp]
 \centering
@@ -192,20 +206,8 @@ Beyond the total trap density, the energetic position $E_{\mathrm{t}}$ of the do
 \caption{Variation of PCE, V$_{\mathrm{OC}}$, J$_{\mathrm{SC}}$, and FF with RbGeI$_{3}$ absorber defect density. Performance degrades sharply above 10$^{14}$ cm$^{-3}$.}
 \end{figure}
 
-\subsection{Quantum efficiency analysis}
-Figure 4 tracks the quantum efficiency: QE climbs from 34.52\% at 300 nm to near 100\% at 400 nm, the suppressed ultraviolet response being surface recombination of near-front absorption \cite{r21,r38}.
-Absorption in the visible is excellent: QE holds near 100\% from 400 to 650 nm, then eases to 76\% at 850 nm and cuts off near 900 nm, matching the 1.4 eV gap ($\lambda$c $\approx$ 886 nm). Integrating the spectrum gives $\approx$23.3 mA/cm$^{2}$, short of the 30.32 mA/cm$^{2}$ read from the J--V curve. The shortfall is a deck-version difference, not physics: the QE spectrum comes from the earlier sweep deck while J--V uses the consolidated deck (flat/graded endpoints give identical J--V, $\Delta$JSC = 0.00). The QE curve is therefore retained only for its edge shape ($\lambda$c $\approx$ 886 nm, consistent with 1.4 eV); the J--V-derived J$_{\mathrm{SC}}$ = 30.32 mA/cm$^{2}$ is the reported metric.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.85\linewidth]{figs/fig14.png}
-\caption{Variation of quantum efficiency (QE) with incident wavelength of the optimized solar cell. The cutoff at $\approx$886 nm corresponds to the absorber bandgap of 1.4 eV.}
-\end{figure}
-
 \subsection{Energy band diagram analysis}
-The energy band diagram of the optimized device under illumination (Figure 5) shows clean extraction paths at both heterojunctions; both interfaces are thus electronically well passivated.
-From affinities ($\chi$ = 2.1 vs 3.9 eV) the conduction offset is $\Delta E_{\mathrm{c}}$ $\approx$ 1.8 eV (electron-blocking), while $E_{\mathrm{v}}$ = $-$($E_{\mathrm{g}}$ + $\chi$) gives $\Delta E_{\mathrm{v}}$ $\approx$ 0.10 eV, so holes cross freely; both band edges stay flat across the 700 nm absorber, consistent with the 1.4 eV gap near the Shockley--Queisser optimum.
-At RbGeI$_{3}$/TiO$_{2}$ ($\chi$ = 3.9 vs 4.0 eV, $\approx$800 nm from the back contact) a 0.10 eV downward conduction step assists extraction while a 1.90 eV valence offset ($E_{\mathrm{v}}$ = $-5.30 vs $-7.2 eV) blocks holes. Under illumination the quasi-Fermi levels split, $F_{\mathrm{n}}$ tracking the conduction band and $F_{\mathrm{p}}$ the valence band; the splitting sets V$_{\mathrm{OC}}$ $\approx$ 1.13 V, with slight bending at the heterojunctions from the built-in field.
+The band diagram under illumination (Figure 3) shows clean extraction at both heterojunctions. At CuI/RbGeI$_{3}$ the 1.8 eV conduction offset blocks electrons while the 0.10 eV valence step passes holes; at RbGeI$_{3}$/TiO$_{2}$ a 0.10 eV conduction step assists extraction while a 1.90 eV valence offset blocks holes. The peak bulk quasi-Fermi splitting reaches $\approx$1.13 V while the terminal V$_{\mathrm{OC}}$ is 1.06 V: the 70 mV gap is interface recombination plus quasi-Fermi bending toward the contacts (visible in Fig.~3), i.e.\ a quantified contact loss, not an inconsistency.
 
 \begin{figure}[htbp]
 \centering
@@ -214,7 +216,7 @@ At RbGeI$_{3}$/TiO$_{2}$ ($\chi$ = 3.9 vs 4.0 eV, $\approx$800 nm from the back 
 \end{figure}
 
 \subsection{Current density--voltage characteristics}
-The current density--voltage (J--V) characteristic of the consolidated optimized device under AM 1.5G illumination is shown in Figure 6. The curve is sharply rectangular, with an open-circuit voltage of V$_{\mathrm{OC}}$ = 1.13 V, a short-circuit current density of J$_{\mathrm{SC}}$ = 30.32 mA/cm$^{2}$, and a fill factor of 78.26\%, yielding a PCE of 26.81\%. The maximum-power point occurs near V = 0.96 V with J $\approx$ 27.9 mA/cm$^{2}$, where the instantaneous power density reaches 26.8 mW/cm$^{2}$. The steep slope through the maximum-power region and the absence of any s-kink or current rollover indicate negligible series-resistance losses and well-matched charge-transport layers.
+The consolidated J--V under AM 1.5G (Figure 4) is sharply rectangular: V$_{\mathrm{OC}}$ = 1.06 V, J$_{\mathrm{SC}}$ = 30.32 mA/cm$^{2}$, FF = 84.11\%, PCE = 27.06\%, with no s-kink or rollover.
 
 \begin{figure}[htbp]
 \centering
@@ -223,7 +225,7 @@ The current density--voltage (J--V) characteristic of the consolidated optimized
 \end{figure}
 
 \subsection{Summary of optimized device parameters and final performance}
-After completing the optimization of all eleven selected device parameters, the final optimized values were incorporated into the proposed FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au solar cell. Table III summarizes the optimized material parameters obtained from the SCAPS-1D simulations. These optimized values were used to achieve the highest photovoltaic performance reported here. The consolidated final device was simulated by applying all eleven optimized parameters simultaneously in a single SCAPS-1D run; the resulting J--V output gives V$_{\mathrm{OC}}$ = 1.13 V, J$_{\mathrm{SC}}$ = 30.32 mA/cm$^{2}$, FF = 78.26\%, and PCE = 26.81\%. The consolidated final-device values come from this single SCAPS-1D simulation run and are not a simple arithmetic combination of the per-step optima reported in Supplementary Figs.~S1--S10. The interaction between optimized parameters in the consolidated solution can shift individual performance metrics relative to their per-step values; the fill factor, for instance, drops from per-step optima above 83\% (Supplementary Figs.~S4 and S7) to 78.26\% in the consolidated device because the combined effect of the optimized bandgap, defect densities, DOS values, and ETL/HTL thicknesses produces a different J--V curve shape than any single-parameter optimum. A six-parameter genetic-algorithm search (population 10, six generations, 62 SCAPS evaluations; crossover plus Gaussian mutation with elitism) finds the best joint optimum over 62 evaluations at $E_{\mathrm{g}}$ = 1.33 eV, $N_{\mathrm{t}}$ $\approx$ 10$^{12}$ cm$^{-3}$, interface $N_{\mathrm{t}}$ $\approx$ 6 $\times$ 10$^{13}$ cm$^{-2}$, N$_{\mathrm{C}}$ = 10$^{17}$ cm$^{-3}$, N$_{\mathrm{V}}$ $\approx$ 2.5 $\times$ 10$^{16}$ cm$^{-3}$, absorber 0.77 $\mu$m (gene values and best deck archived), giving V$_{\mathrm{OC}}$ = 1.13 V, J$_{\mathrm{SC}}$ = 33.06 mA/cm$^{2}$, FF = 85.26\%, PCE = 31.78\% (Fig. 9, Table IV). The 5-point gap to the OPAT point decomposes into a lower bandgap, an order-of-magnitude lower defect density, and N$_{\mathrm{C}}$/N$_{\mathrm{V}}$/thickness interactions the sequential procedure cannot capture. Because the GA optimum assumes 10$^{12}$ cm$^{-3}$ material and ideal light coupling, Table III (OPAT, 26.81\%) is retained as the passivated-lab reference device, and Section VII.A derates it to a realistic 20.7--23.5\% window (Fig. 11). DOS-robustness re-simulation at DFT-typical densities holds the headline: N$_{\mathrm{C}}$ = N$_{\mathrm{V}}$ = 10$^{18}$ cm$^{-3}$ gives 26.81\% $\rightarrow$ 27.13\% and N$_{\mathrm{C}}$ = N$_{\mathrm{V}}$ = 10$^{19}$ cm$^{-3}$ gives 24.94\% (J$_{\mathrm{SC}}$ pinned at 30.32 mA/cm$^{2}$; Table IV), so the 10$^{17}$ cm$^{-3}$ OPAT choice does not inflate the result. 
+After completing the eleven sequential steps, the adopted values were incorporated into the proposed FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au cell (Table IV): adopted means triple-gate values (Section~IV.D), not raw sweep maxima --- defect densities pinned at the passivated-film $10^{14}$ level, N$_{\mathrm{C}}$/N$_{\mathrm{V}}$ at the $10^{18}$ literature floor, dielectric constant at 15 (sweep-flat), CuI at 100 nm (sweep-flat). The consolidated device was simulated in a single SCAPS-1D run with detailed-balance-consistent radiative recombination throughout: V$_{\mathrm{OC}}$ = 1.06 V, J$_{\mathrm{SC}}$ = 30.32 mA/cm$^{2}$, FF = 84.11\%, PCE = 27.06\%. The V$_{\mathrm{OC}}$ climb from the 0.81 V screening point is accounted for: bulk $N_{t}$ $10^{15}$$\rightarrow$$10^{14}$ adds $\approx$0.09 V (0.877$\rightarrow$0.964 V in the sweep), and the $N_{C}$/$N_{V}$ literature floor adds $\approx$0.09 + 0.06 V across their sweeps, with the remainder from thickness/affinity alignment --- no single step carries it. Every metric sits below its R\"uhle Shockley--Queisser limit at 1.4 eV (32.88 mA/cm$^{2}$, 1.122 V, 89.3\%, 32.91\%) \cite{r36}. A six-parameter genetic-algorithm search (population 10, six generations, 62 SCAPS evaluations; crossover plus Gaussian mutation with elitism; seeded, archived) returns a best-found joint point at $E_{\mathrm{g}}$ = 1.36 eV, $N_{\mathrm{t}}$ $\approx$ 1.6 $\times$ 10$^{13}$ cm$^{-3}$, interface $N_{\mathrm{t}}$ $\approx$ 6 $\times$ 10$^{11}$ cm$^{-2}$, N$_{\mathrm{C}}$/N$_{\mathrm{V}}$ $\approx$ 1.6 $\times$ 10$^{18}$ cm$^{-3}$, absorber 0.72 $\mu$m, giving 1.04 V, 31.55 mA/cm$^{2}$, 85.87\%, 28.30\% (Fig. 7, Table V) --- also fully SQ-admissible, but reported as best-found optimizer reach rather than an admissible device: its $N_{t}$$\approx$1.6$\times$10$^{13}$ cm$^{-3}$ and interface $N_{t}$$\approx$6$\times$10$^{11}$ cm$^{-2}$ sit below the triple-gate floors, not a proven global maximum. Section VI.C stacks all realism losses onto Table IV for a single realistic window (Fig. 9).
 
 \begin{table}[htbp]
 \centering
@@ -236,8 +238,8 @@ Thickness (nm) & 10 & 500 & 700 & 100\\
 Bandgap $E_{\mathrm{g}}$ (eV) & 3.2 & 3.2 & 1.4 & 3.1\\
 Electron affinity $\chi$ (eV) & 4.0 & 4.4 & 3.9 & 2.1\\
 Dielectric permittivity $\epsilon$r & 9 & 9 & 15 & 6.5\\
-CB effective DOS N$_{\mathrm{C}}$ (cm$^{-3}$) & 2$\times$10$^{18}$ & 2.2$\times$10$^{18}$ & 1$\times$10$^{17}$ & 2.8$\times$10$^{19}$\\
-VB effective DOS N$_{\mathrm{V}}$ (cm$^{-3}$) & 1.8$\times$10$^{19}$ & 1.8$\times$10$^{19}$ & 1$\times$10$^{17}$ & 1$\times$10$^{19}$\\
+CB effective DOS N$_{\mathrm{C}}$ (cm$^{-3}$) & 2$\times$10$^{18}$ & 2.2$\times$10$^{18}$ & 1$\times$10$^{18}$ & 2.8$\times$10$^{19}$\\
+VB effective DOS N$_{\mathrm{V}}$ (cm$^{-3}$) & 1.8$\times$10$^{19}$ & 1.8$\times$10$^{19}$ & 1$\times$10$^{18}$ & 1$\times$10$^{19}$\\
 Electron mobility $\mu$e (cm$^{2}$ V$^{-1}$ s$^{-1}$) & 20 & 20 & 28.6 & 100\\
 Hole mobility $\mu$p (cm$^{2}$ V$^{-1}$ s$^{-1}$) & 10 & 10 & 27.3 & 43.9\\
 Donor density $N_{\mathrm{D}}$ (cm$^{-3}$) & 9$\times$10$^{16}$ & 1$\times$10$^{19}$ & 1$\times$10$^{9}$ & 0\\
@@ -246,7 +248,7 @@ Bulk defect density $N_{\mathrm{t}}$ (cm$^{-3}$) & 1$\times$10$^{15}$ & 1$\times
 \hline
 \end{tabularx}
 }
-\caption{Optimized material parameters of the proposed FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au perovskite solar cell.}
+\caption{Optimized material parameters of the proposed FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au perovskite solar cell. Transport-layer bulk defect densities were carried from the initial deck (not among the eleven swept steps).}
 \end{table}
 \textit{Note: The optimized interface defect density was 1 $\times$ 10$^{14}$ cm$^{-2}$ for both the TiO}\textit{2}\textit{/RbGeI}\textit{3}\textit{ and RbGeI}\textit{3}\textit{/CuI interfaces.}
 
@@ -257,94 +259,88 @@ Bulk defect density $N_{\mathrm{t}}$ (cm$^{-3}$) & 1$\times$10$^{15}$ & 1$\times
 \hline
 Device & V$_{\mathrm{OC}}$ (V) & J$_{\mathrm{SC}}$ (mA/cm$^{2}$) & FF (\%) & PCE (\%)
 \\\hline
-OPAT reference (Table III) & 1.13 & 30.32 & 78.26 & 26.81\\
-GA joint optimum ($E_{\mathrm{g}}$ 1.33 eV) & 1.13 & 33.06 & 85.26 & 31.78\\
-OPAT + realistic optics & 1.13 & 26.65 & 78.26 & 23.49\\
-Realistic optics + $N_{\mathrm{t}}$ 1e15 & 1.11 & 26.65 & $\sim$73.7 & 21.76\\
-Realistic optics + Nif 1e15 & 1.05 & 26.65 & $\sim$73.9 & 20.68\\
-OPAT params, N$_{\mathrm{C}}$=N$_{\mathrm{V}}$=1e18 & 1.06 & 30.32 & 84.12 & 27.13\\
-OPAT params, N$_{\mathrm{C}}$=N$_{\mathrm{V}}$=1e19 & 0.99 & 30.32 & 83.51 & 24.94\\
+Adopted reference (Table IV) & 1.06 & 30.32 & 84.11 & 27.06\\
+GA best-found ($E_{\mathrm{g}}$ 1.36 eV) & 1.04 & 31.55 & 85.87 & 28.30\\
+Reference, N$_{\mathrm{C}}$=N$_{\mathrm{V}}$=1e19 & 0.97 & 30.32 & 84.09 & 24.82\\
+Reference + realistic optics (0.9 sun) & 1.06 & 27.28 & 83.97 & 24.28\\
 \hline
 \end{tabularx}
 }
-\caption{OPAT reference device versus GA joint optimum and the optically/defect-derated realistic window. FF held in optical derating; defect FF from re-simulation (Fig. 10). Optics-row V$_{\mathrm{OC}}$ uses kT/q ln(J) scaling ($-$3 mV, absorbed in rounding); defect rows use re-simulated FF.}
+\caption{Adopted reference device versus GA best-found point and sensitivity rows (defect rows re-simulated, Fig. 8; optics row reports PCE$_{1\text{-sun}}$). PCEs are unrounded SCAPS outputs (displayed inputs rounded).}
 \end{table}
-As an arithmetic consistency check, the final-device PCE computed from Eq. (5) using the consolidated J--V metrics is PCE = (1.13 $\times$ 30.32 $\times$ 0.7826) / 100 = 26.81\%, which matches the SCAPS-1D output of 26.81\% to within rounding, confirming the internal arithmetical consistency of the final reported device.
+As an arithmetic consistency check, the final-device PCE computed from Eq.~(\ref{eq:pce}) using the consolidated J--V metrics is PCE = (1.0613 $\times$ 30.3161 $\times$ 0.8411) / 100 = 27.06\%, matching the SCAPS-1D output to within rounding.
 
 \subsection{Uncertainty quantification}
-A Monte Carlo UQ was performed using Latin hypercube sampling (N = 200) with eight random variables: absorber thickness (500--900 nm), bandgap (1.3--1.5 eV), defect density (1$\times$10$^{13}$--1$\times$10$^{16}$ cm$^{-3}$ in the absorber, 1$\times$10$^{12}$--1$\times$10$^{16}$ cm$^{-2}$ at each interface), N$_{\mathrm{C}}$ and N$_{\mathrm{V}}$ (1$\times$10$^{17}$--1$\times$10$^{19}$ cm$^{-3}$ each), and dielectric constant (15--23).
+Monte Carlo UQ used Latin hypercube sampling (N = 200, seed 11) over eight variables on the H1 deck: gap 1.35--1.45 eV ($E_{g}$ moves co-move $\chi$), bulk $5\times10^{13}$--$5\times10^{15}$ cm$^{-3}$, interfaces $5\times10^{13}$--$5\times10^{14}$ cm$^{-2}$ each side, $N_{\mathrm{C}}$/$N_{\mathrm{V}}$ $5\times10^{16}$--$5\times10^{17}$ cm$^{-3}$, $\mu_{n}$/$\mu_{p}$ 15--50 cm$^{2}$/Vs.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\linewidth]{figs/fig17.png}
 \caption{Uncertainty quantification results (N = 200). Histograms of PCE, V$_{\mathrm{OC}}$, J$_{\mathrm{SC}}$, and FF.}
 \end{figure}
-Mean PCE = 25.92 $\pm$ 1.78 \% (median 25.85 \%, 5th/95th percentiles 23.38 \%/28.81 \%, all 200/200 runs converged). Mean V$_{\mathrm{OC}}$ = 1.087 $\pm$ 0.021 V.
+Mean PCE 24.86 $\pm$ 1.77 \% (median 24.55 \%; 5th/95th 22.23/27.79 \%; 200/200 converged).
 
 \subsection{Temperature dependence}
-Temperature dependence from 280 K to 400 K (20 K increments) under AM 1.5G.
+Swept 280--400 K (20 K steps) under AM 1.5G.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\linewidth]{figs/fig20.png}
 \caption{Temperature dependence of photovoltaic parameters from 280 K to 400 K.}
 \end{figure}
-dV$_{\mathrm{OC}}$/dT = $-$1.10 mV/K, dPCE/dT = $-$0.0302 \%/K. J$_{\mathrm{SC}}$ increases marginally. FF peaks at 331 K (80.17 \%). Device retains >85 \% of RT PCE at 400 K. Linear extrapolation of V$_{\mathrm{OC}}$(T) to 0 K gives an activation energy $E_{\mathrm{a}}$ = 1.46 eV, within 0.06 eV of the absorber bandgap (1.4 eV). $E_{\mathrm{a}}$ approx $E_{\mathrm{g}}$ is the standard diagnostic for bulk-dominated recombination; an interface-limited device would extrapolate well below $E_{\mathrm{g}}$. Fabricated cells whose measured $E_{\mathrm{a}}$ falls short of 1.4 eV should therefore be diagnosed for interface recombination first.
+dV$_{\mathrm{OC}}$/dT = $-$1.38 mV/K, dPCE/dT = $-$0.058 \%/K (PCE falls non-monotonically in FF, so the linear coefficient is descriptive, not predictive); $\sim$75 \% of RT PCE retained at 400 K. V$_{\mathrm{OC}}$(T) extrapolates to $E_{\mathrm{a}}$ = 1.48 eV --- 0.08 eV \textit{above} $E_{\mathrm{g}}$, so this is not a clean bulk-recombination signature but an extrapolation artifact consistent with T-dependent N$_{\mathrm{C}}$/N$_{\mathrm{V}}$; it is reported as measured, with the artifact disclosed, rather than as proof of bulk-dominated recombination.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\linewidth]{figs/fig21.png}
-\caption{Genetic-algorithm joint optimization over bandgap, bulk/interface defect densities, N$_{\mathrm{C}}$, N$_{\mathrm{V}}$, and absorber thickness. Best PCE rises from 31.35\% (generation 0) to 31.78\% (generation 5), 5 points above the OPAT point (red dashed).}
+\caption{Genetic-algorithm joint search over bandgap, bulk/interface defect densities, N$_{\mathrm{C}}$, N$_{\mathrm{V}}$, and absorber thickness. Per-generation best (grey) fluctuates under mutation; best-so-far (squares) reaches 28.30\% at generation 5 from 27.61\% at generation 0.}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\linewidth]{figs/fig22.png}
-\caption{Defect tolerance of the OPAT device. Raising bulk $N_{\mathrm{t}}$ to $10^{15}$ ($10^{16}$) cm$^{-3}$ drops PCE to 24.84\% (21.45\%); raising interface $N_{\mathrm{t}}$ to $10^{15}$ ($10^{16}$) cm$^{-2}$ drops PCE to 23.60\% (18.40\%). J$_{\mathrm{SC}}$ is nearly unchanged; V$_{\mathrm{OC}}$ and FF collapse.}
+\caption{Defect tolerance of the adopted device. Raising bulk $N_{\mathrm{t}}$ to $10^{15}$ ($10^{16}$) cm$^{-3}$ drops PCE to 24.40\% (20.76\%); raising rear-interface $N_{\mathrm{t}}$ to $10^{15}$ ($10^{16}$) cm$^{-2}$ drops PCE to 20.29\% (19.65\%). J$_{\mathrm{SC}}$ is nearly unchanged; V$_{\mathrm{OC}}$ and FF collapse.}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\linewidth]{figs/fig23.png}
-\caption{From ideal SCAPS (26.81\%) to realistic PCE. Front-surface reflection ($\sim$10\% at air/FTO) and parasitic absorption in TiO$_{2}$/CuI lower PCE to 23.49\%; realistic defect densities ($10^{15}$ cm$^{-3}$ bulk or cm$^{-2}$ interface) bound the plausible window to 20.7-21.8\%. Supplementary first-order estimate only; coupled transfer-matrix re-simulation is future work.}
+\caption{From the adopted 27.06\% to the stacked realistic PCE: optics, bulk and interface losses give 20.78\% (21.76\% with BSF). All nodes re-simulated PCE$_{1\text{-sun}}$ on the adopted deck.}
 \end{figure}
 \subsection{Effect of background acceptor doping}
-Germanium halide perovskites form Ge vacancies that act as intrinsic p-type dopants, so a perfectly intrinsic absorber is an experimental fiction. Sweeping $N_{\mathrm{A}}$ from $10^{14}$ to $10^{17}$ cm$^{-3}$ (Fig. 14), PCE peaks at 26.82\% near $3\times10^{14}$ cm$^{-3}$ and stays within 0.9 pp up to $10^{16}$ cm$^{-3}$ (26.46\%). V$_{\mathrm{OC}}$ rises monotonically (1.13 to 1.17 V) through the larger built-in potential, while J$_{\mathrm{SC}}$ collapses above $10^{16}$ cm$^{-3}$ (30.31 to 27.83 mA/cm$^{2}$) as the depletion width shrinks. Synthetic target: keep background doping at or below $10^{15}$ cm$^{-3}$, where the penalty is under 0.1 pp.
+Each Ge$^{2+}$\,$\rightarrow$\,Ge$^{4+}$ oxidation event donates two holes via V$_{\mathrm{Ge}}$, so background doping is oxidation by another name: sweeping $N_{\mathrm{A}}$ $10^{14}$--$10^{17}$ cm$^{-3}$ on the stacked point (Fig.~12), PCE peaks at 23.41\% near $3\times10^{15}$ cm$^{-3}$ and softens past $10^{16}$ cm$^{-3}$ (23.12\%) before falling at higher doping (22.17\% at $10^{17}$) --- consistent with the oxidation budget's $p\approx2$[V$_{\mathrm{Ge}}$] expectation in Section~VI.H, with the penalty soft ($\le$0.3 pp at $10^{16}$), not a collapse. Synthetic target: $N_{\mathrm{A}}\le10^{16}$ cm$^{-3}$. Tying doping to defects per the budget ($N_{t}$=$10^{15}$ with $N_{A}$=$2\times10^{15}$ cm$^{-3}$) gives 25.52\% against 24.40\% untied, so the near-intrinsic absorber used throughout is conservative at this rung, not flattering.
 \subsection{Effect of series resistance: manufacturing tolerance}
-Scalable coating (slot-die, screen printing) inevitably adds contact and sheet resistance, so the ideal-contact ($R_{\mathrm{s}}$ = 0) result was corrected externally (V $\rightarrow$ V - J x $R_{\mathrm{s}}$, the standard post-processing since SCAPS scripting exposes no $R_{\mathrm{s}}$ key). FF falls from 78.26\% to 56.82\% and PCE from 26.81\% to 19.46\% as $R_{\mathrm{s}}$ goes from 0 to 10 $\Omega\cdot$cm$^{2}$ (Fig. 15); PCE stays above 20\% up to $R_{\mathrm{s}}$ = 8 $\Omega\cdot$cm$^{2}$ and above 22\% up to $R_{\mathrm{s}}$ = 6 $\Omega\cdot$cm$^{2}$. Typical printed contacts (2-4 $\Omega\cdot$cm$^{2}$) therefore cost only 1.6-3.1 pp, and $R_{\mathrm{s}}$ = 8 $\Omega\cdot$cm$^{2}$ is the manufacturing tolerance threshold for a 20\%-efficient module.
+Corrections were recomputed on the stacked realistic point (20.78\%), not the ideal: FF falls 77.75 $\rightarrow$ 59.75\% and PCE 20.78 $\rightarrow$ 15.96\% as $R_{\mathrm{s}}$ goes 0 $\rightarrow$ 8 $\Omega\cdot$cm$^{2}$ (Fig.~13, external V $-$ J$\times$$R_{\mathrm{s}}$). Tolerance: $R_{\mathrm{s}}\le4$ preserves 20\% pre-optics (23.16 $\rightarrow$ 20.10\%); on the full stack the same $R_{\mathrm{s}}$ gives 18.31\%. Shunt analysis on the same point: $R_{\mathrm{sh}}$ $10^{2}$/$5\times10^{2}$/$10^{3}$/$\infty$ gives 14.26/19.41/20.09/20.71\%, so $R_{\mathrm{sh}}\ge10^{3}$ $\Omega\cdot$cm$^{2}$ holds 20\%.
 \subsection{Absorber mobility viability}
-Lead-free perovskites crystallize worse than lead-based ones, so electron/hole mobilities were swept jointly from 1 to 100 cm$^{2}$/Vs (Fig. 16). PCE is log-linear in mobility (22.58\% at 1, 24.41\% at 5, 25.84\% at 15, 26.88\% at 30, 28.52\% at 100), with electron mobility dominant: ($\mu_{\mathrm{n}}$, $\mu_{\mathrm{p}}$) = (30, 5) gives 27.01\% but (5, 30) only 24.36\%. The 700 nm absorber remains optimal over 400 nm at $\mu$ = 5-15 cm$^{2}$/Vs (by $\sim$2 pp), so no thickness retreat is needed; the crystallization target is $\mu$ >= 15 cm$^{2}$/Vs for PCE above 25.8\%.
+Electron/hole mobilities were swept jointly from 1 to 100 cm$^{2}$/Vs on the stacked point (Fig.~14): PCE is log-linear (18.35\% at 1 to 24.32\% at 100). Crystallization target: $\mu\ge15$ cm$^{2}$/Vs.
 
 
-\section{Comparison with Literature}
-
-\subsection{Benchmarking against recent literature}
-Table V compares the optimized FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au device with recently reported RbGeI$_{3}$-based and related lead-free Ge/Sn-based perovskite solar cells. The proposed device achieves a highly competitive V$_{\mathrm{OC}}$ (1.13 V) among the RbGeI$_{3}$ simulation studies, second only to the 1.18 V reported by Pathak et al. \cite{r23}, with a PCE of 26.81\%, within 0.40 pp of the best reported value (27.21\%, Loumachi et al. \cite{r22}) and exceeding the 26.47\% of Pathak et al. \cite{r23} by 0.34 pp, the 18.60\% of Raj et al. \cite{r39} by 8.21 pp, and the 9.77\% simulation baseline of Pindolia et al. \cite{r14} by 17 pp. The performance is competitive with the best tin-based devices (26.40\% CsSnI$_{3}$ \cite{r40}, 25.98\% MASnI$_{3}$ \cite{r41}) while avoiding Sn$^{2+}$ $\rightarrow$ Sn$^{4+}$ oxidation, and exceeds CZTS-HTL devices \cite{r42}.
-All comparator values were cross-checked against primary sources (adopting the efficiency implied by reported V$_{\mathrm{OC}}$, J$_{\mathrm{SC}}$, FF where inconsistent); all entries are SCAPS-1D simulations, and the Loumachi string is ITO/\allowbreak{}C$_{60}$/RbGeI$_{3}$/CBTS/\allowbreak{}Ag (Section II).
+\section{Extended results: loss budget, sensitivity and experimental grounding}
+\subsection{Benchmarking data (discussion in Section~VII)}
+Literature benchmarking (Table~VI) and the CsGeI$_{3}$ gap control (Table~VII, Fig.~16) are discussed in Section~VII; the tables and figures are placed here.
 
 \begin{table}[htbp]
 \centering
-{\footnotesize\setlength{\tabcolsep}{3pt}
-\begin{tabularx}{\textwidth}{XccccXX}
+{\scriptsize\setlength{\tabcolsep}{2pt}
+\begin{tabularx}{\textwidth}{XccccX}
 \hline
-Device Structure & V$_{\mathrm{OC}}$ (V) & J$_{\mathrm{SC}}$ (mA/cm$^{2}$) & FF (\%) & PCE (\%) & Year [Ref.] & Method
+Device Structure & V$_{\mathrm{OC}}$ (V) & J$_{\mathrm{SC}}$ (mA/cm$^{2}$) & FF (\%) & PCE (\%) & Year [Ref.]
 \\\hline
-FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/NiO/\allowbreak{}Ag & 0.5311 & 28.89 & 63.68 & 9.77 & 2022 \cite{r14} & Simulation\\
-FTO/\allowbreak{}TiO$_{2}$/CsGeI$_{3}$/CuI/\allowbreak{}Au & 0.667 & 22.06 & 73.49 & 10.80 & 2022 \cite{r24} & Simulation\\
-ITO/\allowbreak{}C$_{60}$/RbGeI$_{3}$/CBTS/\allowbreak{}Ag & 0.99 & 33.20 & 82.80 & 27.21 & 2024 \cite{r22} & Simulation\\
-FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/PEDOT:PSS/\allowbreak{}Au & 0.813 & 30.84 & 74.19 & 18.60 & 2025 \cite{r39} & Simulation\\
-FTO/\allowbreak{}TiO$_{2}$/MASnI$_{3}$/CBTS/\allowbreak{}Au & 1.030 & 30.24 & 83.41 & 25.98 & 2026 \cite{r41} & Simulation\\
-FTO/\allowbreak{}TiO$_{2}$/MASnI$_{3}$/CZTS/Au & 0.96 & 31.66 & 67.00 & 20.36 & 2025 \cite{r42} & Simulation\\
-FTO/\allowbreak{}TiO$_{2}$/CsSnI$_{3}$/P3HT/Au & 0.972 & 34.70 & 78.21 & 26.38 & 2024 \cite{r40} & Simulation\\
-FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/Spiro-OMeTAD/\allowbreak{}Au & 1.1813 & 26.31 & 85.16 & 26.47 & 2026 \cite{r23} & Simulation\\
-FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au (this work) & 1.13 & 30.32 & 78.26 & 26.81 & This work & Simulation\\
+FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/NiO/\allowbreak{}Ag & 0.5311 & 28.89 & 63.68 & 9.77 & 2022 \cite{r14}\\
+FTO/\allowbreak{}TiO$_{2}$/CsGeI$_{3}$/CuI/\allowbreak{}Au & 0.667 & 22.06 & 73.49 & 10.80 & 2022 \cite{r24}\\
+ITO/\allowbreak{}C$_{60}$/RbGeI$_{3}$/CBTS/\allowbreak{}Ag & 0.99 & 33.20 & 82.80 & 27.21 & 2024 \cite{r22}\\
+FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/PEDOT:PSS/\allowbreak{}Au & 0.813 & 30.84 & 74.19 & 18.60 & 2025 \cite{r39}\\
+FTO/\allowbreak{}TiO$_{2}$/MASnI$_{3}$/CBTS/\allowbreak{}Au & 1.030 & 30.24 & 83.41 & 25.98 & 2026 \cite{r41}\\
+FTO/\allowbreak{}TiO$_{2}$/MASnI$_{3}$/CZTS/Au & 0.96 & 31.66 & 67.00 & 20.36 & 2025 \cite{r42}\\
+FTO/\allowbreak{}TiO$_{2}$/CsSnI$_{3}$/P3HT/Au & 0.972 & 34.70 & 78.21 & 26.38 & 2024 \cite{r40}\\
+FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/Spiro-OMeTAD/\allowbreak{}Au & 1.1813 & 26.31 & 85.16 & 26.47 & 2026 \cite{r23}\\
+FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au (this work) & 1.06 & 30.32 & 84.11 & 27.06 & This work\\
+FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/Cu$_{2}$O-BSF/CuI/\allowbreak{}Au (this work) & 1.09 & 30.32 & 84.62 & 28.01 & This work\\
 \hline
 \end{tabularx}
 }
 \caption{Comparison of the proposed device with recently reported lead-free perovskite solar cells. All comparator values verified against primary sources. All entries are SCAPS-1D simulation studies.}
 \end{table}
-In short, the optimized device lands within 0.40 pp of the best published RbGeI$_{3}$ simulation, posts the second-highest V$_{\mathrm{OC}}$ of the group, and stays competitive with the top tin-based lead-free cells, all with an all-inorganic transport stack.
- The Pindolia et al. \cite{r14} baseline of 9.77\% leaves a wide gap for improvement. Working RbGeI$_{3}$ solar cells are still rare, so experimental confirmation remains the bottleneck.
 
 \begin{table}[htbp]
 \centering
@@ -353,81 +349,180 @@ In short, the optimized device lands within 0.40 pp of the best published RbGeI$
 \hline
 Device & Condition & V$_{\mathrm{OC}}$ (V) & J$_{\mathrm{SC}}$ (mA/cm$^{2}$) & PCE (\%)
 \\\hline
-RbGeI$_{3}$ & Ideal ($N_{\mathrm{t}}$=1e14) & 1.13 & 30.32 & 26.81\\
-CsGeI$_{3}$ & Ideal ($N_{\mathrm{t}}$=1e14) & 1.17 & 23.18 & 19.66\\
-RbGeI$_{3}$ & Realistic ($N_{\mathrm{t}}$=1e15) & 1.11 & 30.31 & 24.84\\
-CsGeI$_{3}$ & Realistic ($N_{\mathrm{t}}$=1e15) & 1.17 & 23.17 & 19.36\\
-RbGeI$_{3}$ & High oxidation ($N_{\mathrm{t}}$=1e16) & 1.06 & 30.22 & 21.45\\
-CsGeI$_{3}$ & High oxidation ($N_{\mathrm{t}}$=1e16) & 1.17 & 23.10 & 17.28\\
+RbGeI$_{3}$ & Ideal ($N_{\mathrm{t}}$=1e14) & 1.06 & 30.32 & 27.06\\
+CsGeI$_{3}$ & Ideal ($N_{\mathrm{t}}$=1e14) & 1.10 & 23.18 & 19.65\\
+RbGeI$_{3}$ & Realistic ($N_{\mathrm{t}}$=1e15) & 1.02 & 30.31 & 24.40\\
+CsGeI$_{3}$ & Realistic ($N_{\mathrm{t}}$=1e15) & 1.10 & 23.17 & 19.31\\
+RbGeI$_{3}$ & High oxidation ($N_{\mathrm{t}}$=1e16) & 0.96 & 30.22 & 20.76\\
+CsGeI$_{3}$ & High oxidation ($N_{\mathrm{t}}$=1e16) & 1.09 & 23.10 & 17.07\\
 \hline
 \end{tabularx}
 }
-\caption{RbGeI$_{3}$ versus CsGeI$_{3}$ in the identical FTO/\allowbreak{}TiO$_{2}$/absorber/CuI/\allowbreak{}Au stack under ideal, realistic, and high-oxidation defect budgets. Only the absorber bandgap differs (1.4 vs 1.6 eV). The Rb high-oxidation row uses the sigma x $N_{\mathrm{t}}$ product-equivalent lifetime point (sigma = $10^{-17}$ m2 at $N_{\mathrm{t}}$ = $10^{14}$ cm$^{-3}$), arithmetically verified.}
+\caption{RbGeI$_{3}$ versus CsGeI$_{3}$ in the identical FTO/\allowbreak{}TiO$_{2}$/absorber/CuI/\allowbreak{}Au stack under ideal, realistic, and high-oxidation defect budgets. Only the absorber bandgap differs (1.4 vs 1.6 eV) at fixed affinity --- a gap-effect control, not A-site chemistry proof.}
 \end{table}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\linewidth]{figs/fig24.png}
-\caption{PCE versus defect energy $E_{\mathrm{t}}$ at $N_{\mathrm{t}}$ = $10^{15}$ cm$^{-3}$. Symmetric minimum at mid-gap (24.84\%) recovering to 25.01\% at both band edges: the SRH fingerprint.}
+\caption{PCE versus defect energy $E_{\mathrm{t}}$ on the H1 baseline ($N_{\mathrm{t}}$ = $10^{14}$ cm$^{-3}$). Symmetric minimum at mid-gap (27.06\%) recovering to 27.27\% at both band edges: the SRH fingerprint.}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\linewidth]{figs/fig25.png}
-\caption{PCE versus capture cross-section asymmetry at mid-gap $E_{\mathrm{t}}$. Lethality requires large sigma on either carrier; at fixed product, electron-dominated traps (23.97\%) beat hole-dominated ones (26.71\%) by 2.7 pp.}
+\caption{PCE versus capture cross-section asymmetry at mid-gap $E_{\mathrm{t}}$ on the H1 baseline. Symmetric large traps (20.76\%) are worst; at $\sigma_{n}$=$10^{-17}$ m$^{2}$, shrinking $\sigma_{p}$ recovers 21.91\% then 27.59\%; small $\sigma_{n}$ is benign throughout.}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\linewidth]{figs/fig26.png}
-\caption{PCE versus background acceptor density. Optimum near $3\times10^{14}$ cm$^{-3}$ (26.82\%); J$_{\mathrm{SC}}$ collapses above $10^{16}$ cm$^{-3}$ while V$_{\mathrm{OC}}$ keeps rising.}
+\caption{PCE versus background acceptor density on the stacked point. Optimum near $3\times10^{15}$ cm$^{-3}$ (23.41\%); penalty soft at $10^{16}$ cm$^{-3}$ ($\le$0.3 pp), collapse beyond.}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\linewidth]{figs/fig27.png}
-\caption{PCE and FF versus series resistance (external V - J x $R_{\mathrm{s}}$ correction). PCE stays above 20\% to $R_{\mathrm{s}}$ = 8 $\Omega\cdot$cm$^{2}$.}
+\caption{PCE and FF versus series resistance (external V - J x $R_{\mathrm{s}}$ correction) on the stacked 20.78\% point. PCE falls to 15.96\% at $R_{\mathrm{s}}$ = 8 $\Omega\cdot$cm$^{2}$; $R_{\mathrm{s}}\le4$ preserves 20\% only pre-optics.}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\linewidth]{figs/fig28.png}
-\caption{PCE versus absorber mobility ($\mu_{\mathrm{n}}$ = $\mu_{\mathrm{p}}$). Log-linear rise 22.58\% (1) to 28.52\% (100 cm$^{2}$/Vs); target $\mu$ >= 15 cm$^{2}$/Vs.}
+\caption{PCE versus absorber mobility ($\mu_{\mathrm{n}}$ = $\mu_{\mathrm{p}}$) on the stacked point. Log-linear rise 18.35\% (1) to 24.32\% (100 cm$^{2}$/Vs); target $\mu$ >= 15 cm$^{2}$/Vs.}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\linewidth]{figs/fig29.png}
-\caption{V$_{\mathrm{OC}}$ versus temperature with 0 K extrapolation. $E_{\mathrm{a}}$ = 1.46 eV approx $E_{\mathrm{g}}$ = 1.4 eV: bulk-dominated recombination; dV$_{\mathrm{OC}}$/dT = -1.10 mV/K.}
+\caption{V$_{\mathrm{OC}}$ versus temperature with 0 K extrapolation. $E_{\mathrm{a}}$ = 1.48 eV sits 0.08 eV \textit{above} $E_{\mathrm{g}}$: extrapolation artifact (T-dependent $N_{C}$/$N_{V}$), not a bulk-recombination signature; dV$_{\mathrm{OC}}$/dT = -1.38 mV/K.}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\linewidth]{figs/fig30.png}
-\caption{RbGeI$_{3}$ versus CsGeI$_{3}$ under ideal, realistic, and high-oxidation defect budgets in the identical stack. RbGeI$_{3}$ leads at every level.}
+\caption{RbGeI$_{3}$ versus CsGeI$_{3}$ under ideal, realistic, and high-oxidation defect budgets in the identical stack. RbGeI$_{3}$ leads on PCE at every level (gap harvest); Cs V$_{\mathrm{OC}}$ pinning signals interface limitation.}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\linewidth]{figs/fig31.png}
-\caption{Defect-plus-resistance derating ladder from the 26.81\% ideal point. $R_{\mathrm{s}}$ steps are first-order estimates from the ideal J-V.}
+\caption{Resistance derating ladder on the stacked 20.78\% point ($R_{\mathrm{s}}$/$R_{\mathrm{sh}}$ post-corrections; red dashed line marks 20\%).}
 \end{figure}
 
-\subsection{A-site cation influence: RbGeI$_{3}$ versus CsGeI$_{3}$}
-To isolate the A-site effect, CsGeI$_{3}$ was simulated in the identical TiO$_{2}$/CuI stack changing only the absorber bandgap (1.4 $\rightarrow$ 1.6 eV); the A-site cation carries no weight at the Ge-4s/I-5p-derived band edges, so its role is structural (tolerance factor, octahedral tilt). A control rerun of CsGeI$_{3}$ at $E_{\mathrm{g}}$ = 1.4 eV reproduces the RbGeI$_{3}$ point exactly (26.81\%), proving the isolation. The consolidated CsGeI$_{3}$ point (Table VI) gives V$_{\mathrm{OC}}$ = 1.17 V, J$_{\mathrm{SC}}$ = 23.18 mA/cm$^{2}$, FF = 72.65\%, PCE = 19.66\%: Cs wins V$_{\mathrm{OC}}$ by 0.04 V through the wider gap, Rb wins J$_{\mathrm{SC}}$ by 7.1 mA/cm$^{2}$ and FF by 5.6 pp. The FF gap traces to CuI alignment: the valence-band cliff grows from 0.10 eV (Rb) to 0.30 eV (Cs), so CuI is uniquely synergistic with RbGeI$_{3}$ rather than a universal Ge-perovskite HTL. Under defect derating the ranking is unchanged (realistic $N_{\mathrm{t}}$ = $10^{15}$: 24.84\% vs 19.36\%; high oxidation $N_{\mathrm{t}}$ = $10^{16}$: 21.45\% vs 17.28\%, Fig. 18). A full 11-parameter OAT mirror for CsGeI$_{3}$ (71 runs) finds the same per-family trends, with one curiosity: 90 nm TiO$_{2}$ lifts the Cs point to 23.12\% (FF 88.26\%, confirmed by rerun), an interface effect flagged for follow-up and not adopted in the consolidated comparison.
+\subsection{BSF enhancement of the TiO$_{2}$/RbGeI$_{3}$/CuI stack}
+A Cu$_{2}$O-like p$^{+}$ back-surface field (BSF) inserted between RbGeI$_{3}$ and CuI ($E_{\mathrm{g}}$ 2.1 eV, $\chi$ 3.2 eV, $\epsilon_{r}$ 7.5, literature-standard Cu$_{2}$O parameters for SCAPS perovskite studies \cite{rMA}) upgrades the same economical stack without changing the absorber or transport pair. The 50 nm, $N_{A}$ $10^{18}$ cm$^{-3}$ pilot converges to 27.93\% (+0.87 pp over the 27.06\% headline). The full $4\times3$ grid (Fig.~18; nodes in Supplementary Table~S5) shows doping, not thickness, controls the gain: $10^{17}$ gives 27.55--27.60\%, $10^{18}$ gives 27.93--27.94\%, $10^{19}$ gives 28.00--28.01\%. The optimum reaches 28.01\% (1.0915 V, 30.32 mA/cm$^{2}$, 84.62\%); $J_{\mathrm{SC}}$ is unchanged, so the gain is $V_{\mathrm{OC}}$ (+30 mV) plus FF (+0.5 pp). The mechanism is rear-interface gap widening, not electron reflection (CuI already blocks electrons with 1.8 eV): the BSF removes the 0.10 eV valence cliff -- computed from the stated layer offsets, cf.\ the no-BSF lineup in Fig.~3 -- that otherwise shrinks the interface recombination gap, and it halves the rear trap penalty --- raising rear $N_{t}$ to $10^{16}$ cm$^{-2}$ costs 7.41 pp without BSF (27.06 $\rightarrow$ 19.65\%) but 3.64 pp with it (28.00 $\rightarrow$ 24.36\%, Fig.~18, right panel). Block attribution is explicit: both rear blocks (CuI/BSF and BSF/RbGeI$_{3}$) carry the raised $N_{t}$, and raising only the far CuI/BSF block costs nothing, pinning the damage on the absorber side. A p$^{+}$ control interlayer with CuI bands (no new offset, same $N_{A}$) gains only +0.76 pp ideally (27.82\%) and still loses 6.49 pp under traps (21.33\%), so the field contributes a minority share and the offset removal carries the immunity. Gains are non-additive with the $N_{t}$=$10^{15}$ ladder for the same reason: once the rear gap is widened, further defect cuts buy less. All metrics sit below the R\"uhle limits \cite{r35,r36,r37}. Cu$_{2}$O is routinely sputtered on perovskite stacks, but a direct Cu$_{2}$O-on-Ge-perovskite interface is undemonstrated and flagged as the fabrication risk.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\linewidth]{figs/fig32.png}
+\caption{BSF grid PCE (\%): $N_{A}$ $10^{17}\!\rightarrow\!10^{19}$ cm$^{-3}$ rows; thickness 30--100 nm columns. Doping dominates; thickness is flat. Full node values: Supplementary Table~S5. Right: rear-interface trap attribution --- raising rear $N_{t}$ to $10^{16}$ cm$^{-2}$ costs 7.41 pp without BSF (27.06 $\rightarrow$ 19.65\%) but 3.64 pp with it (28.00 $\rightarrow$ 24.36\%); far-side traps alone cost nothing; the p+ no-offset control (grey) traps at 21.33\%.}
+\end{figure}
+
+\subsection{Loss waterfall: what survives realism}
+Native-defect simulation plus photon-scaling optics and post-processed parasitics bound the experimentally plausible window (Fig.~19; nodes in Supplementary Table~S6; PCE$_{1\text{-sun}}$ norm.). Radiative recombination at $K_{\mathrm{rad}}$ $10^{-10}$ cm$^{3}$/s costs 0.07 pp (27.13 $\rightarrow$ 27.06\%), consistent with the detailed-balance value to order of magnitude at the rebased densities; higher $K_{\mathrm{rad}}$ bounds the sensitivity in S6. Auger coefficients $10^{-29}$--$10^{-27}$ cm$^{6}$/s change nothing at 1-sun ($\pm$0.00 pp) --- a reportable null justifying its omission from the headline budget. Ten percent front reflection costs 2.78 pp ($\rightarrow$24.28\%); realistic bulk defects ($10^{15}$ cm$^{-3}$) a further 2.35 pp ($\rightarrow$21.93\%); realistic interfaces ($10^{15}$ cm$^{-2}$) a further 1.15 pp ($\rightarrow$\textbf{20.78\%}). The BSF optimum on the \textit{identical} full stack gives \textbf{21.76\%}, recovering +0.98 pp. The stack is optics- and defect-limited, not transport-limited, and the BSF pays off precisely where reality lives.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\linewidth]{figs/fig23.png}
+\caption{Stacked loss waterfall (PCE$_{1\text{-sun}}$ norm.): optics $-$2.78 pp, bulk $-$2.35 pp, interfaces $-$1.15 pp; BSF on the full stack recovers +0.98 pp. Nodes: Supplementary Table~S6.}
+\end{figure}
+
+\subsection{Carrier-lifetime baseline}
+SRH statistics ($\tau^{-1}$=$\sigma v_{\mathrm{th}}N_{t}$) give \textbf{1000 ns} at $10^{14}$ cm$^{-3}$ with diffusion length \textbf{8.6 $\mu$m} $\gg$ 700 nm absorber, explaining the near-unity collection. Fig.~20 shows the Beer--Lambert generation profile normalized to the H1 $J_{\mathrm{SC}}$. No built-in potential, depletion width or Mott--Schottky values are reported: the near-intrinsic absorber is fully depleted so the depletion approximation does not apply, and C--V extraction is left for fabricated devices (method note in S7).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\linewidth]{figs/fig34.png}
+\caption{Normalized Beer--Lambert generation profile (square-root law, edge 886 nm). Recombination-profile export is unavailable for this deck (S7); the BSF mechanism rests on the controlled attribution runs (Fig.~18) instead.}
+\end{figure}
+
+\subsection{Data-driven global sensitivity analysis}
+An XGBoost surrogate on the 200-point LHS-UQ block (8 features: $E_{g}$, $N_{t}$, $N_{C}$, $N_{V}$, $\mu_{n}$, $\mu_{p}$, both interface $N_{t}$; 80/20 held-out split, seed 7; 200/200 converged; $E_{g}$ moves co-move $\chi$ so gap physics, not misalignment, is measured) gives held-out R$^{2}$ 0.907, RMSE 0.57 (Fig.~21; random forest agrees at 0.907). SHAP ranks bulk $N_{t}$ $>$ $E_{g}$ $>$ $\mu_{n}$ $>$ CuI-side $N_{t}$ $>$ TiO$_{2}$-side $N_{t}$ $>$ $N_{V}$ $>$ $\mu_{p}$ $>$ $N_{C}$ (Fig.~22): near the adopted point, bulk defect density dominates, electron mobility outranks hole mobility, and $N_{C}$/$N_{V}$ are inert \textit{within the sampled neighborhood} ($5\times10^{16}$--$5\times10^{17}$ cm$^{-3}$) --- consistent with Table V, where $10^{19}$ costs 2.2 pp outside it. Three hedges: rankings inherit sampled ranges ($E_{g}$ spans 1.35--1.45 while $N_{t}$ spans two decades); $N_{C}$/$N_{V}$ are sampled an order of magnitude below the enforced $10^{18}$ floor, so their ``inert'' ranking is a neighborhood statement, not a license to lower them; the interface range tops out at $5\times10^{14}$ cm$^{-2}$, excluding the realistic point. The deterministic-solver R$^{2}$ is reported on held-out data only; no factorial cross-check figure is shown (the prior 193-row block ran on the pre-rebase deck).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\linewidth]{figs/fig35.png}
+\caption{XGBoost parity on the UQ block, held-out 20\% (R$^{2}$ 0.907).}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\linewidth]{figs/fig36.png}
+\caption{SHAP importance from the UQ surrogate (R$^{2}$ 0.907): bulk defects dominate, then gap and electron mobility.}
+\end{figure}
+
+\subsection{Pipeline calibration against an experimental inorganic perovskite}
+No RbGeI$_{3}$ device has been fabricated to date, so direct validation is impossible; we instead run a calibration sanity check of the solver pipeline on the experimentally realized analog $\beta$-CsPbI$_{3}$ of Wang et al.\ \cite{rWang} (FTO/c-TiO$_{2}$/CsPbI$_{3}$/spiro-OMeTAD/Ag, 375 nm absorber, J--V measured at 318 K). Rebuilding that stack with literature-pinned bands and fitting only bulk $N_{t}$ $\times$ interface $N_{t}$ reproduces both reported devices (Table VIII, Fig.~23): the CHI-passivated champion at $N_{t}$ $3\times10^{13}$ cm$^{-3}$ / $N_{t,\mathrm{if}}$ $3\times10^{13}$ cm$^{-2}$ (18.49\% vs 18.4\%, all metrics within 2\%), and the control at $N_{t}$ $3\times10^{13}$ cm$^{-3}$ / $N_{t,\mathrm{if}}$ $10^{14}$ cm$^{-2}$ plus an effective $R_{s}$ $6.9$ $\Omega\cdot$cm$^{2}$ first-order correction (15.18\% vs 15.1\%). The control's low FF (0.72) cannot be reached by defects (floor $\sim$0.84) and carries the documented cracks, pinholes and hysteresis, justifying the resistive term; the control fit visibly misses the knee, so it is presented as achieved with that caveat. This calibrates that SCAPS-1D with literature bands can reproduce two measured inorganic devices by tuning defect densities (plus one resistive correction) --- it tests the solver pipeline, not CuI, Ge chemistry, the oxidation map or the BSF, none of which appear in the analog; full provenance is in Supplementary Section~S5.
+
+\begin{table}[htbp]
+\centering
+{\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{Xcccc}
+\hline
+Device & V$_{\mathrm{OC}}$ (V) & J$_{\mathrm{SC}}$ (mA/cm$^{2}$) & FF (\%) & PCE (\%)
+\\\hline
+Wang control (measured) & 1.05 & 20.03 & 72.0 & 15.10\\
+SCAPS rebuild + $R_{s}$ 6.9 & 1.060 & 19.92 & 71.88 & 15.18\\
+Wang champion (measured) & 1.11 & $\sim$20.0 & 82.0 & 18.40\\
+SCAPS rebuild & 1.127 & 19.92 & 82.37 & 18.49\\
+\hline
+\end{tabularx}
+}
+\caption{Calibration check: SCAPS rebuild vs measured $\beta$-CsPbI$_{3}$ devices \cite{rWang} at 318 K. Fitted knobs are defect densities (plus $R_{s}$ on the control); the control fit misses the knee.}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/fig37.png}
+\caption{Calibration overlay: SCAPS rebuilds vs digitized J--V of Wang et al.\ \cite{rWang} control and CHI-passivated champion (318 K).}
+\end{figure}
+
+\subsection{Inorganic context from a frozen database snapshot}
+We place the loss-budget window against the Perovskite Database Project via NOMAD \cite{rPDB} as era-bounded context, not a benchmark: 41,316 one-sun entries (43,106 raw fetch; validity filters in S5), of which 2,141 analysis-clean strictly inorganic entries (raw fetch 2,201) include 421 CsPbI$_{3}$ and just 5 Ge-bearing devices (zero RbGeI$_{3}$). The snapshot runs to early 2020 plus author uploads, so recent inorganic cells (20.6--21.5\%+) postdate it and no superiority over the present state of the art is claimed. Within the snapshot, our stacked 20.78\% point (21.76\% with BSF) sits above its inorganic max of 18.22\% (Fig.~24) --- a statement about the gap between simulation upper bounds and that era's inorganic state of the art, not evidence of realism; the refit champion marker (18.49\%) is our own calibration point plotted for scale, not an independent device, and its FF (82.37\%) sits just above the snapshot's realized FF max (0.82).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/fig38.png}
+\caption{(a) PCE histograms (NOMAD Perovskite DB \cite{rPDB}, frozen pre-2021 snapshot): all 1-sun, inorganic subset, CsPbI$_{3}$; gold band = this work's realistic window; dashed line = calibration refit. (b--d) V$_{\mathrm{OC}}$, FF, J$_{\mathrm{SC}}$ vs PCE; gold star = refit champion marker (18.49\%, plotted for scale), white star = control fit (15.18\%).}
+\end{figure}
+
+\subsection{Oxidation budget: from vacancy thermodynamics to fab spec}
+Our defect densities are not free parameters: each Ge$^{2+}$\,$\rightarrow$\,Ge$^{4+}$ oxidation event creates a Ge vacancy (V$_{\mathrm{Ge}}$), the dominant native acceptor in CsGeI$_{3}$ DFT \cite{rMing}, so air exposure sets $N_{t}$ directly. Mapping equilibrium V$_{\mathrm{Ge}}$ concentrations ($N=N_{\mathrm{sites}}\exp(-E^f/kT)$, $N_{\mathrm{sites}}=4.87\times10^{21}$ cm$^{-3}$) onto the consolidated $N_{t}$ ladder (Fig.~25) yields a quantitative fab spec: $E^f\gtrsim0.46$ eV (good glovebox, Ge-rich chemistry) holds the 27.06\% headline; $E^f\approx0.40$ eV (marginal) lands on the realistic 24.40\%; brief air exposure ($E^f\approx0.35$ eV) pushes $p\approx2$[V$_{\mathrm{Ge}}$] past $10^{16}$ cm$^{-3}$, where the $N_{A}$ penalty stays soft ($\le$0.3 pp); ambient processing ($E^f\approx0.30$ eV) falls below the high-oxidation 20.76\%. These are 300~K equilibrium values and hence lower bounds: defects frozen in from typical 100--150~$^{\circ}$C anneals shift every threshold up by 0.11--0.19~eV (holding $10^{14}$ cm$^{-3}$ then needs $E^f\approx0.57$--0.65~eV), and the processing-condition bands are illustrative Ef assumptions, not derived Ge/O chemical-potential regimes. At the Ge-poor limit vacancies reach $\sim$$10^{19}$ cm$^{-3}$ and the absorber goes metallic, as Ming et al.\ predict \cite{rMing} --- consistent with rapid Ge oxidation \cite{rThirumal} and with no reported RbGeI$_{3}$ device to date (phase stability of cubic vs.\ $R3m$ is separately unaddressed here). The mapping is corroborated from three sides: sub-ns TRPL lifetimes invert to $N_{t}\gtrsim10^{17}$, so real Ge films today are 100--1000$\times$ over budget \cite{rGeRev} (S6) --- and a current-state rung at $N_{t}$=$10^{17}$ cm$^{-3}$ on the adopted stack gives 15.53\%, the number a first fabrication should expect to beat; the 1\%-Ge optimum in CsPb(I,Br)$_{3}$ (19.70\% \cite{rGeDope}) marks the same proliferation threshold from the doping side; and passivation chemistries that remove deep levels --- PCCMAI (+3.29 pp \cite{rPCCMAI}), Lewis bases in DFT \cite{rKino} --- are $N_{t}$ reduction in waterfall language. The competing V$_{I}$ deep-trap picture is functional-dependent (benign under HSE+SOC \cite{rZhangPRX}), so this budget rests on V$_{\mathrm{Ge}}$ + Cs$_{I}$ \cite{rZhang24}; CsGeI$_{3}$ energetics transfer to RbGeI$_{3}$ since the A-site carries no band-edge weight. Derivation, bounds and kinetic caveats in S6.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figs/fig39.png}
+\caption{Oxidation budget: consolidated PCE vs V$_{\mathrm{Ge}}$ formation energy (dots; equilibrium mapping in text), with processing-condition bands. Dashed extension toward the metallic limit is schematic; TRPL marker from reported sub-ns lifetimes in Ge-containing films (S6).}
+\end{figure}
+
+
+\section{Comparison with Literature}
+\subsection{Benchmarking against recent literature}
+Table VI compares the optimized FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au device with recently reported RbGeI$_{3}$-based and related lead-free Ge/Sn-based perovskite solar cells. The proposed device achieves a PCE of 27.06\%, within 0.15 pp of the best reported RbGeI$_{3}$ value (27.21\%, Loumachi et al. \cite{r22}), exceeding the 26.47\% of Pathak et al. \cite{r23} (preprint) by 0.59 pp, the 18.60\% of Raj et al. \cite{r39} by 8.46 pp, and the 9.77\% simulation baseline of Pindolia et al. \cite{r14} by 17.29 pp. The performance is competitive with the best tin-based devices (26.38\% CsSnI$_{3}$ \cite{r40}, 25.98\% MASnI$_{3}$ \cite{r41}) while sidestepping Sn$^{2+}$ $\rightarrow$ Sn$^{4+}$ solution oxidation (Ge brings its own Ge$^{2+}$ $\rightarrow$ Ge$^{4+}$ liability, budgeted in Section~VI.H), and exceeds CZTS-HTL devices \cite{r42}.
+All comparator values were cross-checked against primary sources (adopting the efficiency implied by reported V$_{\mathrm{OC}}$, J$_{\mathrm{SC}}$, FF where inconsistent); all entries are SCAPS-1D simulations, and the Loumachi string is ITO/\allowbreak{}C$_{60}$/RbGeI$_{3}$/CBTS/\allowbreak{}Ag (Section II).
+
+In short, the optimized device lands within 0.15 pp of the best published RbGeI$_{3}$ simulation (27.21\% \cite{r22}), and stays competitive with the top tin-based lead-free cells, all with an all-inorganic transport stack. With the Cu$_{2}$O-like BSF the ideal point reaches 28.01\% while keeping the cheap TiO$_{2}$/CuI pair (cf.\ Sb$_{2}$S$_{3}$-route 30.35\% \cite{rRahman} --- numerically equal from an independent stack, not the same device --- and IGZO/Cu$_{2}$O 33.84\% \cite{rReza}); the BSF-realistic 21.76\% is the number an experimentalist should target, reported with the full loss decomposition most entries omit. The ML R$^{2}$ (0.907 held out) sits with recent SCAPS+ML reports \cite{rJCE,rMA,rML40}.
+ The Pindolia et al. \cite{r14} baseline of 9.77\% leaves a wide gap for improvement. Working RbGeI$_{3}$ solar cells are still rare, so experimental confirmation remains the bottleneck.
+
+\subsection{Gap-plus-alignment control (fixed-$\chi$ protocol)}
+To isolate the gap effect, CsGeI$_{3}$ was simulated in the identical stack changing only the bandgap (1.4 $\rightarrow$ 1.6 eV) at fixed $\chi$; a control rerun at 1.4 eV reproduces the RbGeI$_{3}$ point exactly (27.06\%), proving the isolation is computational. The CsGeI$_{3}$ point (Table VII) gives 1.0966 V, 23.1755 mA/cm$^{2}$, 77.3\%, 19.65\%: Cs wins V$_{\mathrm{OC}}$ by 0.035 V through the wider gap while Rb wins J$_{\mathrm{SC}}$ by 7.14 mA/cm$^{2}$ and FF by 6.8 pp. The J$_{\mathrm{SC}}$ gap is dominated by photon harvest --- the 1.6 eV gap excludes the entire 775--886 nm band under this protocol --- while the 0.30 eV cliff's signature is the pinned V$_{\mathrm{OC}}$ ($\sim$1.10 V across a 100$\times$ change in $N_{t}$: 19.65/19.31/17.07\%) and the FF deficit, i.e.\ interface limitation rather than intrinsic robustness. This is therefore evidence about gap-plus-alignment, not A-site chemistry proper --- stated plainly because the same fixed-$\chi$ choice underlies the comparison. The ranking survives derating ($10^{15}$: 24.40 vs 19.31\%; $10^{16}$: 20.76 vs 17.07\%, Fig.~16).
+
+
 \section{Limitations and Future Work}
 
 \subsection{Limitations of the present study}
-The defect-plus-resistance ladder measured here bounds the window further: 26.81\% ideal $\rightarrow$ 24.84\% ($N_{\mathrm{t}}$ = $10^{15}$) $\rightarrow$ 21.45\% ($N_{\mathrm{t}}$ = $10^{16}$), with first-order $R_{\mathrm{s}}$ factors giving $\sim$19.0\% ($R_{\mathrm{s}}$ = 4) and $\sim$16.7\% ($R_{\mathrm{s}}$ = 8) at high oxidation (Fig. 19).
-Four caveats bound these results. First, the 26.81\% OPAT device is an ideal-coupling upper bound: a supplementary first-order optical estimate (Fresnel reflection at air/FTO with n $\approx$ 1.93, plus Beer--Lambert parasitic bounds for the 10 nm TiO$_{2}$ and 100 nm CuI layers) lowers J$_{\mathrm{SC}}$ from 30.32 to 26.65 mA/cm$^{2}$ and PCE to 23.49\% (Fig. 11); a full transfer-matrix stack with measured RbGeI$_{3}$ n/k data would refine this further. Second, the assumed defect densities (10$^{14}$ cm$^{-3}$ bulk, 10$^{14}$ cm$^{-2}$ interfaces) require well-passivated films: raising bulk $N_{\mathrm{t}}$ to 10$^{15}$ (10$^{16}$) cm$^{-3}$ drops PCE to 24.84\% (21.45\%), and raising interface $N_{\mathrm{t}}$ to 10$^{15}$ (10$^{16}$) cm$^{-2}$ drops PCE to 23.60\% (18.40\%), with J$_{\mathrm{SC}}$ nearly unchanged and V$_{\mathrm{OC}}$/FF collapsing (Fig. 10). Holding 10$^{14}$ cm$^{-3}$ in RbGeI$_{3}$ is hard because Ge$^{2+}$ oxidizes readily to Ge$^{4+}$ in ambient, creating deep traps. Third, SCAPS-1D assumes uniform composition, abrupt interfaces, and stable parameters that cannot be built exactly; the seven-step absorption grading in the input deck is a numerical profile with no demonstrated deposition recipe (it leaves the J--V unchanged in our re-simulation, so it is kept only as documented input, not as a claimed structure). Fourth, the OPAT sequence misses cross-interactions by construction; the GA joint optimum (31.78\%) shows the mathematical headroom but itself assumes 10$^{12}$ cm$^{-3}$ material that is not demonstrated.
+The stacked ladder reads 27.06\% ideal $\rightarrow$ 24.28\% (optics) $\rightarrow$ 21.93\% (bulk $10^{15}$) $\rightarrow$ 20.78\% (interfaces $10^{15}$), with $R_{\mathrm{s}}$/$R_{\mathrm{sh}}$ post-corrections (Fig. 16).
+Five caveats bound these results. First, the 27.06\% adopted device is an ideal-coupling upper bound at literature-pinned densities; the unconstrained sweep maxima ( Eg 1.3, $N_{\mathrm{C}}$/N$_{\mathrm{V}}$ below $10^{18}$) were rejected by the triple-gate rule, not hidden. Second, the adopted $10^{14}$ densities require well-passivated films: bulk $10^{15}$ ($10^{16}$) drops PCE to 24.40\% (20.76\%), rear interfaces $10^{15}$ ($10^{16}$) to 20.29\% (19.65\%), with J$_{\mathrm{SC}}$ nearly unchanged and V$_{\mathrm{OC}}$/FF collapsing (Fig. 8); holding $10^{14}$ in RbGeI$_{3}$ is hard because Ge$^{2+}$ oxidizes readily to Ge$^{4+}$ in ambient. Third, SCAPS-1D assumes uniform composition and abrupt interfaces that cannot be built exactly. Fourth, the sequential procedure misses cross-interactions by construction; the GA best-found point (28.30\%) is reported as optimizer reach, not a proven maximum, and it sits below the triple-gate density floors so it is not an admissible device under our own rules. Fifth, the oxidation map is an equilibrium bound (300~K values are lower bounds; 100--150~$^{\circ}$C freeze-in shifts thresholds up 0.11--0.19~eV): real oxidation is kinetic, dose-dependent and surface-localized, and CsGeI$_{3}$ energetics transfer to RbGeI$_{3}$ by framework analogy, not calculation.
 
 \subsection{Future work}
 The obvious next step is to build and test the optimized device under strict inert processing (<0.1 ppm O2/H2O glovebox), with Ge$^{2+}$ stabilization (reducing additives, trap passivation, alloying, encapsulation) and stability testing. On the modelling side, three extensions are queued: (i) a full 11-parameter global optimization (Bayesian or surrogate-assisted, $\approx$500 evaluations) to confirm the six-gene GA maximum; (ii) a transfer-matrix optical model coupled to the drift-diffusion solution using measured RbGeI$_{3}$ n/k spectra; and (iii) replacing the numerical grading with a realizable composition grade re-optimized in SCAPS.
 
 \section{Conclusion}
-We optimized a lead-free RbGeI$_{3}$ perovskite solar cell in SCAPS-1D, with the goal of higher efficiency and no lead in the absorber. RbGeI$_{3}$ is non-toxic and has the optical and electronic properties an absorber needs, which makes it a credible candidate for future photovoltaics.
-From eight ETL--HTL combinations, FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au was selected on durability, cost, and alignment rather than raw efficiency (D2 outscored it 21.10\% to 19.78\% at screening).
-After sequential optimization of eleven parameters, the consolidated device reaches 26.81\% (V$_{\mathrm{OC}}$ = 1.13 V, J$_{\mathrm{SC}}$ = 30.32 mA/cm$^{2}$, FF = 78.26\%), within 0.4 percentage points of the best prior RbGeI$_{3}$ simulation. Joint GA optimization finds a higher joint optimum at 31.78\% ($E_{\mathrm{g}}$ = 1.33 eV, 62 evaluations), while first-order optical derating and realistic defect densities bound the experimentally plausible window to $\approx$20.7--23.5\%. Defect-energy, doping, resistance, mobility, and CsGeI$_{3}$-comparison sweeps (Sections V.C, V.J--V.L, VI.B) convert the headline into manufacturing tolerances: $E_{\mathrm{a}}$ = 1.46 eV (bulk-limited), $N_{\mathrm{A}}$ <= $10^{15}$ cm$^{-3}$, $R_{\mathrm{s}}$ <= 8 $\Omega\cdot$cm$^{2}$, $\mu$ >= 15 cm$^{2}$/Vs.
+We optimized a lead-free RbGeI$_{3}$ perovskite solar cell in SCAPS-1D and converted its central liability --- Ge$^{2+}$ oxidation --- into a quantitative fab spec. From eight ETL--HTL combinations, FTO/\allowbreak{}TiO$_{2}$/RbGeI$_{3}$/CuI/\allowbreak{}Au was selected on durability, cost, and alignment rather than raw efficiency (D2 outscored it 21.10\% to 19.78\% at screening).
+After sequential optimization of eleven parameters on one frozen deck, the consolidated device reaches 27.06\% (V$_{\mathrm{OC}}$ = 1.06 V, J$_{\mathrm{SC}}$ = 30.32 mA/cm$^{2}$, FF = 84.11\%), within 0.15 pp of the best prior RbGeI$_{3}$ simulation, with every metric below its Shockley--Queisser limit; the D2/NiO cross-check through the same pipeline reaches 28.16\%, so the reported stack trades the efficiency crown for stability and cost. Joint search returns 28.30\% as optimizer reach below the adoption floors ($E_{\mathrm{g}}$ = 1.36 eV, 62 evaluations), while stacked optical, defect and parasitic losses bound the realistic window to a single number: 20.78\% (21.76\% with BSF). Defect-energy, doping, resistance, mobility, and gap-control sweeps (Sections V.C, V.J--V.L, VII.B) convert the headline into tolerances recomputed on the stacked point: $R_{\mathrm{s}}$ $\le$ 4 (pre-optics), $R_{\mathrm{sh}}$ $\ge$ 10$^{3}$ $\Omega\cdot$cm$^{2}$, $N_{\mathrm{A}}$ $\le$ $10^{16}$ cm$^{-3}$, $\mu$ $\ge$ 15 cm$^{2}$/Vs. Fixing the economical TiO$_{2}$/RbGeI$_{3}$/CuI stack, a p$^{+}$ BSF adds +0.94 pp ideally (27.06 $\rightarrow$ 28.00\%, 28.01\% at the grid optimum) and +0.98 pp on the identical full stack (20.78 $\rightarrow$ 21.76\%) by widening the rear interface gap, with block-level trap attribution and a p$^{+}$ control isolating the offset share; and SHAP sensitivity yields design rules (bulk $N_{t}$, $E_{g}$, $\mu_{n}$) that one-at-a-time sweeps alone cannot provide. Targets for the lab: $N_{A}$(BSF) $\sim$$10^{19}$ cm$^{-3}$ ($\ge$30 nm suffices), bulk $N_{t}$ $\le$$10^{15}$ cm$^{-3}$, and an oxidation budget of $E^f\gtrsim0.46$ eV at 300 K equilibrium (0.57--0.65 eV for anneal freeze-in) for the headline, with 15.53\% marking the rung current films must beat. The pipeline behind these targets reproduces two experimental $\beta$-CsPbI$_{3}$ devices within 2\% in a calibration refit, and its stacked window is placed against a frozen inorganic snapshot as context --- the ideal-to-realistic bridge this field needs before first fabrication.
+
+\section*{Data availability}
+All SCAPS decks (initial, H1-adopted, D2, BSF, stacked, attribution controls), run scripts and archived result JSONs listed in Supplementary Section~S7 are available from the authors on request; digitized validation curves and database caches are documented in Supplementary Section~S5.
 
 \begin{thebibliography}{99}
 \bibitem{r1} RENEWABLES 2024 Global Status Report (REN21, 2024).
@@ -435,11 +530,11 @@ After sequential optimization of eleven parameters, the consolidated device reac
 \bibitem{r3} M. A. Green et al., ``Solar cell efficiency tables (Version 64),'' Prog. Photovolt.: Res. Appl. (2024). doi:\url{10.1002/pip.3831.}
 \bibitem{r4} R. A. Afre and D. Pugliese, ``Perovskite solar cells: A review of the latest advances in materials, fabrication techniques, and stability enhancement strategies,'' Micromachines 15(2), 192 (2024). doi:\url{10.3390/mi15020192.}
 \bibitem{r5} N.-G. Park, M. Grätzel, T. Miyasaka, K. Zhu, and K. Emery, ``Towards stable and commercially available perovskite solar cells,'' Nat. Energy 1(11), 16152 (2016). doi:\url{10.1038/nenergy.2016.152.}
-\bibitem{r6} ``Compositional engineering of perovskite materials for high-performance solar cells,'' Nature 517(7535), 476--480 (2015). doi:\url{10.1038/nature14133.}
+\bibitem{r6} N. J. Jeon, J. H. Noh, Y. C. Kim, W. S. Yang, S. Ryu and S. I. Seok, ``Compositional engineering of perovskite materials for high-performance solar cells,'' Nature 517(7535), 476--480 (2015). doi:\url{10.1038/nature14133.}
 \bibitem{r7} I. Ahmed, K. Prakash, and S. M. Mobin, ``Lead-free perovskites for solar cell applications: recent progress, ongoing challenges, and strategic approaches,'' Chem. Commun. 61(37), 6691--6721 (2025). doi:\url{10.1039/D4CC06835A.}
 \bibitem{r8} S. Kinza Fatima et al., ``Lead-free perovskites for next-generation applications: a comprehensive computational and data-driven review,'' Mater. Adv. 6(21), 7634--7661 (2025). doi:\url{10.1039/D5MA00681C.}
 \bibitem{r9} J. Burschka, N. Pellet, S.-J. Moon, R. Humphry-Baker, P. Gao, M. K. Nazeeruddin, and M. Grätzel, ``Sequential deposition as a route to high-performance perovskite-sensitized solar cells,'' Nature 499(7458), 316--319 (2013). doi:\url{10.1038/nature12340.}
-\bibitem{r10} M. M. Lee, J. Teuscher, T. Miyasaka, T. N. Murakami, and H. J. Snaith, ``Efficient hybrid solar cells based on meso-superstructured organometal halide perovskites,'' Science 338(6107), 643--647 (2012). doi:\url{9.7726/science.1228604.}
+\bibitem{r10} M. M. Lee, J. Teuscher, T. Miyasaka, T. N. Murakami, and H. J. Snaith, ``Efficient hybrid solar cells based on meso-superstructured organometal halide perovskites,'' Science 338(6107), 643--647 (2012). doi:\url{10.1126/science.1228604.}
 \bibitem{r11} A. K. Jena, A. Kulkarni, and T. Miyasaka, ``Halide perovskite photovoltaics: Background, status, and future prospects,'' Chem. Rev. 119(5), 3036--3103 (2019). doi:\url{10.1021/acs.chemrev.8b00539.}
 \bibitem{r12} P. Afrin, K. Farjana, A. Vumije, and M. N. Uddin, ``An investigation on the impact of temperature variation over the performance of formamidinium tin iodide perovskite solar cell using SCAPS simulation,'' AIP Adv. 14(7) (2024). doi:\url{10.1063/5.0209332.}
 \bibitem{r13} S. Samaki, F. Tchangnwa Nya, G. M. Dzifack Kenfack, and A. Laref, ``Materials and interfaces properties optimization for high-efficient and more stable RbGeI$_{3}$ perovskite solar cells: optoelectrical modelling,'' Sci. Rep. 13, 15517 (2023). doi:\url{10.1038/s41598-023-42471-w.}
@@ -450,7 +545,6 @@ After sequential optimization of eleven parameters, the consolidated device reac
 \bibitem{r18} N. A. Abdulkareem, ``A DFT study of structural, electronic and optical properties of lead-free and Ge-based cubic perovskite RbGeX$_{3}$ (X = I, Br and Cl),'' Passer J. Basic Appl. Sci. 5(1), 46--51 (2023). doi:\url{10.24271/psr.2023.371069.1187.}
 \bibitem{r19} M. Burgelman, P. Nollet, and S. Degrave, ``Modelling polycrystalline semiconductor solar cells,'' Thin Solid Films 361--362, 527--532 (2000). doi:\url{10.1016/S0040-6090(99)00825-1.}
 \bibitem{r20} M. Burgelman, M. Debucquoy, K. Decock, J. Verschraegen, and S. Degrave, SCAPS-1D simulation program for thin film solar cells, version 3.3.10 (ELIS, University of Gent, Belgium, 2024).
-\bibitem{r21} A. Nakane, H. Tampo, M. Tamakoshi, S. Fujimoto, K. M. Kim, S. Kim, H. Shibata, S. Niki, and H. Fujiwara, ``Quantitative determination of optical and recombination losses in thin-film photovoltaic devices based on external quantum efficiency analysis,'' arXiv:1604.04491 (2016); published in J. Appl. Phys. 120, 064505 (2016), doi:\url{10.1063/1.4960698.}
 \bibitem{r22} L. Loumachi, A. Yousfi, O. Saidani, and A. S. Alsubaie, ``Strengthen the power conversion efficiency of solar cell based RbGeI$_{3}$: Numerical approach,'' East Eur. J. Phys. (3), 416--424 (2024). doi:\url{10.26565/2312-4334-2024-3-50}
 \bibitem{r23} A. Pathak, K. M. D. Pravalli, R. Madaka, B. Pandey, D. Shankar, C. S. Beera, and D. J. Rao, ``Computational analysis of germanium-based perovskites (MAGeI$_{3}$, FAGeI$_{3}$, CsGeI$_{3}$, RbGeI$_{3}$) for high-efficiency solar cells using SCAPS-1D,'' Research Square (2026). doi:\url{10.21203/rs.3.rs-8749975/}
 \bibitem{r24} D. Saikia, J. Bera, A. Betal, and S. Sahu, ``Performance evaluation of an all inorganic CsGeI$_{3}$ based perovskite solar cell by numerical simulation,'' Opt. Mater. 123, 111839 (2022). doi:\url{10.1016/j.optmat.2021.111839.}
@@ -458,7 +552,6 @@ After sequential optimization of eleven parameters, the consolidated device reac
 \bibitem{r26} Q. Sun, A. Sadhu, S. Lie, and L. H. Wong, ``Critical review of Cu-based hole transport materials for perovskite solar cells: From theoretical insights to experimental validation,'' Adv. Mater. (2024). doi:\url{10.1002/adma.202402412.}
 \bibitem{r27} J. Z. Mbese, ``Advancements in inorganic hole-transport materials for perovskite solar cells: A comparative review,'' Energies 18(9), 2374 (2025). doi:\url{10.3390/en18092374.}
 \bibitem{r28} L. T. C. Tuyen, S.-R. Jian, N. T. Tien, and P. H. Le, ``Nanomechanical and material properties of fluorine-doped tin oxide thin films prepared by ultrasonic spray pyrolysis: Effects of F-doping,'' Materials 12(10), 1665 (2019). doi:\url{10.3390/ma12101665.}
-\bibitem{r29} W. Yang et al., ``The CuI/\allowbreak{}NiO gradient hole transport layer for enhanced carrier efficiency in large-area perovskite solar cell,'' Appl. Phys. Lett. 128(14) (2026). doi:\url{10.1063/5.0326539.}
 \bibitem{r30} A. J. Olasoji and S. H. Im, ``Perspective chapter: TiO$_{2}$ electron transporting layers for perovskite solar cells,'' in Titanium Dioxide -- Uses, Applications, and Advances (IntechOpen, 2024). doi:\url{10.5772/intechopen.1007266.}
 \bibitem{r31} K. Valadi, S. Gharibi, R. Taheri-Ledari, S. Akin, A. Maleki, and A. E. Shalan, ``Metal oxide electron transport materials for perovskite solar cells: A review,'' Environ. Chem. Lett. 19(3), 2185--2207 (2021). doi:\url{10.1007/s10311-020-01171-x.}
 \bibitem{r32} L. Ji, T. Zhang, and S. Li, ``Band alignment of TiO$_{2}$ by controlling Cl content for high-efficiency perovskite solar cells,'' J. Mater. Chem. C 12(36), 14597--14604 (2024). doi:\url{10.1039/D4TC01495B.}
@@ -472,6 +565,22 @@ After sequential optimization of eleven parameters, the consolidated device reac
 \bibitem{r40} H.-J. Park, H. Son, and B.-S. Jeong, ``SCAPS-1D Simulation for Device Optimization to Improve Efficiency in Lead-Free CsSnI$_{3}$ Perovskite Solar Cells,'' Inorganics 12(4), 123 (2024). doi:\url{10.3390/inorganics12040123.}
 \bibitem{r41} R. Islam, M. N. Uddin, M. J. Hossen, and A. Begum, ``Photovoltaic performance of lead-free MASnI$_{3}$-based perovskite solar cells with kesterite hole transport materials,'' AIP Adv. 16(5) (2026). doi:\url{10.1063/5.0315071.}
 \bibitem{r42} A. C. Piñón Reyes et al., ``Study of a lead-free perovskite solar cell using CZTS as HTL to achieve a 20\% PCE by SCAPS-1D simulation,'' Micromachines 12(12), 1508 (2021). doi:\url{10.3390/mi12121508.}
+\bibitem{rReview} V. H. D. Ara\'ujo, A. F. Nogueira, J. C. Trist\~ao and L. J. dos Santos, ``Advances in lead-free perovskite solar cell design via SCAPS-1D simulations,'' RSC Sustain.\ 3, 4314--4335 (2025). doi:\url{10.1039/D5SU00526D.}
+\bibitem{rRahman} M. M. Rahman et al., ``Numerical modeling and extensive analysis of an extremely efficient RbGeI$_{3}$-based perovskite solar cell by incorporating a variety of ETL and HTL materials,'' Energy Adv.\ 3(9), 2377--2398 (2024). doi:\url{10.1039/D4YA00323C.}
+\bibitem{rReza} M. S. Reza et al., ``Optimizing charge transport layers to enhance the performance of lead-free RbGeI$_{3}$ perovskite solar cells,'' Langmuir 41(11), 7865--7885 (2025).
+\bibitem{rJCE} U. F. Ali et al., ``Integrated simulation and machine learning framework for high-performance lead-free RbGeI$_{3}$ perovskite solar cells with WS$_{2}$/CuI transport layers,'' J.\ Comput.\ Electron.\ 25, 37 (2026). doi:\url{10.1007/s10825-025-02476-2.}
+\bibitem{rMA} T. M. Khan et al., ``Investigating the impact of non-ideal conditions on the performance of an RbGeI$_{3}$ perovskite solar cell through a combination of SCAPS-1D, machine learning and deep learning approaches,'' Mater.\ Adv.\ (2026). doi:\url{10.1039/D5MA01427A.}
+\bibitem{rML40} M. A. Rahman and M. J. Alam, ``Machine learning--guided SCAPS-1D design of lead-free CH$_{3}$NH$_{3}$SnI$_{3}$ perovskite solar cells with 40.17\% simulated PCE,'' J.\ Mater.\ Sci.: Mater.\ Eng.\ (2026). doi:\url{10.1186/s40712-026-00426-9.}
+\bibitem{rMing} W. Ming, H. Shi and M.-H. Du, ``Large dielectric constant, high acceptor density, and deep electron traps in perovskite solar cell material CsGeI$_{3}$,'' J.\ Mater.\ Chem.\ A 4, 13852--13858 (2016). doi:\url{10.1039/C6TA04685A.}
+\bibitem{rThirumal} K. Thirumal et al., ``Lead-free germanium iodide perovskite materials for photovoltaic applications,'' J.\ Mater.\ Chem.\ A 3, 23829--23832 (2015). doi:\url{10.1039/C5TA05741H.}
+\bibitem{rZhang24} C. Zhang et al., ``A systematical study on bands and defects of CsBX$_{3}$ (B = Pb, Sn, Ge; X = Cl, Br, I) perovskite based on first principles,'' Molecules 29(11), 2479 (2024). doi:\url{10.3390/molecules29112479.}
+\bibitem{rZhangPRX} J. Zhang, X. Zhang, M. E. Turiansky and C. G. Van de Walle, ``Iodine vacancies do not cause nonradiative recombination in halide perovskites,'' PRX Energy 2, 013008 (2023). doi:\url{10.1103/PRXEnergy.2.013008.}
+\bibitem{rPCCMAI} S. Mohammadi, L. J. A. Koster and S. Akbari Nia, ``Enhanced stability and efficiency in Ge--Pb-based perovskite solar cells through PCCMAI-induced Ge defect passivation,'' Energy Environ.\ Mater.\ 8, e70052 (2025). doi:\url{10.1002/eem2.70052.}
+\bibitem{rGeDope} R. Chen et al., ``Enhanced stability of Ge-doped CsPb(I$_{1-x}$Br$_{x}$)$_{3}$ perovskite solar cells,'' J.\ Mater.\ Chem.\ A 13, 9822--9829 (2025). doi:\url{10.1039/D4TA08572H.}
+\bibitem{rKino} E. Kino et al., ``A theoretical study of the molecular passivation of p-/n-type defects on tin- and germanium-mixed perovskite surfaces using Lewis base/acid,'' Phys.\ Chem.\ Chem.\ Phys.\ 27, 7429--7439 (2025). doi:\url{10.1039/D4CP03817G.}
+\bibitem{rGeRev} W. J. Jang, P. J. Park, W.-J. Ong and S. Y. Kim, ``Stable and eco-friendly inorganic lead-free perovskite solar cells: structural, electronic, and defect engineering,'' Commun.\ Mater.\ 7 (2026). doi:\url{10.1038/s43246-026-01158-1.}
+\bibitem{rWang} Y. Wang et al., ``Thermodynamically stabilized $\beta$-CsPbI$_{3}$--based perovskite solar cells with efficiencies $>$18\%,'' Science 365, 591--595 (2019). doi:\url{10.1126/science.aav8680.}
+\bibitem{rPDB} T. J. Jacobsson et al., The Perovskite Database Project (perovskitedatabase.com, dataset to Feb.\ 2020 + author uploads), via NOMAD (nomad-lab.eu, Perovskite Solar Cells Database, 43,106 entries accessed Oct.\ 2026).
 \end{thebibliography}
 \end{document}
 % TRIMMED-V2

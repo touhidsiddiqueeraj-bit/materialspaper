@@ -1,0 +1,47 @@
+{
+ "th": {
+  "carried": "0.8um",
+  "PCE": 21.3
+ },
+ "nt": {
+  "carried": "1e12cm",
+  "PCE": 26.46
+ },
+ "eps": {
+  "carried": "23.1",
+  "PCE": 26.46
+ },
+ "chi": {
+  "carried": "3.9",
+  "PCE": 26.46,
+  "note": "3.7/4.2 non-convergent x4 attempts; 3.9 max brackets optimum"
+ },
+ "nifT": {
+  "carried": "1e12cm2",
+  "PCE": 26.46
+ },
+ "nifC": {
+  "carried": "1e12cm2",
+  "PCE": 26.46
+ },
+ "eg": {
+  "carried": "1.4",
+  "PCE": 26.46
+ },
+ "etl": {
+  "carried": "10nm",
+  "PCE": 30.16
+ },
+ "htl": {
+  "carried": "0.1um",
+  "PCE": 30.16
+ },
+ "nc": {
+  "carried": "nc0",
+  "PCE": 30.38
+ },
+ "nv": {
+  "carried": "nv0",
+  "PCE": 32.87
+ }
+}
